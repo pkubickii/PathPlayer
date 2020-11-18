@@ -1,0 +1,1085 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi"
+     xml:base="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:CityOntoNavi="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#appliesToPedestrian -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#appliesToPedestrian"/>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasDirectNeighbor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasDirectNeighbor">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasLocation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasLocation"/>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#isLocatedOn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#isLocatedOn"/>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#recordedInTheLocation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#recordedInTheLocation"/>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#throughTheStreet -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#throughTheStreet"/>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#stopsAtTheBusStop -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#stopsAtTheBusStop"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_building_number -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_building_number">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_city_name -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_city_name">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_country -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_country">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_flat_number -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_flat_number">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_post_code -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_post_code">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_province -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_province">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_street_name -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_street_name">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_telefone -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_telefone">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#Name"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#filePath -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#filePath">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileURI -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileURI">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#location_gps_coordinates -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#location_gps_coordinates"/>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#parking_capacity -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#parking_capacity">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Parking"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#realEstate_name -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#realEstate_name">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#what_material_is_made -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#what_material_is_made">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Fence"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrashCan"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#ATM -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#ATM">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+        <rdfs:comment xml:lang="pl">Bankomat.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#AdvertisingColumn -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#AdvertisingColumn">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Bollard -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Bollard">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+        <rdfs:comment xml:lang="pl">Pachołek, niski słupek.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Booth -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Booth">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+        <rdfs:comment xml:lang="pl">Budka handlowa, stragan, kiosk.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Lawn -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Lawn">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#PedestrianCrossing -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#PedestrianCrossing">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+        <rdfs:comment xml:lang="pl">Słup, latarnia.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#RailwayStation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#RailwayStation">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#TrafficCircle -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#TrafficCircle">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#recordedInTheLocation"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Location"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="en">Multi-channel soundtrack with specific voices of this place</rdfs:comment>
+        <rdfs:comment xml:lang="pl">Wielokanałowa ścieżka dźwiękowa ze specyficznymi głosami tego miejsca</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bank -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bank">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bike -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bike">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BlockOfFlats -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BlockOfFlats">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bridge -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bridge">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bus -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bus">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#stopsAtTheBusStop"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BusStop"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BusStop -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BusStop">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Car -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Car">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasDirectNeighbor"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasDirectNeighbor"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasLocation"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Location"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CrossRoads -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CrossRoads">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Fence -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Fence">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Fountain -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Fountain">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#House -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#House">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InformationSign -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InformationSign">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadSign"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Lift -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Lift">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Location -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Location"/>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Monument -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Monument">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Motorcycle -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Motorcycle">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Parking -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Parking">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Pavement -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Pavement">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ProhibitionSign -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ProhibitionSign">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadSign"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasDirectNeighbor"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasDirectNeighbor"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasLocation"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Location"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadSign -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadSign">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#School -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#School">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Shop -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Shop">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Square -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Square">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Stairs -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Stairs">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrafficLight -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrafficLight">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#appliesToPedestrian"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#PedestrianCrossing"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrashCan -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrashCan">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Tunnel -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Tunnel">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle"/>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#WarrantSign -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#WarrantSign">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadSign"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_busStop_0003 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_busStop_0003">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
+        <CityOntoNavi:recordedInTheLocation rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#busStop02SiedlcePKP"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#adverstingColumnArmiiKrajowej3Maja -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#adverstingColumnArmiiKrajowej3Maja">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#AdvertisingColumn"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:location_gps_coordinates>52.163950, 22.271705</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Kolumna ogłoszeniowa, ulokowana na środku chodnika, można obejść dookoła.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlce3Maja -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlce3Maja">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#ATM"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesFacultyOfSciences"/>
+        <CityOntoNavi:location_gps_coordinates>52.164173, 22.272073</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Bankomat PKO BP.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlceArmiiKrajowej -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlceArmiiKrajowej">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#ATM"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopBiedronkaSiedlceArmiiKrajowej"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:location_gps_coordinates>52.163051, 22.271826</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Bankomat Euronet Polska.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlceSienkiewicza -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlceSienkiewicza">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#ATM"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopRossmannSiedlceSienkiewicza"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:location_gps_coordinates>52.165071, 22.271703</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Bankomat.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#bollardSienkiewicza1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#bollardSienkiewicza1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Bollard"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
+        <CityOntoNavi:location_gps_coordinates>52.165137, 22.272197</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Pachołek, ulokowany na skraju chodnika i ulicy.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#bollardSienkiewicza2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#bollardSienkiewicza2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Bollard"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
+        <CityOntoNavi:location_gps_coordinates>52.165153, 22.272390</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Pachołek, ulokowany na skraju chodnika i ulicy.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#boothIceCreamShop -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#boothIceCreamShop">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Booth"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:location_gps_coordinates>52.165060, 22.271686</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Budka z lodami, ulokowana na środku chodnika, można obejść dookoła.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#boothNewsStand -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#boothNewsStand">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Booth"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:location_gps_coordinates>52.165018, 22.271687</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Kiosk RUCHu, ulokowany na środku chodnika, można obejśc dookoła.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#busStop01SiedlceArmiiKrajowejSienkiewicza -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#busStop01SiedlceArmiiKrajowejSienkiewicza">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BusStop"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:location_gps_coordinates>52.164879, 22.271683</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Przystanek autobusowy Armii Krajowej Sienkiewicza, wiata ulokowana na środku chodnika, można obejść dookoła, zatoczka autobusu wcina się w chodnik.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#busStop02SiedlcePKP -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#busStop02SiedlcePKP">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BusStop"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementKolejowa"/>
+        <CityOntoNavi:location_gps_coordinates>52.162802, 22.272424</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Przystanek autobusowy PKP.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavement3Maja -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavement3Maja">
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#street3Maja"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetArmiiKrajowej"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Pavement"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavement3Maja"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementKolejowa"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
+        <rdfs:comment xml:lang="pl">Chodnik, samochody parkują na chodniku od strony ulicy.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementKolejowa -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementKolejowa">
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetKolejowa"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Pavement"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetSienkiewicza"/>
+        <rdfs:comment xml:lang="pl">Chodnik, samochody parkują na chodniku od strony ulicy.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementZdanowskiego -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementZdanowskiego">
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetZdanowskiego"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossing3Maja1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossing3Maja1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#PedestrianCrossing"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavement3Maja"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:throughTheStreet rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#street3Maja"/>
+        <CityOntoNavi:location_gps_coordinates>52.164028, 22.271778</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Przejście dla pieszych, z sygnalizacją świetlną i dźwiękową.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossingKolejowa1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossingKolejowa1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#PedestrianCrossing"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementKolejowa"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossingZdanowskiego1"/>
+        <CityOntoNavi:throughTheStreet rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetKolejowa"/>
+        <CityOntoNavi:location_gps_coordinates>52.162912, 22.271931</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Przejście dla pieszych, bez sygnalizacji świetlnej i dźwiękowej.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossingZdanowskiego1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossingZdanowskiego1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#PedestrianCrossing"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementZdanowskiego"/>
+        <CityOntoNavi:throughTheStreet rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetKolejowa"/>
+        <CityOntoNavi:location_gps_coordinates>52.162533, 22.271884</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Przejście dla pieszych, bez sygnalizacji świetlnej i dźwiękowej.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:location_gps_coordinates>52.164703, 22.271683</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Latarnia, umiejscowiona na skraju chodnika i ulicy.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:location_gps_coordinates>52.164436, 22.271693</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Latarnia, umiejscowiona na skraju chodnika i ulicy.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:location_gps_coordinates>52.163570, 22.271719</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Latarnia, umiejscowiona na skraju chodnika i ulicy.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleSienkiewicza1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleSienkiewicza1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
+        <CityOntoNavi:location_gps_coordinates>52.165157, 22.272622</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Latarnia, umiejscowiona na skraju chodnika i ulicy.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#railwayStationSiedlcePKP -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#railwayStationSiedlcePKP">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#RailwayStation"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementZdanowskiego"/>
+        <CityOntoNavi:location_gps_coordinates>52.162407, 22.271910</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Dworzec PKP Siedlce Główny.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesFacultyOfSciences -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesFacultyOfSciences">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#School"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavement3Maja"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:address_building_number rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</CityOntoNavi:address_building_number>
+        <CityOntoNavi:address_city_name>Siedlce</CityOntoNavi:address_city_name>
+        <CityOntoNavi:address_country>Poland</CityOntoNavi:address_country>
+        <CityOntoNavi:address_post_code>08-110</CityOntoNavi:address_post_code>
+        <CityOntoNavi:address_province>Mazowieckie</CityOntoNavi:address_province>
+        <CityOntoNavi:address_street_name>3 Maja</CityOntoNavi:address_street_name>
+        <CityOntoNavi:address_telefone>25 6431066</CityOntoNavi:address_telefone>
+        <CityOntoNavi:location_gps_coordinates>52.164171, 22.272156</CityOntoNavi:location_gps_coordinates>
+        <CityOntoNavi:realEstate_name>Faculty of Science</CityOntoNavi:realEstate_name>
+        <rdfs:comment xml:lang="pl">Instytut Informatyki UPH w Siedlcach przy ul. Sienkiewicza.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesInstituteOfComputerScience -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesInstituteOfComputerScience">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#School"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
+        <CityOntoNavi:address_building_number rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">51</CityOntoNavi:address_building_number>
+        <CityOntoNavi:address_city_name>Siedlce</CityOntoNavi:address_city_name>
+        <CityOntoNavi:address_country>Poland</CityOntoNavi:address_country>
+        <CityOntoNavi:address_post_code>08-110</CityOntoNavi:address_post_code>
+        <CityOntoNavi:address_province>Mazowieckie</CityOntoNavi:address_province>
+        <CityOntoNavi:address_street_name>Sienkiewicza</CityOntoNavi:address_street_name>
+        <CityOntoNavi:address_telefone>25 6431070</CityOntoNavi:address_telefone>
+        <CityOntoNavi:location_gps_coordinates>52.165148, 22.272612</CityOntoNavi:location_gps_coordinates>
+        <CityOntoNavi:realEstate_name>Institute of Computer Science</CityOntoNavi:realEstate_name>
+        <rdfs:comment xml:lang="pl">Wydział Nauk Ścisłych UPH w Siedlcach.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopBiedronkaSiedlceArmiiKrajowej -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopBiedronkaSiedlceArmiiKrajowej">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Shop"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:location_gps_coordinates>52.163145, 22.271854</CityOntoNavi:location_gps_coordinates>
+        <CityOntoNavi:realEstate_name>Biedronka</CityOntoNavi:realEstate_name>
+        <rdfs:comment xml:lang="pl">Biedronka, sklep spożywczy.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopRossmannSiedlceSienkiewicza -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopRossmannSiedlceSienkiewicza">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Shop"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
+        <CityOntoNavi:address_building_number rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">55</CityOntoNavi:address_building_number>
+        <CityOntoNavi:address_city_name>Siedlce</CityOntoNavi:address_city_name>
+        <CityOntoNavi:address_country>Poland</CityOntoNavi:address_country>
+        <CityOntoNavi:address_post_code>08-110</CityOntoNavi:address_post_code>
+        <CityOntoNavi:address_province>Mazowieckie</CityOntoNavi:address_province>
+        <CityOntoNavi:address_street_name>Sienkiewicza</CityOntoNavi:address_street_name>
+        <CityOntoNavi:location_gps_coordinates>52.165107, 22.271771</CityOntoNavi:location_gps_coordinates>
+        <CityOntoNavi:realEstate_name>42 6139100</CityOntoNavi:realEstate_name>
+        <CityOntoNavi:realEstate_name>Drogeria Rossmann</CityOntoNavi:realEstate_name>
+        <rdfs:comment xml:lang="pl">Rossmann, sklep kosmetyczny, perfumeria, drogeria.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#street3Maja -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#street3Maja">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetArmiiKrajowej -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetArmiiKrajowej">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetKolejowa -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetKolejowa">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetSienkiewicza -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetSienkiewicza">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetZdanowskiego -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetZdanowskiego">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trafficLightArmiiKrajowej3maja1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trafficLightArmiiKrajowej3maja1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrafficLight"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossing3Maja1"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#street3Maja"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavement3Maja"/>
+        <CityOntoNavi:location_gps_coordinates>52.164070, 22.271732</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Sygnalizacja świetlna i dźwiękowa.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trafficLightArmiiKrajowej3maja2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trafficLightArmiiKrajowej3maja2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrafficLight"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossing3Maja1"/>
+        <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#street3Maja"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavement3Maja"/>
+        <CityOntoNavi:location_gps_coordinates>52.163975, 22.271737</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Sygnalizacja świetlna i dźwiękowa.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trashCanSienkiewicza1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trashCanSienkiewicza1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrashCan"/>
+        <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
+        <CityOntoNavi:location_gps_coordinates>52.165163, 22.272620</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">Kosz na śmieci, ulokowany na skraju pomiędzy chodnikiem a ulicą.</rdfs:comment>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
