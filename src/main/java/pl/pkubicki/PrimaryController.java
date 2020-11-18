@@ -60,7 +60,8 @@ public class PrimaryController {
         try {
             o = manager.createOntology();
             System.out.println(o);
-        } catch (OWLOntologyCreationException e) {
+            manager.saveOntology(o, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileOut));
+        } catch (OWLOntologyCreationException | FileNotFoundException | OWLOntologyStorageException e) {
             e.printStackTrace();
         }
     }
