@@ -7,9 +7,13 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.FunctionalSyntaxDocumentFormat;
 import org.semanticweb.owlapi.model.*;
+
+import static pl.pkubicki.App.loadFXML;
 
 public class PrimaryController {
     private OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
@@ -64,5 +68,12 @@ public class PrimaryController {
         } catch (OWLOntologyCreationException | FileNotFoundException | OWLOntologyStorageException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    private void openUploadForm(ActionEvent actionEvent) throws IOException{
+        Stage stage = new Stage();
+        stage.setTitle("New POI form");
+        stage.setScene(new Scene(loadFXML("addpoiform"), 640, 480));
+        stage.show();
     }
 }

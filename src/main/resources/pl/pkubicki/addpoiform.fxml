@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<!--<AnchorPane xmlns="http://javafx.com/javafx"-->
+<!--            xmlns:fx="http://javafx.com/fxml"-->
+<!--            fx:controller="pl.pkubicki.PrimaryController"-->
+<!--            prefHeight="400.0" prefWidth="600.0">-->
+<!--</AnchorPane>-->
+
+<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.AddPoiController">
+    <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
+    <gridLinesVisible>true</gridLinesVisible>
+    <Text id="addpoi-welcome-text" text="Add a new POI:" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+
+
+
+    <Label text="Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+    <TextField fx:id="latitude" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label text="Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+    <TextField fx:id="longitude" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+    <Label text="Audio file:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Text fx:id="fileName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <HBox alignment="BOTTOM_RIGHT" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="3">
+        <Button onAction="#selectFile" text="Open File" />
+    </HBox>
+    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <Button onAction="#submitNewPoiButton" text="Submit POI" />
+    </HBox>
+    <Text fx:id="submitStatus" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+    <stylesheets>
+        <URL value="@css/AddPoiForm.css" />
+    </stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
