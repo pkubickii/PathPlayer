@@ -24,6 +24,9 @@
    <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
       <Button fx:id="addPoi" onAction="#openUploadForm" prefHeight="25.0" prefWidth="94.0" text="Add POI" />
    </HBox>
+   <HBox GridPane.columnIndex="0" GridPane.rowIndex="3">
+      <Button fx:id="downloadPoi" onAction="#openDownloadForm" prefHeight="25.0" prefWidth="94.0" text="Download POI" />
+   </HBox>
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />

@@ -76,4 +76,11 @@ public class PrimaryController {
         stage.setScene(new Scene(loadFXML("addpoiform"), 640, 480));
         stage.show();
     }
+    @FXML
+    private void openDownloadForm(ActionEvent actionEvent) throws IOException{
+        Stage stage = new Stage();
+        stage.setTitle("Download POI form");
+        stage.setScene(new Scene(loadFXML("downloadpoi"), 640, 480));
+        stage.show();
+    }
 }
