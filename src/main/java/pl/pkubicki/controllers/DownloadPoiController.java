@@ -1,5 +1,7 @@
 package pl.pkubicki.controllers;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import org.apache.commons.io.IOUtils;
 import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.core.ResponseInputStream;
@@ -43,5 +45,8 @@ public class DownloadPoiController {
 
         IOUtils.closeQuietly(inputStream);
 
+        Media media = new Media(downloadFile.toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
     }
 }

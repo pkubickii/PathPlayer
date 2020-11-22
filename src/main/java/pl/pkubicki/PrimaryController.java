@@ -16,7 +16,7 @@ import org.semanticweb.owlapi.model.*;
 import static pl.pkubicki.App.loadFXML;
 
 public class PrimaryController {
-    private OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+    private final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 
     @FXML
     private void switchToSecondary() throws IOException {
