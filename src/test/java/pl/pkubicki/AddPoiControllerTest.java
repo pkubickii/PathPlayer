@@ -20,11 +20,6 @@ public class AddPoiControllerTest {
     LatLng poi1 = new LatLng(lat2, lng2);
     LatLng poi2 = new LatLng(lat3, lng3);
 
-
-    @Test
-    public void proxTest() {
-        AddPoiController.generateProximityList();
-    }
     @Test
     public void distanceCheck() {
         System.out.println(LatLngTool.distance(poi0, poi1, LengthUnit.METER));

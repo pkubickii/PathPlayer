@@ -1,6 +1,5 @@
 package pl.pkubicki.controllers;
 
-import com.javadocmd.simplelatlng.util.LengthUnit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
@@ -12,11 +11,8 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
-import com.javadocmd.simplelatlng.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 
 public class AddPoiController {
     private final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
@@ -24,7 +20,6 @@ public class AddPoiController {
     @FXML private Text submitStatus;
     @FXML private Text fileName;
     private static File audioFile;
-    private final static double PROXIMITY = 100.0;
 
     @FXML
     public void selectFile(ActionEvent actionEvent){
@@ -39,19 +34,7 @@ public class AddPoiController {
     }
 
     @FXML
-    public static void generateProximityList() {
-        LatLng poi0 = new LatLng(52.162995, 22.271528);
-        List<LatLng> proxList = new ArrayList<>();
-        List<LatLng> allList = Arrays.asList(new LatLng(52.162995, 22.271528));
-        allList.forEach( element -> {
-                    if (LatLngTool.distance(poi0, element, LengthUnit.METER) < PROXIMITY) {
-                        proxList.add(element);
-                    }
-        });
-        System.out.println(proxList.toString());
-    }
-    @FXML
-    private void submitNewPoiButton(ActionEvent actionEvent) {
+    public void submitNewPoiButton(ActionEvent actionEvent) {
         S3Client s3 = S3Client.builder().region(region).build();
         String bucket = "siedlce";
 //        String stringObjKeyName = "objKey "+ System.currentTimeMillis();
@@ -76,7 +59,7 @@ public class AddPoiController {
     }
 
     @FXML
-    private void submitNewBucket(ActionEvent actionEvent) {
+    public void submitNewBucket(ActionEvent actionEvent) {
 
         S3Client s3 = S3Client.builder().region(region).build();
         String bucket = "bucket" + System.currentTimeMillis();
@@ -87,7 +70,7 @@ public class AddPoiController {
         System.out.println("Uploading POI...");
 
         s3.putObject(PutObjectRequest.builder().bucket(bucket).key(key)
-                .build(), RequestBody.fromString("FIRST NEW POI!!! WOOHOOO!!!"));
+                .build(), RequestBody.fromString("new key in bucket"));
 
         System.out.println("Upload complete");
         System.out.printf("%n");
