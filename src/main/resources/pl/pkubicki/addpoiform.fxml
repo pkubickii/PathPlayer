@@ -33,6 +33,7 @@
         <Button onAction="#selectFile" text="Open File" />
     </HBox>
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <Button mnemonicParsing="false" text="List prox POI" onAction="#generateProximityList" />
         <Button onAction="#submitNewPoiButton" text="Submit POI" />
     </HBox>
     <Text fx:id="submitStatus" GridPane.columnIndex="1" GridPane.rowIndex="5" />

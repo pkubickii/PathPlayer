@@ -1,31 +1,30 @@
 package pl.pkubicki.controllers;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Paths;
-
-import javafx.application.Application;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.model.*;
-import software.amazon.awssdk.services.s3.S3Client;
+import com.javadocmd.simplelatlng.util.LengthUnit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.*;
-
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.*;
+import com.javadocmd.simplelatlng.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AddPoiController {
-    private OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+    private final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
     private static Region region = Region.EU_NORTH_1;
     @FXML private Text submitStatus;
     @FXML private Text fileName;
     private static File audioFile;
+    private final static double PROXIMITY = 100.0;
 
     @FXML
     public void selectFile(ActionEvent actionEvent){
@@ -39,6 +38,18 @@ public class AddPoiController {
         }
     }
 
+    @FXML
+    public static void generateProximityList() {
+        LatLng poi0 = new LatLng(52.162995, 22.271528);
+        List<LatLng> proxList = new ArrayList<>();
+        List<LatLng> allList = Arrays.asList(new LatLng(52.162995, 22.271528));
+        allList.forEach( element -> {
+                    if (LatLngTool.distance(poi0, element, LengthUnit.METER) < PROXIMITY) {
+                        proxList.add(element);
+                    }
+        });
+        System.out.println(proxList.toString());
+    }
     @FXML
     private void submitNewPoiButton(ActionEvent actionEvent) {
         S3Client s3 = S3Client.builder().region(region).build();

@@ -925,6 +925,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#railwayStationSiedlcePKP">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#RailwayStation"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementZdanowskiego"/>
         <CityOntoNavi:location_gps_coordinates>52.162407, 22.271910</CityOntoNavi:location_gps_coordinates>
         <rdfs:comment xml:lang="pl">Dworzec PKP Siedlce Główny.</rdfs:comment>
@@ -935,6 +936,7 @@
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesFacultyOfSciences -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesFacultyOfSciences">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#School"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavement3Maja"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
@@ -955,6 +957,7 @@
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesInstituteOfComputerScience -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesInstituteOfComputerScience">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#School"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
         <CityOntoNavi:address_building_number rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">51</CityOntoNavi:address_building_number>
@@ -974,6 +977,7 @@
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopBiedronkaSiedlceArmiiKrajowej -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopBiedronkaSiedlceArmiiKrajowej">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Shop"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
         <CityOntoNavi:location_gps_coordinates>52.163145, 22.271854</CityOntoNavi:location_gps_coordinates>
@@ -986,6 +990,7 @@
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopRossmannSiedlceSienkiewicza -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopRossmannSiedlceSienkiewicza">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Shop"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
