@@ -2,6 +2,8 @@ package pl.pkubicki.controllers;
 
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.util.LengthUnit;
+import fr.dudie.nominatim.client.JsonNominatimClient;
+import fr.dudie.nominatim.client.NominatimClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,10 +26,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
+
 
 public class FreeTravelController implements Initializable {
     private final File owlFile= new File("C:\\Users\\pkubicki\\IntelliJIDEAProjects\\PathPlayer\\src\\main\\java\\pl\\pkubicki\\CityOnto.owl");
@@ -44,8 +50,19 @@ public class FreeTravelController implements Initializable {
     @FXML private TextField longitudeText;
     @FXML private TextField proximityText;
 
+    private static JsonNominatimClient nominatimClient;
+    private static final Properties PROPS = new Properties();
+    private static final String PROPS_PATH = "/properties/nominatim.properties";
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        final InputStream in = JsonNominatimClient.class.getResourceAsStream(PROPS_PATH);
+        try {
+            PROPS.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         latitudeText.setText("52.162995");
         longitudeText.setText("22.271528");
 
@@ -73,10 +90,14 @@ public class FreeTravelController implements Initializable {
 
     @FXML
     public void createProximityList(ActionEvent actionEvent) {
+
             LatLng poi = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
             LengthUnit lengthUnit = (LengthUnit) unitChoiceBox.getValue();
             proximityListText.clear();
             proximityListText.setText((OwlUtils.createProximityNodeSet(poi, Double.parseDouble(proximityText.getText()), lengthUnit, OwlUtils.createNodeSetWithGps(reasoner, dataFactory), reasoner, dataFactory)).toString());
     }
 
+    public void createGeoLocation(ActionEvent actionEvent) {
+
+    }
 }

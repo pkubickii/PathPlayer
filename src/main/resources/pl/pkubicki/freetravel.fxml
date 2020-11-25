@@ -11,6 +11,10 @@
 
     <TextField fx:id="geolocationText" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
+    <HBox GridPane.columnIndex="3" GridPane.rowIndex="0" >
+        <Button fx:id="searchGeoButton" onAction="#createGeoLocation" text="Search"/>
+    </HBox>
+
     <Label text="Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
     <TextField fx:id="latitudeText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
