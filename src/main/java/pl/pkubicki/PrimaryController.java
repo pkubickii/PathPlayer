@@ -70,17 +70,24 @@ public class PrimaryController {
         }
     }
     @FXML
-    private void openUploadForm(ActionEvent actionEvent) throws IOException{
+    private void openUploadForm(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         stage.setTitle("New POI form");
         stage.setScene(new Scene(loadFXML("addpoiform"), 640, 480));
         stage.show();
     }
     @FXML
-    private void openDownloadForm(ActionEvent actionEvent) throws IOException{
+    private void openDownloadForm(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Download POI form");
         stage.setScene(new Scene(loadFXML("downloadpoi"), 640, 480));
+        stage.show();
+    }
+
+    public void openFreeTravelWindow(ActionEvent actionEvent) throws IOException {
+        Stage stage = new Stage();
+        stage.setTitle("Free Travel");
+        stage.setScene(new Scene(loadFXML("freetravel"), 640, 480));
         stage.show();
     }
 }

@@ -10,7 +10,7 @@
    <gridLinesVisible>true</gridLinesVisible>
    <Text id="welcome-text" text="Path Player 1.0 Welcome" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
    <HBox GridPane.columnIndex="0" GridPane.rowIndex="1">
-      <Button fx:id="loadButton" onAction="#showOwl" prefHeight="25.0" prefWidth="113.0" text="Load Ontology" />
+      <Button fx:id="loadButton" onAction="#showOwl" text="Load Ontology" />
    </HBox>
    <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
       <Button fx:id="saveButton" onAction="#saveOwl" text="Save Ontology" />
@@ -22,10 +22,13 @@
       <Button fx:id="emptyOwl" onAction="#createEmptyOWL" text="Create EmptyOWL" />
    </HBox>
    <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
-      <Button fx:id="addPoi" onAction="#openUploadForm" prefHeight="25.0" prefWidth="94.0" text="Add POI" />
+      <Button fx:id="addPoi" onAction="#openUploadForm" text="Add POI" />
    </HBox>
    <HBox GridPane.columnIndex="0" GridPane.rowIndex="3">
-      <Button fx:id="downloadPoi" onAction="#openDownloadForm" prefHeight="25.0" prefWidth="94.0" text="Download POI" />
+      <Button fx:id="downloadPoi" onAction="#openDownloadForm" text="Download POI" />
+   </HBox>
+   <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Button fx:id="freeTravelButton" onAction="#openFreeTravelWindow" text="Free Travel" />
    </HBox>
    <columnConstraints>
       <ColumnConstraints />
