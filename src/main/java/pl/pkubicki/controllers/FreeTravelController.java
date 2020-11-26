@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -51,13 +52,13 @@ public class FreeTravelController implements Initializable {
     @FXML private TextField proximityText;
 
     private static JsonNominatimClient nominatimClient;
-    private static final Properties PROPS = new Properties();
-    private static final String PROPS_PATH = "/properties/nominatim.properties";
+    private static Properties PROPS = new Properties();
+    private static String PROPS_PATH = "src/main/resources/pl/pkubicki/nominatim.properties";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        final InputStream in = JsonNominatimClient.class.getResourceAsStream(PROPS_PATH);
         try {
+            InputStream in = new FileInputStream(PROPS_PATH);
             PROPS.load(in);
         } catch (IOException e) {
             e.printStackTrace();
