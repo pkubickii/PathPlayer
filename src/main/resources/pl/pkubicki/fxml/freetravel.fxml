@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.FreeTravelController">
+    <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
+    <gridLinesVisible>true</gridLinesVisible>
+    <Label text="Search:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+
+    <TextField fx:id="searchText" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+    <HBox GridPane.columnIndex="3" GridPane.rowIndex="0" />
+    <Label text="Search results:" GridPane.rowIndex="1" />
+    <ChoiceBox fx:id="searchResultsChoiceBox" prefHeight="25.0" prefWidth="374.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label text="Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+    <TextField fx:id="latitudeText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+    <Label text="Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+
+    <TextField fx:id="longitudeText" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+    <Label text="Proximity[m]:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+
+    <TextField fx:id="proximityText" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+    <HBox GridPane.columnIndex="2" GridPane.rowIndex="4">
+        <ChoiceBox fx:id="unitChoiceBox" />
+    </HBox>
+
+    <HBox GridPane.columnIndex="1" GridPane.rowIndex="5">
+      <children>
+         <TextField fx:id="startPoiText" prefHeight="25.0" prefWidth="375.0" />
+      </children></HBox>
+
+    <TextArea fx:id="proximityListText" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+     <Button fx:id="createPoiListButton" onAction="#createProximityList" prefHeight="25.0" prefWidth="373.0" text="Create POI list in vicinity" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+     <Button fx:id="searchButton" onAction="#createGeoLocation" text="Search" GridPane.columnIndex="2" />
+   <Label text="Start Point:" GridPane.rowIndex="5" />
+   <Button fx:id="checkButton" mnemonicParsing="false" onAction="#makeStartPoiFromGps" text="Check" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+
+   <columnConstraints>
+      <ColumnConstraints maxWidth="125.0" minWidth="76.0" prefWidth="103.0" />
+      <ColumnConstraints maxWidth="472.0" minWidth="278.0" prefWidth="375.0" />
+      <ColumnConstraints maxWidth="217.0" minWidth="40.0" prefWidth="145.0" />
+      <ColumnConstraints maxWidth="100.0" minWidth="13.0" prefWidth="27.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints maxHeight="95.0" minHeight="5.0" prefHeight="23.0" />
+      <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints maxHeight="201.0" minHeight="111.0" prefHeight="183.0" />
+   </rowConstraints>
+</GridPane>

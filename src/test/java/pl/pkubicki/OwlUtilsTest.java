@@ -4,6 +4,9 @@ import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.util.LengthUnit;
 import fr.dudie.nominatim.client.JsonNominatimClient;
 import fr.dudie.nominatim.model.Address;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -26,14 +29,11 @@ import pl.pkubicki.util.OwlUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 public class OwlUtilsTest {
     @Test
-    public void owlToNodeSetbyGpsClass() throws OWLOntologyCreationException {
+    public void owlToNodeSetGpsClass() throws OWLOntologyCreationException {
         File file = new File("C:\\Users\\pkubicki\\IntelliJIDEAProjects\\PathPlayer\\src\\main\\java\\pl\\pkubicki\\CityOnto.owl");
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         OWLOntology ontology = manager.loadOntologyFromOntologyDocument(file);
@@ -89,7 +89,7 @@ public class OwlUtilsTest {
     public void createPlaceFromGeo() throws IOException {
         JsonNominatimClient nominatimClient;
         Properties PROPS = new Properties();
-        String PROPS_PATH = "nominatim.properties";
+        String PROPS_PATH = "properties/nominatim.properties";
         InputStream in = OwlUtilsTest.class.getResourceAsStream(PROPS_PATH);
         PROPS.load(in);
 //        PROPS.setProperty("nominatim.server.url","https://nominatim.openstreetmap.org/");
@@ -119,10 +119,14 @@ public class OwlUtilsTest {
             System.out.println(ToStringBuilder.reflectionToString(place, ToStringStyle.MULTI_LINE_STYLE));
         }
         System.out.println("Display name: ");
+        List<String> addressList = new ArrayList<>();
         for (Address place : addresses) {
             System.out.println(place.getDisplayName());
             System.out.println(place.getLatitude() + ", " + place.getLongitude());
+            addressList.add(place.getDisplayName());
         }
+        ObservableList<Address> ov = FXCollections.observableList(addresses);
+        System.out.println(ov.get(0).getDisplayName() + " COORDS: " + ov.get(0).getLatitude() + ", " + ov.get(0).getLongitude());
         System.out.println(PROPS_PATH);
     }
 }

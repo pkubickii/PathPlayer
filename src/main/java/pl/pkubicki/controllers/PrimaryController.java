@@ -1,9 +1,4 @@
-package pl.pkubicki;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+package pl.pkubicki.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +7,12 @@ import javafx.stage.Stage;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.FunctionalSyntaxDocumentFormat;
 import org.semanticweb.owlapi.model.*;
+import pl.pkubicki.App;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import static pl.pkubicki.App.loadFXML;
 
@@ -20,11 +21,11 @@ public class PrimaryController {
 
     @FXML
     private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+        App.setRoot("fxml/secondary");
     }
     @FXML
     private void showOwl(ActionEvent actionEvent) {
-        File file = new File("C:\\Users\\pkubicki\\IntelliJIDEAProjects\\PathPlayer\\src\\main\\java\\pl\\pkubicki\\CityOnto.owl");
+        File file = new File("src/main/java/pl/pkubicki/CityOnto.owl");
         try {
             OWLOntology ontology = manager.loadOntologyFromOntologyDocument(file);
             System.out.println("Test buttona." + manager.getOntologies().size());
@@ -35,8 +36,8 @@ public class PrimaryController {
     }
     @FXML
     private void saveOwl(ActionEvent actionEvent) {
-        File fileOut = new File("C:\\Users\\pkubicki\\IntelliJIDEAProjects\\PathPlayer\\src\\main\\java\\pl\\pkubicki\\CityOntoSave.owl");
-        File file = new File("C:\\Users\\pkubicki\\IntelliJIDEAProjects\\PathPlayer\\src\\main\\java\\pl\\pkubicki\\CityOnto.owl");
+        File fileOut = new File("src/main/java/pl/pkubicki/CityOntoSave.owl");
+        File file = new File("src/main/java/pl/pkubicki/CityOnto.owl");
         try {
             OWLOntology ontology = manager.loadOntologyFromOntologyDocument(file);
             manager.saveOntology(ontology, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileOut));
@@ -46,7 +47,7 @@ public class PrimaryController {
     }
     @FXML
     private void loadTestOWL(ActionEvent actionEvent) {
-        File fileOut = new File("C:\\Users\\pkubicki\\IntelliJIDEAProjects\\PathPlayer\\src\\main\\java\\pl\\pkubicki\\TestOnto.owl");
+        File fileOut = new File("src/main/java/pl/pkubicki/TestOnto.owl");
         IRI testOnto = IRI.create("http://www.cs.man.ac.uk/~stevensr/ontology/family.rdf.owl");
         OWLOntology familyOnto = null;
         try {
@@ -59,7 +60,7 @@ public class PrimaryController {
     }
     @FXML
     private void createEmptyOWL(ActionEvent actionEvent) {
-        File fileOut = new File ("C:\\Users\\pkubicki\\IntelliJIDEAProjects\\PathPlayer\\src\\main\\java\\pl\\pkubicki\\EmptyOnto.owl");
+        File fileOut = new File ("src/main/java/pl/pkubicki/CityOnto.owl");
         OWLOntology o;
         try {
             o = manager.createOntology();
@@ -73,21 +74,21 @@ public class PrimaryController {
     private void openUploadForm(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         stage.setTitle("New POI form");
-        stage.setScene(new Scene(loadFXML("addpoiform"), 640, 480));
+        stage.setScene(new Scene(loadFXML("fxml/addpoiform"), 640, 480));
         stage.show();
     }
     @FXML
     private void openDownloadForm(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Download POI form");
-        stage.setScene(new Scene(loadFXML("downloadpoi"), 640, 480));
+        stage.setScene(new Scene(loadFXML("fxml/downloadpoi"), 640, 480));
         stage.show();
     }
 
     public void openFreeTravelWindow(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Free Travel");
-        stage.setScene(new Scene(loadFXML("freetravel"), 640, 480));
+        stage.setScene(new Scene(loadFXML("fxml/freetravel"), 640, 480));
         stage.show();
     }
 }

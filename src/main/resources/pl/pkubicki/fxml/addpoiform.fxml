@@ -29,7 +29,7 @@
     </HBox>
     <Text fx:id="submitStatus" GridPane.columnIndex="1" GridPane.rowIndex="5" />
     <stylesheets>
-        <URL value="@css/AddPoiForm.css" />
+        <URL value="@../css/AddPoiForm.css" />
     </stylesheets>
    <columnConstraints>
       <ColumnConstraints />

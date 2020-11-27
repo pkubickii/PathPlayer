@@ -1,19 +1,15 @@
 package pl.pkubicki.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.apache.commons.io.IOUtils;
 import software.amazon.awssdk.core.ResponseBytes;
-import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.regions.Region;
-import javafx.stage.Stage;
-import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.services.s3.S3Client;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.text.Text;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
