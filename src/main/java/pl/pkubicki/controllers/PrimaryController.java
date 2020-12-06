@@ -88,7 +88,7 @@ public class PrimaryController {
     public void openFreeTravelWindow(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Free Travel");
-        stage.setScene(new Scene(loadFXML("fxml/freetravel"), 640, 480));
+        stage.setScene(new Scene(loadFXML("fxml/freetravel"), 800, 800));
         stage.show();
     }
 }
