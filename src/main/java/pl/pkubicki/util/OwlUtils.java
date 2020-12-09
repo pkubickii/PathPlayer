@@ -10,9 +10,7 @@ import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
-import org.semanticweb.owlapi.util.OWLOntologyWalker;
-import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
-import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitorEx;
+import org.semanticweb.owlapi.util.*;
 
 import java.io.File;
 import java.util.*;
@@ -41,8 +39,8 @@ public class OwlUtils {
         OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#location_gps_coordinates"));
         Set<OWLNamedIndividual> proximitySet = new HashSet<>();
         nodes.forEach(node -> {
-            System.out.println(node);
-            System.out.println(reasoner.getDataPropertyValues(node.getRepresentativeElement(), owlDataProperty));
+//            System.out.println(node);
+//            System.out.println(reasoner.getDataPropertyValues(node.getRepresentativeElement(), owlDataProperty));
             (reasoner.getDataPropertyValues(node.getRepresentativeElement(), owlDataProperty)).forEach(owlLiteral -> {
                 LatLng temp = OwlUtils.stringToLatLng(owlLiteral.getLiteral());
                 if (OwlUtils.checkProximity(poi, temp, proximity, unit)) {
@@ -61,5 +59,33 @@ public class OwlUtils {
         });
         result = sB.toString();
         return result;
+    }
+
+    public static Map<OWLNamedIndividual, String> individualsLabels(Set<OWLNamedIndividual> set, OWLOntology ontology) {
+        Map<OWLNamedIndividual, String> individualsLabels = new HashMap<OWLNamedIndividual, String>();
+        OWLOntologyWalker walker = new OWLOntologyWalker(Collections.singleton(ontology));
+        OWLOntologyWalkerVisitor visitor = new OWLOntologyWalkerVisitor(walker) {
+            public void visit(OWLAnnotationAssertionAxiom axiom) {
+                boolean label = axiom.getProperty().isLabel();
+                if (axiom.getProperty().isLabel()) {
+                    set.forEach(individual -> {
+                        if (axiom.getSubject().asIRI().get().getRemainder().hashCode() == individual.getIRI().getRemainder().hashCode()) {
+                            individualsLabels.put(individual, axiom.getValue().asLiteral().get().getLiteral());
+                        }
+                    });
+                }
+            }
+        };
+        walker.walkStructure(visitor);
+        return individualsLabels;
+    }
+
+    public static String individualsLabelsToString(Map<OWLNamedIndividual, String> map) {
+        StringBuilder sB = new StringBuilder();
+        map.forEach((k, v) -> {
+            sB.append(v);
+            sB.append("\n");
+        });
+        return sB.toString();
     }
 }

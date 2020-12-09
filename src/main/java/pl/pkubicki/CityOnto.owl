@@ -929,6 +929,7 @@
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementZdanowskiego"/>
         <CityOntoNavi:location_gps_coordinates>52.162407, 22.271910</CityOntoNavi:location_gps_coordinates>
         <rdfs:comment xml:lang="pl">Dworzec PKP Siedlce Główny.</rdfs:comment>
+        <rdfs:label xml:lang="pl">Dworzec PKP Siedlce</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -950,6 +951,7 @@
         <CityOntoNavi:location_gps_coordinates>52.164171, 22.272156</CityOntoNavi:location_gps_coordinates>
         <CityOntoNavi:realEstate_name>Faculty of Science</CityOntoNavi:realEstate_name>
         <rdfs:comment xml:lang="pl">Instytut Informatyki UPH w Siedlcach przy ul. Sienkiewicza.</rdfs:comment>
+        <rdfs:label xml:lang="pl">UPH - Instytut Informatyki</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -970,6 +972,7 @@
         <CityOntoNavi:location_gps_coordinates>52.165148, 22.272612</CityOntoNavi:location_gps_coordinates>
         <CityOntoNavi:realEstate_name>Institute of Computer Science</CityOntoNavi:realEstate_name>
         <rdfs:comment xml:lang="pl">Wydział Nauk Ścisłych UPH w Siedlcach.</rdfs:comment>
+        <rdfs:label xml:lang="pl">UPH - Wydział Nauk Ścisłych</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -983,6 +986,7 @@
         <CityOntoNavi:location_gps_coordinates>52.163145, 22.271854</CityOntoNavi:location_gps_coordinates>
         <CityOntoNavi:realEstate_name>Biedronka</CityOntoNavi:realEstate_name>
         <rdfs:comment xml:lang="pl">Biedronka, sklep spożywczy.</rdfs:comment>
+        <rdfs:label xml:lang="pl">Biedronka</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -1004,6 +1008,7 @@
         <CityOntoNavi:realEstate_name>42 6139100</CityOntoNavi:realEstate_name>
         <CityOntoNavi:realEstate_name>Drogeria Rossmann</CityOntoNavi:realEstate_name>
         <rdfs:comment xml:lang="pl">Rossmann, sklep kosmetyczny, perfumeria, drogeria.</rdfs:comment>
+        <rdfs:label xml:lang="pl">Rossmann</rdfs:label>
     </owl:NamedIndividual>
     
 
