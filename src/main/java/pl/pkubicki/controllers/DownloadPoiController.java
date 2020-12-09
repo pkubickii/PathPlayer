@@ -17,8 +17,9 @@ import java.nio.file.StandardCopyOption;
 
 public class DownloadPoiController {
     private static Region region = Region.EU_NORTH_1;
+    private static Media media;
 
-    public void downloadFile(ActionEvent actionEvent) {
+    public void downloadFile(ActionEvent actionEvent) throws InterruptedException {
         String bucketName = "siedlce";
         String key = "testaudio.mp3";
         File downloadFile = new File("C:\\Users\\pkubicki\\IntelliJIDEAProjects\\PathPlayer\\downloads\\download" + System.currentTimeMillis() + ".mp3");
@@ -41,8 +42,9 @@ public class DownloadPoiController {
 
         IOUtils.closeQuietly(inputStream);
 
-        Media media = new Media(downloadFile.toURI().toString());
+        media = new Media(downloadFile.toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
+
     }
 }

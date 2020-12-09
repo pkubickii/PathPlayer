@@ -28,9 +28,6 @@
     <ChoiceBox fx:id="unitChoiceBox" GridPane.columnIndex="2" GridPane.rowIndex="4" />
 
     <TextField fx:id="startPoiText" editable="false" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-
-<!--    <TextArea fx:id="proximityListText" GridPane.columnIndex="2" GridPane.rowIndex="8" />-->
-
      <Button fx:id="createPoiListButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#createProximityListWithLabels" prefHeight="25.0" prefWidth="373.0" text="Create POI list in vicinity" GridPane.columnIndex="1" GridPane.rowIndex="6" />
      <Button fx:id="searchButton" onAction="#createGeoLocation" text="Search" GridPane.columnIndex="2" />
    <Label text="Start Point:" GridPane.rowIndex="5" />
@@ -133,7 +130,7 @@
    </GridPane>
    <Label text="POI's in vicinity:" GridPane.columnIndex="2" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
 
-   <TextArea fx:id="currentLocationText" editable="false" maxHeight="80.0" maxWidth="400.0" prefHeight="80.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+   <TextArea fx:id="currentLocationText" wrapText="true" editable="false" maxHeight="80.0" maxWidth="400.0" prefHeight="80.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
    <Label text="Current location:" GridPane.rowIndex="7" />
    <ListView fx:id="proximityListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
 

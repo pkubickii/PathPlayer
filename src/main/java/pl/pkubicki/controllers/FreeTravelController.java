@@ -51,6 +51,7 @@ public class FreeTravelController implements Initializable {
     @FXML private ChoiceBox unitChoiceBox;
     @FXML private TextArea proximityListText;
     @FXML private ListView proximityListView;
+    @FXML private TextArea currentLocationText;
     @FXML private TextField latitudeText;
     @FXML private TextField longitudeText;
     @FXML private TextField proximityText;
@@ -100,6 +101,8 @@ public class FreeTravelController implements Initializable {
         // Fixed GPS point for testing purposes only
         latitudeText.setText("52.162995");
         longitudeText.setText("22.271528");
+
+        //currentLocationText.setWrapText(true);
 
         // Initialization for ontology manager and reasoner
         try {
@@ -166,7 +169,17 @@ public class FreeTravelController implements Initializable {
         vicinityDistChoiceBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
             if (newVal != null) {
                vicinity = Double.parseDouble(newVal.toString());
-               refreshProximityList(startPoi);
+               if (startPoi != null) {
+                   refreshProximityList(startPoi);
+
+                try {
+                    refreshCurrentLocation();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+               } else {
+                   System.out.println("No starting point.");
+               }
                 System.out.println(vicinity);
             }
         });
@@ -246,6 +259,10 @@ public class FreeTravelController implements Initializable {
             System.out.println("Empty gps coords.");
         }
     }
+    public void refreshCurrentLocation() throws IOException {
+        Address address = nominatimClient.getAddress(startPoi.getLongitude(), startPoi.getLatitude());
+        currentLocationText.setText(address.getDisplayName());
+    }
 
     private class TravelButtonsHandler implements EventHandler<ActionEvent> {
         private double bearing;
@@ -260,6 +277,11 @@ public class FreeTravelController implements Initializable {
             if (startPoi != null) {
                 nextPoi = LatLngTool.travel(startPoi, this.bearing, 10.0, LengthUnit.METER);
                 refreshProximityList(nextPoi);
+                try {
+                    refreshCurrentLocation();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 startPoi = nextPoi;
                 System.out.println("NEXT POI: " + nextPoi.toString());
             } else {
