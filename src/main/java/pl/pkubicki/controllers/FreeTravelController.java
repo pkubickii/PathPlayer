@@ -5,7 +5,6 @@ import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
 import fr.dudie.nominatim.client.JsonNominatimClient;
 import fr.dudie.nominatim.model.Address;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -14,6 +13,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.StringConverter;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ClientConnectionManager;
@@ -43,13 +44,12 @@ public class FreeTravelController implements Initializable {
     private final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
     private final OWLDataFactory dataFactory = manager.getOWLDataFactory();
     private final OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
-    private OWLReasoner reasoner;
-    private OWLOntology ontology;
+    private static OWLReasoner reasoner;
+    private static OWLOntology ontology;
 
-    private static Region region = Region.EU_NORTH_1;
+    private static final Region region = Region.EU_NORTH_1;
 
     @FXML private ChoiceBox unitChoiceBox;
-    @FXML private TextArea proximityListText;
     @FXML private ListView proximityListView;
     @FXML private TextArea currentLocationText;
     @FXML private TextField latitudeText;
@@ -72,7 +72,7 @@ public class FreeTravelController implements Initializable {
 
     private static JsonNominatimClient nominatimClient;
     private static Properties PROPS = new Properties();
-    private static String PROPS_PATH = "src/main/resources/pl/pkubicki/properties/nominatim.properties";
+    private static final String PROPS_PATH = "src/main/resources/pl/pkubicki/properties/nominatim.properties";
     private static HttpClient httpClient;
 
     private static LatLng startPoi = null;
@@ -80,6 +80,10 @@ public class FreeTravelController implements Initializable {
     private static double vicinity = 200.0;
     private static double stepLength = 10.0;
 
+    private static ObservableList obListForStepLengths = FXCollections.emptyObservableList();
+    private static ObservableMap<OWLNamedIndividual, String> observableMap = FXCollections.emptyObservableMap();
+    private static ObservableList obListForUnitTypes = FXCollections.emptyObservableList();
+    private static ObservableList obListForVicinityDistances = FXCollections.emptyObservableList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -122,7 +126,7 @@ public class FreeTravelController implements Initializable {
                 add(LengthUnit.ROD);
             }
         };
-        ObservableList obListForUnitTypes = FXCollections.observableList(unitTypes);
+        obListForUnitTypes = FXCollections.observableList(unitTypes);
         unitChoiceBox.getItems().clear();
         unitChoiceBox.setItems(obListForUnitTypes);
         proximityText.setText("100.0");
@@ -139,7 +143,7 @@ public class FreeTravelController implements Initializable {
                 add(100.0);
             }
         };
-        ObservableList obListForStepLengths = FXCollections.observableList(stepLengths);
+        obListForStepLengths = FXCollections.observableList(stepLengths);
         stepLengthChoiceBox.getItems().clear();
         stepLengthChoiceBox.setItems(obListForStepLengths);
         stepLengthChoiceBox.setValue(10.0);
@@ -162,7 +166,7 @@ public class FreeTravelController implements Initializable {
                 add(200.0);
             }
         };
-        ObservableList obListForVicinityDistances = FXCollections.observableList(vicinityDistances);
+        obListForVicinityDistances = FXCollections.observableList(vicinityDistances);
         vicinityDistChoiceBox.getItems().clear();
         vicinityDistChoiceBox.setItems(obListForVicinityDistances);
         vicinityDistChoiceBox.setValue(200.0);
@@ -171,7 +175,6 @@ public class FreeTravelController implements Initializable {
                vicinity = Double.parseDouble(newVal.toString());
                if (startPoi != null) {
                    refreshProximityList(startPoi);
-
                 try {
                     refreshCurrentLocation();
                 } catch (IOException e) {
@@ -207,26 +210,22 @@ public class FreeTravelController implements Initializable {
     public void createProximityListWithLabels(ActionEvent actionEvent) {
         LatLng poi = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
         LengthUnit lengthUnit = (LengthUnit) unitChoiceBox.getValue();
-//        proximityListText.setText(OwlUtils.individualsLabelsToString(OwlUtils.individualsLabels((OwlUtils.createProximityNodeSet(poi, Double.parseDouble(proximityText.getText()), lengthUnit, reasoner, dataFactory)),ontology)));
-        Map<?, ?> points = OwlUtils.individualsLabels((OwlUtils.createProximityNodeSet(poi, Double.parseDouble(proximityText.getText()), lengthUnit, reasoner, dataFactory)),ontology);
-        ObservableMap observableMap = FXCollections.observableMap(points);
+        double proximityDistance = Double.parseDouble(proximityText.getText());
+        Map<OWLNamedIndividual, String> points = OwlUtils.individualsLabels((OwlUtils.createProximityNodeSet(poi, proximityDistance, lengthUnit, reasoner, dataFactory)),ontology);
+        observableMap = FXCollections.observableMap(points);
         proximityListView.getItems().setAll(observableMap.values());
+        proximityListView.getSelectionModel().selectFirst();
     }
 
-    @FXML
-    public void createProximityList(ActionEvent actionEvent) {
-            LatLng poi = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
-            LengthUnit lengthUnit = (LengthUnit) unitChoiceBox.getValue();
-            proximityListText.clear();
-            proximityListText.setText(OwlUtils.proximitySetToString(OwlUtils.createProximityNodeSet(poi, Double.parseDouble(proximityText.getText()), lengthUnit, reasoner, dataFactory)));
-    }
-    public void refreshProximityList(LatLng poi) {
+    private void refreshProximityList(LatLng poi) {
         LengthUnit lengthUnit = (LengthUnit) unitChoiceBox.getValue();
         double vicinity = (Double) vicinityDistChoiceBox.getValue();
-        Map<?, ?> points = OwlUtils.individualsLabels((OwlUtils.createProximityNodeSet(poi, Double.parseDouble(proximityText.getText()), lengthUnit, reasoner, dataFactory)),ontology);
-        ObservableMap observableMap = FXCollections.observableMap(points);
+        Map<OWLNamedIndividual, String> points = OwlUtils.individualsLabels((OwlUtils.createProximityNodeSet(poi, vicinity, lengthUnit, reasoner, dataFactory)),ontology);
+        observableMap = FXCollections.observableMap(points);
         proximityListView.getItems().setAll(observableMap.values());
+        proximityListView.getSelectionModel().selectFirst();
     }
+
     @FXML
     public void createGeoLocation(ActionEvent actionEvent) throws IOException {
         if (!searchText.getText().isEmpty()) {
@@ -250,7 +249,9 @@ public class FreeTravelController implements Initializable {
             System.out.println("Search query is empty.");
         }
     }
-    public void makeStartPoiFromGps() throws IOException {
+
+    @FXML
+    public void makeStartPoiFromGps(ActionEvent actionEvent) throws IOException {
         if (!latitudeText.getText().isEmpty() && !longitudeText.getText().isEmpty()) {
             Address address = nominatimClient.getAddress(Double.parseDouble(longitudeText.getText()), Double.parseDouble(latitudeText.getText()));
             startPoiText.setText(address.getDisplayName());
@@ -259,9 +260,28 @@ public class FreeTravelController implements Initializable {
             System.out.println("Empty gps coords.");
         }
     }
-    public void refreshCurrentLocation() throws IOException {
+
+    private void refreshCurrentLocation() throws IOException {
         Address address = nominatimClient.getAddress(startPoi.getLongitude(), startPoi.getLatitude());
         currentLocationText.setText(address.getDisplayName());
+    }
+    @FXML
+    public void playAudio(ActionEvent actionEvent) {
+        if (!proximityListView.getItems().isEmpty()) {
+
+        } else {
+            System.out.println("Nothing to play.");
+        }
+    }
+
+    @FXML
+    public void pauseAudio(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    public void stopAudio(ActionEvent actionEvent) {
+
     }
 
     private class TravelButtonsHandler implements EventHandler<ActionEvent> {
@@ -275,7 +295,7 @@ public class FreeTravelController implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             if (startPoi != null) {
-                nextPoi = LatLngTool.travel(startPoi, this.bearing, 10.0, LengthUnit.METER);
+                nextPoi = LatLngTool.travel(startPoi, this.bearing, stepLength, LengthUnit.METER);
                 refreshProximityList(nextPoi);
                 try {
                     refreshCurrentLocation();
