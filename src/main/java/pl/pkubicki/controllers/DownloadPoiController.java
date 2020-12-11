@@ -13,6 +13,6 @@ public class DownloadPoiController {
 
     public void downloadFile(ActionEvent actionEvent) throws InterruptedException {
         File file = S3Utils.downloadFile("testaudio.mp3");
-        MediaUtils.playAudio(file);
+        MediaUtils.playAudioFile(file);
     }
 }

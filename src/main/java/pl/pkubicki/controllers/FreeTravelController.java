@@ -5,7 +5,9 @@ import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
 import fr.dudie.nominatim.client.JsonNominatimClient;
 import fr.dudie.nominatim.model.Address;
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
@@ -13,8 +15,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.StringConverter;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ClientConnectionManager;
@@ -28,7 +30,9 @@ import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
+import pl.pkubicki.util.MediaUtils;
 import pl.pkubicki.util.OwlUtils;
+import pl.pkubicki.util.S3Utils;
 import software.amazon.awssdk.regions.Region;
 
 import java.io.File;
@@ -84,6 +88,10 @@ public class FreeTravelController implements Initializable {
     private static ObservableMap<OWLNamedIndividual, String> observableMap = FXCollections.emptyObservableMap();
     private static ObservableList obListForUnitTypes = FXCollections.emptyObservableList();
     private static ObservableList obListForVicinityDistances = FXCollections.emptyObservableList();
+    private static Set<OWLNamedIndividual> namedIndividualsInProximity = new HashSet<>();
+    private static LinkedList<Media> audioList = new LinkedList<>();
+    private static ObservableList<Media> observableAudioList = FXCollections.emptyObservableList();
+    private static Media media;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -195,6 +203,15 @@ public class FreeTravelController implements Initializable {
             }
         });
 
+//        // Listener for observableAudioList -> change selection on ListView
+//        observableAudioList.addListener((ListChangeListener<? super Media>) c -> {
+//            while(c.next()) {
+//                if(c.wasRemoved()) {
+//                    System.out.println("WAS REMOVED!");
+//                }
+//            }
+//        });
+
         // Initialization of travel buttons listeners
         buttonN.setOnAction(new TravelButtonsHandler(LatLngTool.Bearing.NORTH));
         buttonNE.setOnAction(new TravelButtonsHandler(LatLngTool.Bearing.NORTH_EAST));
@@ -209,21 +226,23 @@ public class FreeTravelController implements Initializable {
     @FXML
     public void createProximityListWithLabels(ActionEvent actionEvent) {
         LatLng poi = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
-        LengthUnit lengthUnit = (LengthUnit) unitChoiceBox.getValue();
         double proximityDistance = Double.parseDouble(proximityText.getText());
-        Map<OWLNamedIndividual, String> points = OwlUtils.individualsLabels((OwlUtils.createProximityNodeSet(poi, proximityDistance, lengthUnit, reasoner, dataFactory)),ontology);
-        observableMap = FXCollections.observableMap(points);
-        proximityListView.getItems().setAll(observableMap.values());
-        proximityListView.getSelectionModel().selectFirst();
+        refreshProximityListView(poi, proximityDistance);
     }
 
     private void refreshProximityList(LatLng poi) {
+        double proximityDistance = (Double) vicinityDistChoiceBox.getValue();
+        refreshProximityListView(poi, proximityDistance);
+    }
+
+    private void refreshProximityListView(LatLng poi, double proximityDistance) {
         LengthUnit lengthUnit = (LengthUnit) unitChoiceBox.getValue();
-        double vicinity = (Double) vicinityDistChoiceBox.getValue();
-        Map<OWLNamedIndividual, String> points = OwlUtils.individualsLabels((OwlUtils.createProximityNodeSet(poi, vicinity, lengthUnit, reasoner, dataFactory)),ontology);
+        namedIndividualsInProximity = OwlUtils.getIndividualsInProximity(poi, proximityDistance, lengthUnit, reasoner, dataFactory);
+        Map<OWLNamedIndividual, String> points = OwlUtils.getIndividualsWithLabels(namedIndividualsInProximity, ontology);
         observableMap = FXCollections.observableMap(points);
         proximityListView.getItems().setAll(observableMap.values());
         proximityListView.getSelectionModel().selectFirst();
+        refreshAudioList();
     }
 
     @FXML
@@ -265,12 +284,46 @@ public class FreeTravelController implements Initializable {
         Address address = nominatimClient.getAddress(startPoi.getLongitude(), startPoi.getLatitude());
         currentLocationText.setText(address.getDisplayName());
     }
-    @FXML
-    public void playAudio(ActionEvent actionEvent) {
+    private void refreshAudioList() {
         if (!proximityListView.getItems().isEmpty()) {
-
+            audioList.clear();
+            Map<OWLNamedIndividual, String> audioFileNames = OwlUtils.getAudioFileNames(namedIndividualsInProximity, reasoner, dataFactory);
+            audioFileNames.forEach( (k , v) -> {
+                audioList.add(new Media((S3Utils.downloadFile(v)).toURI().toString()));
+            });
         } else {
             System.out.println("Nothing to play.");
+        }
+        observableAudioList = FXCollections.observableList(audioList);
+    }
+    public void selectNextOnListView() {
+        proximityListView.getSelectionModel().selectNext();
+    }
+
+    @FXML
+    public void play(ActionEvent actionEvent) {
+        if (!observableAudioList.isEmpty()) {
+            MediaUtils.play(observableAudioList);
+            System.out.println("TEST TEST TEST");
+        } else {
+            System.out.println("Nothing to play.");
+        }
+    }
+    @FXML
+    public void playAudio(ActionEvent actionEvent) {
+        proximityListView.getSelectionModel().selectFirst();
+        this.playMedia();
+    }
+    private void playMedia() {
+        if (!observableAudioList.isEmpty()) {
+            media = observableAudioList.get(0);
+            observableAudioList.remove(0);
+            MediaPlayer player = new MediaPlayer(media);
+            player.setOnEndOfMedia(() -> {
+                proximityListView.getSelectionModel().selectNext();
+                this.playMedia();
+            });
+            player.play();
         }
     }
 

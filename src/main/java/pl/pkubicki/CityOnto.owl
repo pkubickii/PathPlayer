@@ -712,7 +712,7 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_shopBiedronkaSiedlceTadeuszaCzackiego_0001">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
         <CityOntoNavi:recordedInTheLocation rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopBiedronkaSiedlceTadeuszaCzackiego"/>
-        <CityOntoNavi:fileName>Track_shopBiedronkaSiedlceArmiiKrajowej_0001.mp3</CityOntoNavi:fileName>
+        <CityOntoNavi:fileName>Track_shopBiedronkaSiedlceTadeuszaCzackiego_0001.mp3</CityOntoNavi:fileName>
     </owl:NamedIndividual>
     
 
@@ -1000,8 +1000,8 @@
         <CityOntoNavi:address_telefone>25 6431066</CityOntoNavi:address_telefone>
         <CityOntoNavi:location_gps_coordinates>52.164171, 22.272156</CityOntoNavi:location_gps_coordinates>
         <CityOntoNavi:realEstate_name>Faculty of Science</CityOntoNavi:realEstate_name>
-        <rdfs:comment xml:lang="pl">Instytut Informatyki UPH w Siedlcach przy ul. Sienkiewicza.</rdfs:comment>
-        <rdfs:label xml:lang="pl">UPH - Instytut Informatyki</rdfs:label>
+        <rdfs:comment xml:lang="pl">Wydział Nauk Ścisłych UPH przy ulicy 3 Maja.</rdfs:comment>
+        <rdfs:label xml:lang="pl">UPH - Wydział Nauk Ścisłych</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -1021,8 +1021,8 @@
         <CityOntoNavi:address_telefone>25 6431070</CityOntoNavi:address_telefone>
         <CityOntoNavi:location_gps_coordinates>52.165148, 22.272612</CityOntoNavi:location_gps_coordinates>
         <CityOntoNavi:realEstate_name>Institute of Computer Science</CityOntoNavi:realEstate_name>
-        <rdfs:comment xml:lang="pl">Wydział Nauk Ścisłych UPH w Siedlcach.</rdfs:comment>
-        <rdfs:label xml:lang="pl">UPH - Wydział Nauk Ścisłych</rdfs:label>
+        <rdfs:comment xml:lang="pl">Instytut Informatyki UPH w Siedlcach przy ul. Sienkiewicza.</rdfs:comment>
+        <rdfs:label xml:lang="pl">UPH - Instytut Informatyki</rdfs:label>
     </owl:NamedIndividual>
     
 

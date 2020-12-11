@@ -19,28 +19,21 @@ import org.apache.http.impl.conn.SingleClientConnManager;
 import org.junit.Test;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
-import org.semanticweb.owlapi.search.Searcher;
-import org.semanticweb.owlapi.util.OWLObjectWalker;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
 import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
-import org.semanticweb.owlapi.util.StructureWalker;
 import pl.pkubicki.util.OwlUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.split;
-import static pl.pkubicki.util.OwlUtils.createProximityNodeSet;
+import static pl.pkubicki.util.OwlUtils.getIndividualsInProximity;
 
 public class OwlUtilsTest {
     @Test
@@ -185,7 +178,7 @@ public class OwlUtilsTest {
         IRI owlGpsClassIRI = IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates");
         OWLClassExpression owlGPSClassExpression = dataFactory.getOWLClass(owlGpsClassIRI);
         OWLOntologyWalker walker = new OWLOntologyWalker(Collections.singleton(ontology));
-        Set<OWLNamedIndividual> set = createProximityNodeSet(poi, 200.0, LengthUnit.METER, reasoner, dataFactory);
+        Set<OWLNamedIndividual> set = getIndividualsInProximity(poi, 200.0, LengthUnit.METER, reasoner, dataFactory);
 
         Map<OWLNamedIndividual, String> individualsLabels = new HashMap<OWLNamedIndividual, String>();
         OWLOntologyWalkerVisitor visitor = new OWLOntologyWalkerVisitor(walker) {
@@ -203,6 +196,49 @@ public class OwlUtilsTest {
         };
         walker.walkStructure(visitor);
         System.out.println(individualsLabels);
+    }
+
+    @Test
+    public void testOWLAudioFilesSearch() throws OWLOntologyCreationException {
+        LatLng poi = new LatLng(52.162995, 22.271528);
+        File owlFile= new File("src/main/java/pl/pkubicki/CityOnto.owl");
+        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+        OWLDataFactory dataFactory = manager.getOWLDataFactory();
+        OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
+        OWLOntology ontology = manager.loadOntologyFromOntologyDocument(owlFile);
+        OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);
+        Set<OWLNamedIndividual> set = getIndividualsInProximity(poi, 200.0, LengthUnit.METER, reasoner, dataFactory);
+        Map<OWLNamedIndividual, String> individualsLabels = OwlUtils.getIndividualsWithLabels(set, ontology);
+
+        OWLClassExpression classExpression = dataFactory.getOWLClass(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"));
+        OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileName"));
+        OWLObjectPropertyExpression propertyExpression = dataFactory.getOWLObjectProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#recordedInTheLocation"));
+
+        HashMap<OWLNamedIndividual, String> audioFileNames = new HashMap<>();
+
+        Set<OWLLiteral> audioFileNamesLiterals = new HashSet<>();
+        NodeSet<OWLNamedIndividual> audioTrackIndividuals = reasoner.getInstances(classExpression);
+        audioTrackIndividuals.forEach( ati -> {
+            NodeSet<OWLNamedIndividual> recordedInLocationObject = reasoner.getObjectPropertyValues(ati.getRepresentativeElement(), propertyExpression);
+            set.forEach( o -> {
+                if (recordedInLocationObject.containsEntity(o)) {
+                    audioFileNamesLiterals.addAll(reasoner.getDataPropertyValues(ati.getRepresentativeElement(), owlDataProperty));
+                    Set<OWLLiteral> fileNameLiteral = reasoner.getDataPropertyValues(ati.getRepresentativeElement(), owlDataProperty);
+                    fileNameLiteral.forEach( l -> {
+                        audioFileNames.put(o, l.getLiteral());
+                    });
+
+                }
+            });
+        });
+        System.out.println(audioFileNames);
+        
+        individualsLabels.forEach((individual, label) -> {
+            NodeSet<OWLNamedIndividual> objectPropertyValues = reasoner.getObjectPropertyValues(individual, propertyExpression);
+        });
+        
+
+
     }
 
 }

@@ -19,25 +19,26 @@ public class S3Utils {
 
     public static File downloadFile(String fileName) {
         File file = new File(downloadPath + fileName);
-        S3Client s3 = S3Client.builder().region(region).build();
-        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                .bucket(bucketName)
-                .key(fileName)
-                .build();
+        if (!file.exists()) {
+            S3Client s3 = S3Client.builder().region(region).build();
+            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileName)
+                    .build();
 
-        ResponseBytes<GetObjectResponse> objectAsBytes = s3.getObjectAsBytes(getObjectRequest);
-        InputStream inputStream = objectAsBytes.asInputStream();
-        try {
-            java.nio.file.Files.copy(
-                    inputStream,
-                    file.toPath(),
-                    StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
+            ResponseBytes<GetObjectResponse> objectAsBytes = s3.getObjectAsBytes(getObjectRequest);
+            InputStream inputStream = objectAsBytes.asInputStream();
+            try {
+                java.nio.file.Files.copy(
+                        inputStream,
+                        file.toPath(),
+                        StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            IOUtils.closeQuietly(inputStream);
         }
-
-        IOUtils.closeQuietly(inputStream);
-
         return file;
     }
 }
