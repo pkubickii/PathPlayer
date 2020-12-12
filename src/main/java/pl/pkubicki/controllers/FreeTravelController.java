@@ -5,9 +5,7 @@ import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
 import fr.dudie.nominatim.client.JsonNominatimClient;
 import fr.dudie.nominatim.model.Address;
-import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
@@ -92,6 +90,9 @@ public class FreeTravelController implements Initializable {
     private static LinkedList<Media> audioList = new LinkedList<>();
     private static ObservableList<Media> observableAudioList = FXCollections.emptyObservableList();
     private static Media media;
+    private static MediaPlayer player;
+    private static boolean isPaused = false;
+    private static boolean isStopped = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -113,8 +114,6 @@ public class FreeTravelController implements Initializable {
         // Fixed GPS point for testing purposes only
         latitudeText.setText("52.162995");
         longitudeText.setText("22.271528");
-
-        //currentLocationText.setWrapText(true);
 
         // Initialization for ontology manager and reasoner
         try {
@@ -202,15 +201,6 @@ public class FreeTravelController implements Initializable {
                 longitudeText.setText(String.valueOf(newVal.getLongitude()));
             }
         });
-
-//        // Listener for observableAudioList -> change selection on ListView
-//        observableAudioList.addListener((ListChangeListener<? super Media>) c -> {
-//            while(c.next()) {
-//                if(c.wasRemoved()) {
-//                    System.out.println("WAS REMOVED!");
-//                }
-//            }
-//        });
 
         // Initialization of travel buttons listeners
         buttonN.setOnAction(new TravelButtonsHandler(LatLngTool.Bearing.NORTH));
@@ -304,7 +294,6 @@ public class FreeTravelController implements Initializable {
     public void play(ActionEvent actionEvent) {
         if (!observableAudioList.isEmpty()) {
             MediaUtils.play(observableAudioList);
-            System.out.println("TEST TEST TEST");
         } else {
             System.out.println("Nothing to play.");
         }
@@ -312,29 +301,44 @@ public class FreeTravelController implements Initializable {
     @FXML
     public void playAudio(ActionEvent actionEvent) {
         proximityListView.getSelectionModel().selectFirst();
-        this.playMedia();
+        isStopped = false;
+        this.playMediaList();
+
     }
-    private void playMedia() {
+    private void playMediaList() {
         if (!observableAudioList.isEmpty()) {
             media = observableAudioList.get(0);
             observableAudioList.remove(0);
-            MediaPlayer player = new MediaPlayer(media);
+            player = new MediaPlayer(media);
             player.setOnEndOfMedia(() -> {
                 proximityListView.getSelectionModel().selectNext();
-                this.playMedia();
+                this.playMediaList();
             });
             player.play();
+        } else {
+            System.out.println("Nothing to play.");
         }
     }
 
     @FXML
     public void pauseAudio(ActionEvent actionEvent) {
-
+        if((player != null) && !(player.getStatus() == MediaPlayer.Status.DISPOSED) && !isStopped) {
+            if(!isPaused) {
+                player.pause();
+                isPaused = true;
+            } else {
+                player.play();
+                isPaused = false;
+            }
+        }
     }
 
     @FXML
     public void stopAudio(ActionEvent actionEvent) {
-
+        if((player != null) && !(player.getStatus() == MediaPlayer.Status.DISPOSED)) {
+            player.stop();
+            isStopped = true;
+        }
     }
 
     private class TravelButtonsHandler implements EventHandler<ActionEvent> {

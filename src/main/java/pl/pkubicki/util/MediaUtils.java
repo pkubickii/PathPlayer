@@ -3,11 +3,9 @@ package pl.pkubicki.util;
 import javafx.collections.ObservableList;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import pl.pkubicki.controllers.FreeTravelController;
 
 import java.io.File;
 import java.util.LinkedList;
-import java.util.List;
 
 public class MediaUtils {
     private static Media media;
@@ -27,7 +25,6 @@ public class MediaUtils {
             return;
         media = audioList.poll();
         MediaPlayer player = new MediaPlayer(media);
-//        player.setBalance(-0.5);
         player.setOnEndOfMedia(() -> {
             MediaUtils.play(audioList);
         });
