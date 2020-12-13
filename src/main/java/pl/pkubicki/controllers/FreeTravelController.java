@@ -23,17 +23,11 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import pl.pkubicki.util.MediaUtils;
 import pl.pkubicki.util.OwlUtils;
 import pl.pkubicki.util.S3Utils;
-import software.amazon.awssdk.regions.Region;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,15 +36,6 @@ import java.util.*;
 
 
 public class FreeTravelController implements Initializable {
-    private final File owlFile= new File("src/main/java/pl/pkubicki/CityOnto.owl");
-    private final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-    private final OWLDataFactory dataFactory = manager.getOWLDataFactory();
-    private final OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
-    private static OWLReasoner reasoner;
-    private static OWLOntology ontology;
-
-    private static final Region region = Region.EU_NORTH_1;
-
     @FXML private ChoiceBox unitChoiceBox;
     @FXML private ListView proximityListView;
     @FXML private TextArea currentLocationText;
@@ -96,7 +81,22 @@ public class FreeTravelController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Configuration for Nominatim Client
+
+        latitudeText.setText("52.162995");
+        longitudeText.setText("22.271528");
+        proximityText.setText("100.0");
+
+        initializeNominatimClient();
+        initializeUnitTypeChoiceBox();
+        initializeStepLengthChoiceBox();
+        initializeStepLengthChoiceBoxListener();
+        initializeVicinityDistances();
+        initializeVicinityDistancesListenerToRefreshProximityValues();
+        initializeSearchResultsListenerToRefreshGpsValues();
+        initializeTravelButtonsHandler();
+    }
+
+    private void initializeNominatimClient() {
         try {
             InputStream in = new FileInputStream(PROPS_PATH);
             PROPS.load(in);
@@ -110,20 +110,9 @@ public class FreeTravelController implements Initializable {
         String baseUrl = PROPS.getProperty("nominatim.server.url");
         String email = PROPS.getProperty("nominatim.headerEmail");
         nominatimClient = new JsonNominatimClient(baseUrl, httpClient, email);
+    }
 
-        // Fixed GPS point for testing purposes only
-        latitudeText.setText("52.162995");
-        longitudeText.setText("22.271528");
-
-        // Initialization for ontology manager and reasoner
-        try {
-            ontology = manager.loadOntologyFromOntologyDocument(owlFile);
-            reasoner = reasonerFactory.createReasoner(ontology);
-        } catch (OWLOntologyCreationException e) {
-            e.printStackTrace();
-        }
-
-        // Configuration for unit type choice box
+    private void initializeUnitTypeChoiceBox() {
         List<LengthUnit> unitTypes = new ArrayList<LengthUnit>() {
             {
                 add(LengthUnit.METER);
@@ -136,10 +125,19 @@ public class FreeTravelController implements Initializable {
         obListForUnitTypes = FXCollections.observableList(unitTypes);
         unitChoiceBox.getItems().clear();
         unitChoiceBox.setItems(obListForUnitTypes);
-        proximityText.setText("100.0");
         unitChoiceBox.setValue(LengthUnit.METER);
+    }
 
-        // Configuration + listener for step length choice box
+    private void initializeStepLengthChoiceBoxListener() {
+        stepLengthChoiceBox.valueProperty().addListener((obs, oldVal, newVal) -> {
+                if (newVal != null) {
+                    stepLength = Double.parseDouble(newVal.toString());
+                    System.out.println(stepLength);
+                }
+        });
+    }
+
+    private void initializeStepLengthChoiceBox() {
         List<Double> stepLengths = new ArrayList<Double>() {
             {
                 add(1.0);
@@ -154,14 +152,23 @@ public class FreeTravelController implements Initializable {
         stepLengthChoiceBox.getItems().clear();
         stepLengthChoiceBox.setItems(obListForStepLengths);
         stepLengthChoiceBox.setValue(10.0);
-        stepLengthChoiceBox.valueProperty().addListener((obs, oldVal, newVal) -> {
-                if (newVal != null) {
-                    stepLength = Double.parseDouble(newVal.toString());
-                    System.out.println(stepLength);
-                }
-        });
+    }
 
-        // Configuration + listener for vicinity choice box
+    private void initializeVicinityDistancesListenerToRefreshProximityValues() {
+        vicinityDistChoiceBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
+            if (newVal != null) {
+               vicinity = Double.parseDouble(newVal.toString());
+               if (startPoi != null) {
+                   refreshProximityList(startPoi);
+               } else {
+                   System.out.println("No starting point.");
+               }
+                System.out.println(vicinity);
+            }
+        });
+    }
+
+    private void initializeVicinityDistances() {
         List<Double> vicinityDistances = new ArrayList<Double> () {
             {
                 add(10.0);
@@ -177,32 +184,18 @@ public class FreeTravelController implements Initializable {
         vicinityDistChoiceBox.getItems().clear();
         vicinityDistChoiceBox.setItems(obListForVicinityDistances);
         vicinityDistChoiceBox.setValue(200.0);
-        vicinityDistChoiceBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
-            if (newVal != null) {
-               vicinity = Double.parseDouble(newVal.toString());
-               if (startPoi != null) {
-                   refreshProximityList(startPoi);
-                try {
-                    refreshCurrentLocation();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-               } else {
-                   System.out.println("No starting point.");
-               }
-                System.out.println(vicinity);
-            }
-        });
+    }
 
-        // Listener which change gps values to point picked from search results
+    private void initializeSearchResultsListenerToRefreshGpsValues() {
         searchResultsChoiceBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
             if (newVal != null) {
                 latitudeText.setText(String.valueOf(newVal.getLatitude()));
                 longitudeText.setText(String.valueOf(newVal.getLongitude()));
             }
         });
+    }
 
-        // Initialization of travel buttons listeners
+    private void initializeTravelButtonsHandler() {
         buttonN.setOnAction(new TravelButtonsHandler(LatLngTool.Bearing.NORTH));
         buttonNE.setOnAction(new TravelButtonsHandler(LatLngTool.Bearing.NORTH_EAST));
         buttonNW.setOnAction(new TravelButtonsHandler(LatLngTool.Bearing.NORTH_WEST));
@@ -227,8 +220,8 @@ public class FreeTravelController implements Initializable {
 
     private void refreshProximityListView(LatLng poi, double proximityDistance) {
         LengthUnit lengthUnit = (LengthUnit) unitChoiceBox.getValue();
-        namedIndividualsInProximity = OwlUtils.getIndividualsInProximity(poi, proximityDistance, lengthUnit, reasoner, dataFactory);
-        Map<OWLNamedIndividual, String> points = OwlUtils.getIndividualsWithLabels(namedIndividualsInProximity, ontology);
+        namedIndividualsInProximity = OwlUtils.getIndividualsInProximity(poi, proximityDistance, lengthUnit);
+        Map<OWLNamedIndividual, String> points = OwlUtils.getIndividualsWithLabels(namedIndividualsInProximity);
         observableMap = FXCollections.observableMap(points);
         proximityListView.getItems().setAll(observableMap.values());
         proximityListView.getSelectionModel().selectFirst();
@@ -277,7 +270,7 @@ public class FreeTravelController implements Initializable {
     private void refreshAudioList() {
         if (!proximityListView.getItems().isEmpty()) {
             audioList.clear();
-            Map<OWLNamedIndividual, String> audioFileNames = OwlUtils.getAudioFileNames(namedIndividualsInProximity, reasoner, dataFactory);
+            Map<OWLNamedIndividual, String> audioFileNames = OwlUtils.getAudioFileNames(namedIndividualsInProximity);
             audioFileNames.forEach( (k , v) -> {
                 audioList.add(new Media((S3Utils.downloadFile(v)).toURI().toString()));
             });

@@ -3,14 +3,32 @@ package pl.pkubicki.util;
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
+import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 import org.semanticweb.owlapi.util.*;
 
+import java.io.File;
 import java.util.*;
 
 public class OwlUtils {
+    private static final File owlFile = new File("src/main/java/pl/pkubicki/CityOnto.owl");
+    private static final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+    private static final OWLDataFactory dataFactory = manager.getOWLDataFactory();
+    private static final OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
+    private static OWLOntology ontology;
+    static {
+        try {
+            ontology = manager.loadOntologyFromOntologyDocument(owlFile);
+        } catch (OWLOntologyCreationException e) {
+            e.printStackTrace();
+        }
+    }
+    private static final OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);;
+
 
     public static LatLng stringToLatLng(String stringGps) {
         String[] cords = stringGps.split(", ");
@@ -23,13 +41,13 @@ public class OwlUtils {
     }
     // method to gather all individuals from ontology which have GPS coordinates,
     // TODO: change it into one which will narrow this list picking points from some area of vicinity in correlation to starting point
-    public static NodeSet<OWLNamedIndividual> getIndividualsWithGpsClass(OWLReasoner reasoner, OWLDataFactory dataFactory) {
+    public static NodeSet<OWLNamedIndividual> getIndividualsWithGpsClass() {
         IRI owlGpsClassIRI = IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates");
         return reasoner.getInstances(dataFactory.getOWLClass(owlGpsClassIRI));
     }
 
-    public static Set<OWLNamedIndividual> getIndividualsInProximity(LatLng poi, Double proximity, LengthUnit unit, OWLReasoner reasoner, OWLDataFactory dataFactory) {
-        NodeSet<OWLNamedIndividual> nodes = getIndividualsWithGpsClass(reasoner, dataFactory);
+    public static Set<OWLNamedIndividual> getIndividualsInProximity(LatLng poi, Double proximity, LengthUnit unit) {
+        NodeSet<OWLNamedIndividual> nodes = getIndividualsWithGpsClass();
         OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#location_gps_coordinates"));
         Set<OWLNamedIndividual> proximitySet = new HashSet<>();
         nodes.forEach(node -> {
@@ -43,7 +61,7 @@ public class OwlUtils {
         return proximitySet;
     }
 
-    public static Map<OWLNamedIndividual, String> getIndividualsWithLabels(Set<OWLNamedIndividual> set, OWLOntology ontology) {
+    public static Map<OWLNamedIndividual, String> getIndividualsWithLabels(Set<OWLNamedIndividual> set) {
         Map<OWLNamedIndividual, String> individualsLabels = new HashMap<OWLNamedIndividual, String>();
         OWLOntologyWalker walker = new OWLOntologyWalker(Collections.singleton(ontology));
         OWLOntologyWalkerVisitor visitor = new OWLOntologyWalkerVisitor(walker) {
@@ -62,7 +80,7 @@ public class OwlUtils {
         return individualsLabels;
     }
 
-    public static Map<OWLNamedIndividual, String> getAudioFileNames(Set<OWLNamedIndividual> namedIndividuals, OWLReasoner reasoner, OWLDataFactory dataFactory) {
+    public static Map<OWLNamedIndividual, String> getAudioFileNames(Set<OWLNamedIndividual> namedIndividuals) {
         HashMap<OWLNamedIndividual, String> audioFileNames = new HashMap<>();
         OWLClassExpression classExpression = dataFactory.getOWLClass(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"));
         OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileName"));

@@ -178,7 +178,7 @@ public class OwlUtilsTest {
         IRI owlGpsClassIRI = IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates");
         OWLClassExpression owlGPSClassExpression = dataFactory.getOWLClass(owlGpsClassIRI);
         OWLOntologyWalker walker = new OWLOntologyWalker(Collections.singleton(ontology));
-        Set<OWLNamedIndividual> set = getIndividualsInProximity(poi, 200.0, LengthUnit.METER, reasoner, dataFactory);
+        Set<OWLNamedIndividual> set = getIndividualsInProximity(poi, 200.0, LengthUnit.METER);
 
         Map<OWLNamedIndividual, String> individualsLabels = new HashMap<OWLNamedIndividual, String>();
         OWLOntologyWalkerVisitor visitor = new OWLOntologyWalkerVisitor(walker) {
@@ -207,8 +207,8 @@ public class OwlUtilsTest {
         OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
         OWLOntology ontology = manager.loadOntologyFromOntologyDocument(owlFile);
         OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);
-        Set<OWLNamedIndividual> set = getIndividualsInProximity(poi, 200.0, LengthUnit.METER, reasoner, dataFactory);
-        Map<OWLNamedIndividual, String> individualsLabels = OwlUtils.getIndividualsWithLabels(set, ontology);
+        Set<OWLNamedIndividual> set = getIndividualsInProximity(poi, 200.0, LengthUnit.METER);
+        Map<OWLNamedIndividual, String> individualsLabels = OwlUtils.getIndividualsWithLabels(set);
 
         OWLClassExpression classExpression = dataFactory.getOWLClass(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"));
         OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileName"));
