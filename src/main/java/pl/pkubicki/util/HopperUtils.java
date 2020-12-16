@@ -1,12 +1,22 @@
 package pl.pkubicki.util;
 
+import com.graphhopper.GHRequest;
+import com.graphhopper.GHResponse;
 import com.graphhopper.GraphHopper;
+import com.graphhopper.ResponsePath;
 import com.graphhopper.config.CHProfile;
 import com.graphhopper.config.Profile;
 import com.graphhopper.reader.osm.GraphHopperOSM;
 import com.graphhopper.routing.util.EncodingManager;
+import com.graphhopper.util.Instruction;
+import com.graphhopper.util.InstructionList;
+import com.graphhopper.util.PointList;
+import com.graphhopper.util.Translation;
+
+import java.util.Locale;
 
 public class HopperUtils {
+    private static final String ghLoc = "D:\\mazowieckie.osm.pbf";
 
     public static GraphHopper createGraphHopperInstance(String ghLoc) {
         GraphHopper hopper = new GraphHopperOSM().forServer();
@@ -26,6 +36,21 @@ public class HopperUtils {
         // now this can take minutes if it imports or a few seconds for loading of course this is dependent on the area you import
         hopper.importOrLoad();
         return hopper;
+    }
+
+    public static PointList getRoute(double fromLat, double fromLon, double toLat, double toLon) {
+        GraphHopper hopper = createGraphHopperInstance(ghLoc);
+        GHRequest req = new GHRequest(fromLat, fromLon, toLat, toLon)
+                .setProfile("foot")
+                .setLocale(Locale.UK);
+        GHResponse rsp = hopper.route(req);
+        if (rsp.hasErrors())
+            throw new RuntimeException(rsp.getErrors().toString());
+
+        ResponsePath path = rsp.getBest();
+        PointList pointList = path.getPoints();
+
+        return pointList;
     }
 
 }

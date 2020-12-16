@@ -4,30 +4,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.PrimaryController">
+<?import java.net.URL?>
+<GridPane hgap="10" vgap="10" alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1" styleClass="root" xmlns="http://javafx.com/javafx/8.0.271" fx:controller="pl.pkubicki.controllers.PrimaryController">
    <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
    <gridLinesVisible>true</gridLinesVisible>
    <Text id="welcome-text" text="Path Player 1.0 Welcome" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
-   <HBox GridPane.columnIndex="0" GridPane.rowIndex="1">
-      <Button fx:id="loadButton" onAction="#showOwl" text="Load Ontology" />
-   </HBox>
-   <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
-      <Button fx:id="saveButton" onAction="#saveOwl" text="Save Ontology" />
-   </HBox>
-<HBox GridPane.columnIndex="0" GridPane.rowIndex="2">
-   <Button fx:id="loadTestOwl" onAction="#loadTestOWL" text="Load TestOWL" />
+<HBox GridPane.columnIndex="0" GridPane.rowIndex="1">
+   <Button fx:id="secondaryControllerButton" onAction="#switchToSecondary" text="Secondary Con" />
 </HBox>
+   <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Button fx:id="routeTravelButton" onAction="#switchToRouteTravel" text="Routing Travel" />
+   </HBox>
    <HBox GridPane.columnIndex="0" GridPane.rowIndex="2">
-      <Button fx:id="emptyOwl" onAction="#createEmptyOWL" text="Create EmptyOWL" />
+      <Button fx:id="addPoiButton" onAction="#openUploadForm" text="Add POI" />
    </HBox>
    <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
-      <Button fx:id="addPoi" onAction="#openUploadForm" text="Add POI" />
+      <Button fx:id="downloadPoiButton" onAction="#openDownloadForm" text="Download POI" />
    </HBox>
    <HBox GridPane.columnIndex="0" GridPane.rowIndex="3">
-      <Button fx:id="downloadPoi" onAction="#openDownloadForm" text="Download POI" />
-   </HBox>
-   <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
       <Button fx:id="freeTravelButton" onAction="#openFreeTravelWindow" text="Free Travel" />
    </HBox>
    <columnConstraints>
@@ -39,5 +33,7 @@
       <RowConstraints />
       <RowConstraints />
    </rowConstraints>
-
+   <stylesheets>
+      <URL value="@../css/FreeTravel.css" />
+   </stylesheets>
 </GridPane>

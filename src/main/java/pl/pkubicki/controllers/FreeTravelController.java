@@ -24,6 +24,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import pl.pkubicki.util.FxUtils;
 import pl.pkubicki.util.MediaUtils;
 import pl.pkubicki.util.OwlUtils;
 import pl.pkubicki.util.S3Utils;
@@ -68,7 +69,7 @@ public class FreeTravelController implements Initializable {
     private static double stepLength = 10.0;
 
     private static ObservableList obListForStepLengths = FXCollections.emptyObservableList();
-    private static ObservableMap<OWLNamedIndividual, String> observableMap = FXCollections.emptyObservableMap();
+    private static ObservableMap<OWLNamedIndividual, String> individualsWithLabels = FXCollections.emptyObservableMap();
     private static ObservableList obListForUnitTypes = FXCollections.emptyObservableList();
     private static ObservableList obListForVicinityDistances = FXCollections.emptyObservableList();
     private static Set<OWLNamedIndividual> namedIndividualsInProximity = new HashSet<>();
@@ -222,31 +223,16 @@ public class FreeTravelController implements Initializable {
         LengthUnit lengthUnit = (LengthUnit) unitChoiceBox.getValue();
         namedIndividualsInProximity = OwlUtils.getIndividualsInProximity(poi, proximityDistance, lengthUnit);
         Map<OWLNamedIndividual, String> points = OwlUtils.getIndividualsWithLabels(namedIndividualsInProximity);
-        observableMap = FXCollections.observableMap(points);
-        proximityListView.getItems().setAll(observableMap.values());
+        individualsWithLabels = FXCollections.observableMap(points);
+        proximityListView.getItems().setAll(individualsWithLabels.values());
         proximityListView.getSelectionModel().selectFirst();
         refreshAudioList();
     }
 
     @FXML
-    public void createGeoLocation(ActionEvent actionEvent) throws IOException {
+    public void searchButtonHandler(ActionEvent actionEvent) throws IOException {
         if (!searchText.getText().isEmpty()) {
-            List<Address> addresses = nominatimClient.search(searchText.getText());
-            ObservableList<Address> observableList = FXCollections.observableList(addresses);
-            searchResultsChoiceBox.getItems().clear();
-            searchResultsChoiceBox.setItems(observableList);
-            searchResultsChoiceBox.setConverter(new StringConverter<Address>() {
-                @Override
-                public String toString(Address object) {
-                    return object.getDisplayName();
-                }
-
-                @Override
-                public Address fromString(String string) {
-                    return searchResultsChoiceBox.getItems().stream().filter(address ->
-                            address.getDisplayName().equals(string)).findFirst().orElse(null);
-                }
-            });
+            FxUtils.generateSearchResultsInChBox(searchResultsChoiceBox, searchText.getText());
         } else {
             System.out.println("Search query is empty.");
         }
@@ -278,9 +264,6 @@ public class FreeTravelController implements Initializable {
             System.out.println("Nothing to play.");
         }
         observableAudioList = FXCollections.observableList(audioList);
-    }
-    public void selectNextOnListView() {
-        proximityListView.getSelectionModel().selectNext();
     }
 
     @FXML

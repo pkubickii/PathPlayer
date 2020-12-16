@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.RouteTravelController">
+    <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
+    <gridLinesVisible>true</gridLinesVisible>
+    <Label text="Search START:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <TextField fx:id="searchStartText" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Button fx:id="searchStartButton" onAction="#searchStartButtonHandler" text="Search" GridPane.columnIndex="2" />
+    <Label text="Start point:" GridPane.rowIndex="1" />
+    <ChoiceBox fx:id="searchStartResultsChBox" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label text="Start Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <TextField fx:id="startLatitudeText" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <Label text="Start Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <TextField fx:id="startLongitudeText" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+    <Label text="Search END:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <TextField fx:id="searchEndText" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <Button fx:id="searchEndButton" onAction="#searchEndButtonHandler" text="Search" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+    <Label text="End point:" GridPane.rowIndex="5" />
+    <ChoiceBox fx:id="searchEndResultsChBox" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+    <Label text="End Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+    <TextField fx:id="endLatitudeText" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    <Label text="End Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+    <TextField fx:id="endLongitudeText" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+    <Button fx:id="generateRouteButton" onAction="#generateRouteButtonHandler" text="Generate Travel Route" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+    <ListView fx:id="routePointsList" GridPane.columnIndex="1" GridPane.rowIndex="9" prefHeight="300" prefWidth="400"/>
+    <stylesheets>
+        <URL value="@../css/FreeTravel.css" />
+    </stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

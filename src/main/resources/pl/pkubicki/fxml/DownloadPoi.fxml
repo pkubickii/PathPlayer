@@ -8,7 +8,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Text?>
-<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.DownloadPoiController">
+<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.DownloadPoiController">
 <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
 <gridLinesVisible>true</gridLinesVisible>
     <Text id="addpoi-welcome-text" text="Download POI" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />

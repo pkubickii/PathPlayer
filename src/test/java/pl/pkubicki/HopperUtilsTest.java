@@ -17,7 +17,7 @@ private static final String ghLoc = "D:\\mazowieckie.osm.pbf";
         GraphHopper hopper = HopperUtils.createGraphHopperInstance(ghLoc);
         GHRequest req = new GHRequest(52.162995, 22.271528, 52.16553841009015, 22.27621565578134)
                 .setProfile("foot")
-                .setLocale(Locale.forLanguageTag("PL"));
+                .setLocale(Locale.JAPANESE);
         GHResponse rsp = hopper.route(req);
         if (rsp.hasErrors())
             throw new RuntimeException(rsp.getErrors().toString());

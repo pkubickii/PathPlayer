@@ -21,7 +21,11 @@ public class PrimaryController {
 
     @FXML
     private void switchToSecondary() throws IOException {
-        App.setRoot("fxml/secondary");
+        App.setRoot("fxml/Secondary");
+    }
+    @FXML
+    private void switchToRouteTravel() throws IOException {
+        App.setRoot("fxml/RouteTravel");
     }
     @FXML
     private void showOwl(ActionEvent actionEvent) {
@@ -74,21 +78,22 @@ public class PrimaryController {
     private void openUploadForm(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         stage.setTitle("New POI form");
-        stage.setScene(new Scene(loadFXML("fxml/addpoiform"), 640, 480));
+        stage.setScene(new Scene(loadFXML("fxml/NewPoiPanel"), 640, 480));
         stage.show();
     }
     @FXML
     private void openDownloadForm(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        stage.setTitle("Download POI form");
-        stage.setScene(new Scene(loadFXML("fxml/downloadpoi"), 640, 480));
-        stage.show();
+//        Stage stage = new Stage();
+//        stage.setTitle("Download POI form");
+//        stage.setScene(new Scene(loadFXML("fxml/DownloadPoi"), 640, 480));
+//        stage.show();
+            App.setRoot("fxml/DownloadPoi");
     }
 
     public void openFreeTravelWindow(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Free Travel");
-        stage.setScene(new Scene(loadFXML("fxml/freetravel"), 800, 800));
+        stage.setScene(new Scene(loadFXML("fxml/FreeTravel"), 800, 800));
         stage.show();
     }
 }
