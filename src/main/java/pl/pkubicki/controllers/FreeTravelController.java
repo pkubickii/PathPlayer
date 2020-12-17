@@ -15,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.util.StringConverter;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.Scheme;
@@ -214,14 +213,9 @@ public class FreeTravelController implements Initializable {
         refreshProximityListView(poi, proximityDistance);
     }
 
-    private void refreshProximityList(LatLng poi) {
-        double proximityDistance = (Double) vicinityDistChoiceBox.getValue();
-        refreshProximityListView(poi, proximityDistance);
-    }
-
     private void refreshProximityListView(LatLng poi, double proximityDistance) {
         LengthUnit lengthUnit = (LengthUnit) unitChoiceBox.getValue();
-        namedIndividualsInProximity = OwlUtils.getIndividualsInProximity(poi, proximityDistance, lengthUnit);
+        namedIndividualsInProximity = OwlUtils.getIndividualsInPointProximity(poi, proximityDistance, lengthUnit);
         Map<OWLNamedIndividual, String> points = OwlUtils.getIndividualsWithLabels(namedIndividualsInProximity);
         individualsWithLabels = FXCollections.observableMap(points);
         proximityListView.getItems().setAll(individualsWithLabels.values());
@@ -229,6 +223,10 @@ public class FreeTravelController implements Initializable {
         refreshAudioList();
     }
 
+    private void refreshProximityList(LatLng poi) {
+        double proximityDistance = (Double) vicinityDistChoiceBox.getValue();
+        refreshProximityListView(poi, proximityDistance);
+    }
     @FXML
     public void searchButtonHandler(ActionEvent actionEvent) throws IOException {
         if (!searchText.getText().isEmpty()) {

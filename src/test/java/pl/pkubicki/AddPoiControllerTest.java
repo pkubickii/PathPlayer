@@ -2,12 +2,7 @@ package pl.pkubicki;
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
-import org.junit.Test;
-import pl.pkubicki.controllers.AddPoiController;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.junit.jupiter.api.Test;
 
 public class AddPoiControllerTest {
     double lat1 = 52.162995;

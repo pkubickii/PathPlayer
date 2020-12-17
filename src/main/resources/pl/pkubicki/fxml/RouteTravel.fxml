@@ -31,7 +31,42 @@
     <TextField fx:id="endLongitudeText" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
     <Button fx:id="generateRouteButton" onAction="#generateRouteButtonHandler" text="Generate Travel Route" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-    <ListView fx:id="routePointsList" GridPane.columnIndex="1" GridPane.rowIndex="9" prefHeight="300" prefWidth="400"/>
+
+    <GridPane GridPane.rowIndex="9">
+
+        <children>
+            <Label text="Vicinity dist. [m]:" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="vicinityChBox" prefHeight="20.0" prefWidth="100.0" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+        </children>
+    </GridPane>
+
+    <ListView fx:id="routePointsList" prefHeight="300" prefWidth="400" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+
+    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="10">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <children>
+            <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#playAudio" prefHeight="40.0" prefWidth="40.0" styleClass="play" text="|&gt;" GridPane.halignment="CENTER">
+                <GridPane.margin>
+                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                </GridPane.margin></Button>
+            <Button fx:id="buttonPause" mnemonicParsing="false" onAction="#pauseAudio" prefHeight="40.0" prefWidth="40.0" styleClass="pause" text="||" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                <GridPane.margin>
+                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                </GridPane.margin></Button>
+            <Button fx:id="buttonStop" mnemonicParsing="false" onAction="#stopAudio" prefHeight="40.0" prefWidth="40.0" styleClass="stop" text="[x]" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                <GridPane.margin>
+                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                </GridPane.margin></Button>
+        </children>
+    </GridPane>
+
     <stylesheets>
         <URL value="@../css/FreeTravel.css" />
     </stylesheets>
@@ -50,5 +85,7 @@
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
+      <RowConstraints />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
    </rowConstraints>
 </GridPane>

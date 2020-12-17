@@ -29,16 +29,28 @@ public class OwlUtils {
     }
     private static final OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);;
 
-
-    public static LatLng stringToLatLng(String stringGps) {
-        String[] cords = stringGps.split(", ");
-        return new LatLng(Double.parseDouble(cords[0]), Double.parseDouble(cords[1]));
+    public static Set<OWLNamedIndividual> getIndividualsInRouteProximity(List<LatLng> route, Double proximity, LengthUnit unit) {
+        Set<OWLNamedIndividual> proximityIndividuals = new HashSet<>();
+        route.forEach( point -> {
+            Set<OWLNamedIndividual> individualsInProximity = getIndividualsInPointProximity(point, proximity, unit);
+            Collections.addAll(proximityIndividuals, individualsInProximity.toArray(new OWLNamedIndividual[0]));
+        });
+        return proximityIndividuals;
     }
 
-    public static boolean checkProximity(LatLng point1, LatLng point2, double proximity, LengthUnit unit) {
-        if (LatLngTool.distance(point1, point2, unit) < proximity) return true;
-        return false;
+    public static Set<OWLNamedIndividual> getIndividualsInPointProximity(LatLng poi, Double proximity, LengthUnit unit) {
+        NodeSet<OWLNamedIndividual> nodes = getIndividualsWithGpsClass();
+        OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#location_gps_coordinates"));
+        Set<OWLNamedIndividual> proximitySet = new HashSet<>();
+        nodes.forEach(node -> (reasoner.getDataPropertyValues(node.getRepresentativeElement(), owlDataProperty)).forEach(owlLiteral -> {
+            LatLng temp = OwlUtils.stringToLatLng(owlLiteral.getLiteral());
+            if (OwlUtils.checkProximity(poi, temp, proximity, unit)) {
+                proximitySet.add(node.getRepresentativeElement());
+            }
+        }));
+        return proximitySet;
     }
+
     // method to gather all individuals from ontology which have GPS coordinates,
     // TODO: change it into one which will narrow this list picking points from some area of vicinity in correlation to starting point
     public static NodeSet<OWLNamedIndividual> getIndividualsWithGpsClass() {
@@ -46,27 +58,21 @@ public class OwlUtils {
         return reasoner.getInstances(dataFactory.getOWLClass(owlGpsClassIRI));
     }
 
-    public static Set<OWLNamedIndividual> getIndividualsInProximity(LatLng poi, Double proximity, LengthUnit unit) {
-        NodeSet<OWLNamedIndividual> nodes = getIndividualsWithGpsClass();
-        OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#location_gps_coordinates"));
-        Set<OWLNamedIndividual> proximitySet = new HashSet<>();
-        nodes.forEach(node -> {
-            (reasoner.getDataPropertyValues(node.getRepresentativeElement(), owlDataProperty)).forEach(owlLiteral -> {
-                LatLng temp = OwlUtils.stringToLatLng(owlLiteral.getLiteral());
-                if (OwlUtils.checkProximity(poi, temp, proximity, unit)) {
-                    proximitySet.add(node.getRepresentativeElement());
-                }
-            });
-        });
-        return proximitySet;
+    public static boolean checkProximity(LatLng point1, LatLng point2, double proximity, LengthUnit unit) {
+        if (LatLngTool.distance(point1, point2, unit) < proximity) return true;
+        return false;
+    }
+
+    public static LatLng stringToLatLng(String stringGps) {
+        String[] cords = stringGps.split(", ");
+        return new LatLng(Double.parseDouble(cords[0]), Double.parseDouble(cords[1]));
     }
 
     public static Map<OWLNamedIndividual, String> getIndividualsWithLabels(Set<OWLNamedIndividual> set) {
-        Map<OWLNamedIndividual, String> individualsLabels = new HashMap<OWLNamedIndividual, String>();
+        Map<OWLNamedIndividual, String> individualsLabels = new HashMap<>();
         OWLOntologyWalker walker = new OWLOntologyWalker(Collections.singleton(ontology));
         OWLOntologyWalkerVisitor visitor = new OWLOntologyWalkerVisitor(walker) {
             public void visit(OWLAnnotationAssertionAxiom axiom) {
-                boolean label = axiom.getProperty().isLabel();
                 if (axiom.getProperty().isLabel()) {
                     set.forEach(individual -> {
                         if (axiom.getSubject().asIRI().get().getRemainder().hashCode() == individual.getIRI().getRemainder().hashCode()) {

@@ -12,7 +12,10 @@ import com.graphhopper.util.Instruction;
 import com.graphhopper.util.InstructionList;
 import com.graphhopper.util.PointList;
 import com.graphhopper.util.Translation;
+import com.javadocmd.simplelatlng.LatLng;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class HopperUtils {
@@ -38,7 +41,7 @@ public class HopperUtils {
         return hopper;
     }
 
-    public static PointList getRoute(double fromLat, double fromLon, double toLat, double toLon) {
+    public static List<LatLng> getRoute(double fromLat, double fromLon, double toLat, double toLon) {
         GraphHopper hopper = createGraphHopperInstance(ghLoc);
         GHRequest req = new GHRequest(fromLat, fromLon, toLat, toLon)
                 .setProfile("foot")
@@ -49,8 +52,18 @@ public class HopperUtils {
 
         ResponsePath path = rsp.getBest();
         PointList pointList = path.getPoints();
-
-        return pointList;
+        LatLng from = new LatLng(fromLat, fromLon);
+        LatLng to = new LatLng(toLat, toLon);
+        return pointListToLatLngList(pointList, from, to);
+    }
+    private static List<LatLng> pointListToLatLngList(PointList pointList, LatLng startPoint, LatLng endPoint) {
+        List<LatLng> latLngs = new ArrayList<>();
+        latLngs.add(startPoint);
+        pointList.forEach( p -> {
+            latLngs.add(new LatLng(p.getLat(), p.getLon()));
+        });
+        latLngs.add(endPoint);
+        return latLngs;
     }
 
 }

@@ -1,7 +1,6 @@
 package pl.pkubicki;
 
-import com.github.jsonldjava.utils.JsonUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.FunctionalSyntaxDocumentFormat;
 import org.semanticweb.owlapi.model.*;
@@ -10,7 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import static org.junit.Assert.*;
 
 public class PrimaryControllerTest {
     private OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
