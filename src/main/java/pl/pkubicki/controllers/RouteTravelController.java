@@ -18,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayerBuilder;
+import javafx.stage.Stage;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import pl.pkubicki.util.FxUtils;
 import pl.pkubicki.util.HopperUtils;
@@ -55,13 +56,13 @@ public class RouteTravelController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         FxUtils.updateGpsValuesFromSearchChoice(searchStartResultsChBox, startLatitudeText, startLongitudeText);
         FxUtils.updateGpsValuesFromSearchChoice(searchEndResultsChBox, endLatitudeText, endLongitudeText);
-
         initializeVicinityDistances();
         searchStartText.setText("dworzec pkp siedlce");
         searchEndText.setText("3 maja 54 siedlce");
         initializeVicinityDistancesListenerToRefreshRoutePoints();
         searchStartText.setOnKeyReleased(new FxUtils.SubmitTextFieldHandler(searchStartResultsChBox, searchStartText));
         searchEndText.setOnKeyReleased(new FxUtils.SubmitTextFieldHandler(searchEndResultsChBox, searchEndText));
+
     }
 
     private void initializeVicinityDistances() {

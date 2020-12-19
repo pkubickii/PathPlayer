@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.RouteTravelController">
+<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.RouteTravelController">
     <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
 <!--    <gridLinesVisible>true</gridLinesVisible>-->
     <Label text="Search START:" GridPane.columnIndex="0" GridPane.rowIndex="0" />

@@ -23,10 +23,17 @@ public class PrimaryController {
     private void switchToSecondary() throws IOException {
         App.setRoot("fxml/Secondary");
     }
+
     @FXML
     private void switchToRouteTravel() throws IOException {
-        App.setRoot("fxml/RouteTravel");
+        App.setRoot("fxml/RouteTravel", 700, 800);
     }
+
+    @FXML
+    private void switchToFreeTravel() throws IOException {
+        App.setRoot("fxml/FreeTravel", 800, 800);
+    }
+
     @FXML
     private void showOwl(ActionEvent actionEvent) {
         File file = new File("src/main/java/pl/pkubicki/CityOnto.owl");

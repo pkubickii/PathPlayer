@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.util.StringConverter;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import pl.pkubicki.App;
 
 import java.io.IOException;
 import java.util.*;
@@ -71,6 +72,14 @@ public class FxUtils {
         Map<OWLNamedIndividual, String> audioFileNames = OwlUtils.getAudioFileNames(proximityPoints);
         audioFileNames.forEach( (k , v) -> audioTracks.add(new Media((S3Utils.downloadFile(v)).toURI().toString())));
         return audioTracks;
+    }
+
+    public static void goBack(String fxmlSource) {
+        try {
+            App.setRoot(fxmlSource);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static class SubmitTextFieldHandler implements EventHandler<KeyEvent> {

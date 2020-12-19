@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.FreeTravelController">
+<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.FreeTravelController">
     <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
 <!--    <gridLinesVisible>true</gridLinesVisible>-->
     <Label text="Search:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
@@ -32,7 +32,7 @@
      <Button fx:id="createPoiListButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#createProximityListWithLabels" prefHeight="25.0" prefWidth="373.0" text="Create POI list in vicinity" GridPane.columnIndex="1" GridPane.rowIndex="6" />
      <Button fx:id="searchButton" onAction="#searchButtonHandler" text="Search" GridPane.columnIndex="2" />
    <Label text="Start Point:" GridPane.rowIndex="5" />
-   <Button fx:id="checkButton" mnemonicParsing="false" onAction="#makeStartPointFromGps" text="Check" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+   <Button fx:id="createStartPointButton" mnemonicParsing="false" onAction="#makeStartPointFromGps" text="Create Start Point" GridPane.columnIndex="2" GridPane.rowIndex="5" />
    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
      <columnConstraints>
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -157,7 +157,7 @@
 
    <TextArea fx:id="currentLocationText" editable="false" maxHeight="80.0" maxWidth="400.0" prefHeight="80.0" prefWidth="400.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
    <Label text="Current location:" GridPane.rowIndex="7" />
-   <ListView fx:id="proximityListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+   <ListView fx:id="proximityListView" minWidth="180.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
     <stylesheets>
         <URL value="@../css/FreeTravel.css" />
     </stylesheets>

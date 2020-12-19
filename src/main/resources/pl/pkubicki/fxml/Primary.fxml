@@ -23,7 +23,7 @@
       <Button fx:id="downloadPoiButton" onAction="#openDownloadForm" text="Download POI" />
    </HBox>
    <HBox GridPane.columnIndex="0" GridPane.rowIndex="3">
-      <Button fx:id="freeTravelButton" onAction="#openFreeTravelWindow" text="Free Travel" />
+      <Button fx:id="freeTravelButton" onAction="#switchToFreeTravel" text="Free Travel" />
    </HBox>
    <columnConstraints>
       <ColumnConstraints />
