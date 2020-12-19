@@ -55,13 +55,22 @@ public class RouteTravelController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         FxUtils.updateGpsValuesFromSearchChoice(searchStartResultsChBox, startLatitudeText, startLongitudeText);
         FxUtils.updateGpsValuesFromSearchChoice(searchEndResultsChBox, endLatitudeText, endLongitudeText);
-        FxUtils.initializeVicinityDistances(vicinityChBox, vicinityDistances);
+
+        initializeVicinityDistances();
         searchStartText.setText("dworzec pkp siedlce");
         searchEndText.setText("3 maja 54 siedlce");
         initializeVicinityDistancesListenerToRefreshRoutePoints();
-        searchStartText.setOnKeyReleased(new SubmitTextFieldHandler(searchStartResultsChBox, searchStartText));
-        searchEndText.setOnKeyReleased(new SubmitTextFieldHandler(searchEndResultsChBox, searchEndText));
+        searchStartText.setOnKeyReleased(new FxUtils.SubmitTextFieldHandler(searchStartResultsChBox, searchStartText));
+        searchEndText.setOnKeyReleased(new FxUtils.SubmitTextFieldHandler(searchEndResultsChBox, searchEndText));
     }
+
+    private void initializeVicinityDistances() {
+        vicinityDistances = FxUtils.getObListForVicinity();
+        vicinityChBox.getItems().clear();
+        vicinityChBox.setItems(vicinityDistances);
+        vicinityChBox.setValue(50.0);
+    }
+
     private void initializeVicinityDistancesListenerToRefreshRoutePoints() {
         vicinityChBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
             if (newVal != null) {
@@ -132,7 +141,7 @@ public class RouteTravelController implements Initializable {
         if (!individualsOnRoute.isEmpty()) {
             audioTracks = FxUtils.getAudioTracks(individualsOnRoute);
         } else {
-            System.out.println("List with points is empty.");
+            System.out.println("Empty list of individuals on route to get audio.");
         }
     }
 
@@ -171,22 +180,5 @@ public class RouteTravelController implements Initializable {
         MediaUtils.stop(player);
     }
 
-    private class SubmitTextFieldHandler implements EventHandler<KeyEvent> {
-        private ChoiceBox searchResults;
-        private TextField searchText;
-        private SubmitTextFieldHandler(ChoiceBox searchResults, TextField searchText) {
-            this.searchResults = searchResults;
-            this.searchText = searchText;
-        }
-        @Override
-        public void handle(KeyEvent keyEvent) {
-            if(keyEvent.getCode() == KeyCode.ENTER) {
-                if (!searchStartText.getText().isEmpty()) {
-                    FxUtils.generateSearchResultsInChBox(searchResults, searchText.getText());
-                } else {
-                    System.out.println("Search query is empty.");
-                }
-            }
-        }
-    }
+
 }

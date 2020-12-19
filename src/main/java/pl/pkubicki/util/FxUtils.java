@@ -1,16 +1,16 @@
 package pl.pkubicki.util;
 
-import com.javadocmd.simplelatlng.LatLng;
 import fr.dudie.nominatim.model.Address;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.util.StringConverter;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import pl.pkubicki.controllers.RouteTravelController;
 
 import java.io.IOException;
 import java.util.*;
@@ -52,11 +52,7 @@ public class FxUtils {
         });
     }
 
-    public static void getProximityPointsOnRoute(ListView listView) {
-
-    }
-
-    public static void initializeVicinityDistances(ChoiceBox vicinityChBox, ObservableList obListForVicinityDistances) {
+    public static ObservableList<Double> getObListForVicinity() {
         List<Double> vicinityDistances = new ArrayList<Double>() {
             {
                 add(10.0);
@@ -68,18 +64,33 @@ public class FxUtils {
                 add(200.0);
             }
         };
-        obListForVicinityDistances = FXCollections.observableList(vicinityDistances);
-        vicinityChBox.getItems().clear();
-        vicinityChBox.setItems(obListForVicinityDistances);
-        vicinityChBox.setValue(50.0);
+        return FXCollections.observableList(vicinityDistances);
     }
     public static LinkedList<Media> getAudioTracks(Set<OWLNamedIndividual> proximityPoints) {
         LinkedList<Media> audioTracks = new LinkedList<>();
         Map<OWLNamedIndividual, String> audioFileNames = OwlUtils.getAudioFileNames(proximityPoints);
-        audioFileNames.forEach( (k , v) -> {
-            audioTracks.add(new Media((S3Utils.downloadFile(v)).toURI().toString()));
-        });
+        audioFileNames.forEach( (k , v) -> audioTracks.add(new Media((S3Utils.downloadFile(v)).toURI().toString())));
         return audioTracks;
     }
 
+    public static class SubmitTextFieldHandler implements EventHandler<KeyEvent> {
+        private final ChoiceBox<Address> searchResults;
+        private final TextField searchText;
+
+        public SubmitTextFieldHandler(ChoiceBox<Address> searchResults, TextField searchText) {
+            this.searchResults = searchResults;
+            this.searchText = searchText;
+        }
+
+        @Override
+        public void handle(KeyEvent keyEvent) {
+            if(keyEvent.getCode() == KeyCode.ENTER) {
+                if (!searchText.getText().isEmpty()) {
+                    FxUtils.generateSearchResultsInChBox(searchResults, searchText.getText());
+                } else {
+                    System.out.println("Search query is empty.");
+                }
+            }
+        }
+    }
 }

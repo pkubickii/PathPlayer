@@ -1,5 +1,6 @@
 package pl.pkubicki.util;
 
+import com.javadocmd.simplelatlng.LatLng;
 import fr.dudie.nominatim.client.JsonNominatimClient;
 import fr.dudie.nominatim.model.Address;
 import javafx.collections.FXCollections;
@@ -44,5 +45,11 @@ public class NominatimUtils {
         initializeNominatimClient();
         List<Address> addresses = nominatimClient.search(query);
         return FXCollections.observableList(addresses);
+    }
+
+    public static String getCurrentLocationString(LatLng point) throws IOException {
+        initializeNominatimClient();
+        Address address = nominatimClient.getAddress(point.getLongitude(), point.getLatitude());
+        return address.getDisplayName();
     }
 }

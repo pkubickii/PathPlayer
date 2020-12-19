@@ -3,7 +3,6 @@ package pl.pkubicki.controllers;
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
-import fr.dudie.nominatim.client.JsonNominatimClient;
 import fr.dudie.nominatim.model.Address;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,36 +14,26 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import org.apache.http.client.HttpClient;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.SingleClientConnManager;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import pl.pkubicki.util.FxUtils;
 import pl.pkubicki.util.MediaUtils;
+import pl.pkubicki.util.NominatimUtils;
 import pl.pkubicki.util.OwlUtils;
-import pl.pkubicki.util.S3Utils;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 
 
 public class FreeTravelController implements Initializable {
-    @FXML private ChoiceBox unitChoiceBox;
-    @FXML private ListView proximityListView;
+    @FXML private ChoiceBox<LengthUnit> unitChoiceBox;
+    @FXML private ListView<String> proximityListView;
     @FXML private TextArea currentLocationText;
     @FXML private TextField latitudeText;
     @FXML private TextField longitudeText;
     @FXML private TextField proximityText;
     @FXML private ChoiceBox<Address> searchResultsChoiceBox;
     @FXML private TextField startPoiText;
-    @FXML private Button searchButton;
     @FXML private TextField searchText;
     @FXML private Button buttonN;
     @FXML private Button buttonNE;
@@ -54,30 +43,22 @@ public class FreeTravelController implements Initializable {
     @FXML private Button buttonSW;
     @FXML private Button buttonE;
     @FXML private Button buttonW;
-    @FXML private ChoiceBox stepLengthChoiceBox;
-    @FXML private ChoiceBox vicinityDistChoiceBox;
+    @FXML private ChoiceBox<Double> stepLengthChoiceBox;
+    @FXML private ChoiceBox<Double> vicinityDistChoiceBox;
 
-    private static JsonNominatimClient nominatimClient;
-    private static Properties PROPS = new Properties();
-    private static final String PROPS_PATH = "src/main/resources/pl/pkubicki/properties/nominatim.properties";
-    private static HttpClient httpClient;
-
-    private static LatLng startPoi = null;
+    private static LatLng startPoint = null;
     private static LatLng nextPoi = null;
     private static double vicinity = 200.0;
     private static double stepLength = 10.0;
 
-    private static ObservableList obListForStepLengths = FXCollections.emptyObservableList();
+    private static ObservableList<Double> obListForStepLengths = FXCollections.emptyObservableList();
     private static ObservableMap<OWLNamedIndividual, String> individualsWithLabels = FXCollections.emptyObservableMap();
-    private static ObservableList obListForUnitTypes = FXCollections.emptyObservableList();
-    private static ObservableList obListForVicinityDistances = FXCollections.emptyObservableList();
+    private static ObservableList<LengthUnit> obListForUnitTypes = FXCollections.emptyObservableList();
+    private static ObservableList<Double> obListForVicinityDistances = FXCollections.emptyObservableList();
     private static Set<OWLNamedIndividual> namedIndividualsInProximity = new HashSet<>();
-    private static LinkedList<Media> audioList = new LinkedList<>();
-    private static ObservableList<Media> observableAudioList = FXCollections.emptyObservableList();
+    private static LinkedList<Media> audioTracks = new LinkedList<>();
     private static Media media;
     private static MediaPlayer player;
-    private static boolean isPaused = false;
-    private static boolean isStopped = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -86,7 +67,7 @@ public class FreeTravelController implements Initializable {
         longitudeText.setText("22.271528");
         proximityText.setText("100.0");
 
-        initializeNominatimClient();
+        searchText.setOnKeyReleased(new FxUtils.SubmitTextFieldHandler(searchResultsChoiceBox, searchText));
         initializeUnitTypeChoiceBox();
         initializeStepLengthChoiceBox();
         initializeStepLengthChoiceBoxListener();
@@ -94,22 +75,6 @@ public class FreeTravelController implements Initializable {
         initializeVicinityDistancesListenerToRefreshProximityValues();
         initializeSearchResultsListenerToRefreshGpsValues();
         initializeTravelButtonsHandler();
-    }
-
-    private void initializeNominatimClient() {
-        try {
-            InputStream in = new FileInputStream(PROPS_PATH);
-            PROPS.load(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        SchemeRegistry registry = new SchemeRegistry();
-        registry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
-        ClientConnectionManager connexionManager = new SingleClientConnManager(null, registry);
-        httpClient = new DefaultHttpClient(connexionManager, null);
-        String baseUrl = PROPS.getProperty("nominatim.server.url");
-        String email = PROPS.getProperty("nominatim.headerEmail");
-        nominatimClient = new JsonNominatimClient(baseUrl, httpClient, email);
     }
 
     private void initializeUnitTypeChoiceBox() {
@@ -158,8 +123,8 @@ public class FreeTravelController implements Initializable {
         vicinityDistChoiceBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
             if (newVal != null) {
                vicinity = Double.parseDouble(newVal.toString());
-               if (startPoi != null) {
-                   refreshProximityList(startPoi);
+               if (startPoint != null) {
+                   refreshProximityList(startPoint);
                } else {
                    System.out.println("No starting point.");
                }
@@ -169,18 +134,7 @@ public class FreeTravelController implements Initializable {
     }
 
     private void initializeVicinityDistances() {
-        List<Double> vicinityDistances = new ArrayList<Double> () {
-            {
-                add(10.0);
-                add(20.0);
-                add(30.0);
-                add(40.0);
-                add(50.0);
-                add(100.0);
-                add(200.0);
-            }
-        };
-        obListForVicinityDistances = FXCollections.observableList(vicinityDistances);
+        obListForVicinityDistances = FxUtils.getObListForVicinity();
         vicinityDistChoiceBox.getItems().clear();
         vicinityDistChoiceBox.setItems(obListForVicinityDistances);
         vicinityDistChoiceBox.setValue(200.0);
@@ -237,82 +191,64 @@ public class FreeTravelController implements Initializable {
     }
 
     @FXML
-    public void makeStartPoiFromGps(ActionEvent actionEvent) throws IOException {
+    public void makeStartPointFromGps(ActionEvent actionEvent) throws IOException {
         if (!latitudeText.getText().isEmpty() && !longitudeText.getText().isEmpty()) {
-            Address address = nominatimClient.getAddress(Double.parseDouble(longitudeText.getText()), Double.parseDouble(latitudeText.getText()));
-            startPoiText.setText(address.getDisplayName());
-            startPoi = new LatLng(address.getLatitude(), address.getLongitude());
+            startPoint = new LatLng(Double.parseDouble(longitudeText.getText()), Double.parseDouble(latitudeText.getText()));
+            startPoiText.setText(NominatimUtils.getCurrentLocationString(startPoint));
         } else {
             System.out.println("Empty gps coords.");
         }
     }
 
     private void refreshCurrentLocation() throws IOException {
-        Address address = nominatimClient.getAddress(startPoi.getLongitude(), startPoi.getLatitude());
-        currentLocationText.setText(address.getDisplayName());
-    }
-    private void refreshAudioList() {
-        if (!proximityListView.getItems().isEmpty()) {
-            audioList.clear();
-            Map<OWLNamedIndividual, String> audioFileNames = OwlUtils.getAudioFileNames(namedIndividualsInProximity);
-            audioFileNames.forEach( (k , v) -> {
-                audioList.add(new Media((S3Utils.downloadFile(v)).toURI().toString()));
-            });
+        if (startPoint != null) {
+            currentLocationText.setText(NominatimUtils.getCurrentLocationString(startPoint));
         } else {
-            System.out.println("Nothing to play.");
+            System.out.println("No Starting Point.");
         }
-        observableAudioList = FXCollections.observableList(audioList);
     }
 
-    @FXML
-    public void play(ActionEvent actionEvent) {
-        if (!observableAudioList.isEmpty()) {
-            MediaUtils.play(observableAudioList);
+    private void refreshAudioList() {
+        if (!namedIndividualsInProximity.isEmpty()) {
+            audioTracks = FxUtils.getAudioTracks(namedIndividualsInProximity);
         } else {
             System.out.println("Nothing to play.");
         }
     }
+
     @FXML
     public void playAudio(ActionEvent actionEvent) {
-        proximityListView.getSelectionModel().selectFirst();
-        isStopped = false;
-        this.playMediaList();
-
-    }
-    private void playMediaList() {
-        if (!observableAudioList.isEmpty()) {
-            media = observableAudioList.get(0);
-            observableAudioList.remove(0);
+        if (player != null && player.getStatus() == MediaPlayer.Status.PLAYING) return;
+        if(!audioTracks.isEmpty()) {
+            proximityListView.getSelectionModel().selectFirst();
+            LinkedList<Media> tempAudioTracks = new LinkedList<>();
+            Collections.addAll(tempAudioTracks, audioTracks.toArray(new Media[0]));
+            playAudioTracks(tempAudioTracks);
+        }
+            }
+    private void playAudioTracks(LinkedList<Media> audioList) {
+        if (!audioList.isEmpty()) {
+            media = audioList.poll();
             player = new MediaPlayer(media);
             player.setOnEndOfMedia(() -> {
                 proximityListView.getSelectionModel().selectNext();
-                this.playMediaList();
+                playAudioTracks(audioList);
             });
             player.play();
         } else {
-            System.out.println("Nothing to play.");
+            System.out.println("No audio to play");
+            player.dispose();
         }
     }
 
     @FXML
     public void pauseAudio(ActionEvent actionEvent) {
-        if((player != null) && !(player.getStatus() == MediaPlayer.Status.DISPOSED) && !isStopped) {
-            if(!isPaused) {
-                player.pause();
-                isPaused = true;
-            } else {
-                player.play();
-                isPaused = false;
-            }
-        }
+        MediaUtils.pause(player);
     }
 
     @FXML
     public void stopAudio(ActionEvent actionEvent) {
-        if((player != null) && !(player.getStatus() == MediaPlayer.Status.DISPOSED)) {
-            player.stop();
-            isStopped = true;
-        }
+        MediaUtils.stop(player);
     }
 
     private class TravelButtonsHandler implements EventHandler<ActionEvent> {
@@ -325,15 +261,16 @@ public class FreeTravelController implements Initializable {
         }
         @Override
         public void handle(ActionEvent event) {
-            if (startPoi != null) {
-                nextPoi = LatLngTool.travel(startPoi, this.bearing, stepLength, LengthUnit.METER);
+            if (startPoint != null) {
+                nextPoi = LatLngTool.travel(startPoint, this.bearing, stepLength, LengthUnit.METER);
                 refreshProximityList(nextPoi);
                 try {
                     refreshCurrentLocation();
                 } catch (IOException e) {
+                    System.out.println("Nominatim error: " + e.getMessage() + "cause: " + e.getCause());
                     e.printStackTrace();
                 }
-                startPoi = nextPoi;
+                startPoint = nextPoi;
                 System.out.println("NEXT POI: " + nextPoi.toString());
             } else {
                 System.out.println("No starting point.");
