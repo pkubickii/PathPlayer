@@ -47,9 +47,9 @@ public class NominatimUtils {
         return FXCollections.observableList(addresses);
     }
 
-    public static String getCurrentLocationString(LatLng point) throws IOException {
+    public static Address getCurrentLocationAddress(LatLng point) throws IOException {
         initializeNominatimClient();
         Address address = nominatimClient.getAddress(point.getLongitude(), point.getLatitude());
-        return address.getDisplayName();
+        return address;
     }
 }

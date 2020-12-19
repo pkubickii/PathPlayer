@@ -193,8 +193,8 @@ public class FreeTravelController implements Initializable {
     @FXML
     public void makeStartPointFromGps(ActionEvent actionEvent) throws IOException {
         if (!latitudeText.getText().isEmpty() && !longitudeText.getText().isEmpty()) {
-            startPoint = new LatLng(Double.parseDouble(longitudeText.getText()), Double.parseDouble(latitudeText.getText()));
-            startPoiText.setText(NominatimUtils.getCurrentLocationString(startPoint));
+            startPoint = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
+            startPoiText.setText(NominatimUtils.getCurrentLocationAddress(startPoint).getDisplayName());
         } else {
             System.out.println("Empty gps coords.");
         }
@@ -202,7 +202,8 @@ public class FreeTravelController implements Initializable {
 
     private void refreshCurrentLocation() throws IOException {
         if (startPoint != null) {
-            currentLocationText.setText(NominatimUtils.getCurrentLocationString(startPoint));
+            Address address = NominatimUtils.getCurrentLocationAddress(startPoint);
+            currentLocationText.setText(address.getDisplayName());
         } else {
             System.out.println("No Starting Point.");
         }
