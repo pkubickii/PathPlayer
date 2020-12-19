@@ -12,10 +12,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayerBuilder;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import pl.pkubicki.util.FxUtils;
 import pl.pkubicki.util.HopperUtils;
+import pl.pkubicki.util.MediaUtils;
 import pl.pkubicki.util.OwlUtils;
+import sun.awt.image.ImageWatched;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +28,7 @@ import java.util.*;
 
 public class RouteTravelController implements Initializable {
     @FXML private ChoiceBox vicinityChBox;
-    @FXML private ListView routePointsList;
+    @FXML private ListView routePointsListView;
     @FXML private TextField startLatitudeText;
     @FXML private TextField startLongitudeText;
     @FXML private TextField endLatitudeText;
@@ -33,10 +38,15 @@ public class RouteTravelController implements Initializable {
     @FXML private TextField searchStartText;
     @FXML private TextField searchEndText;
 
-    private static List<LatLng> route;
+    private static Set<OWLNamedIndividual> individualsOnRoute = new HashSet<>();
+    private static LinkedList<Media> audioTracks = new LinkedList<>();
+    private static List<LatLng> route = new ArrayList<>();
     private static ObservableList vicinityDistances = FXCollections.emptyObservableList();
     private static double vicinity = 50.0;
     private static final LengthUnit UNIT = LengthUnit.METER;
+    private static MediaPlayer player = null;
+    private static Media media = null;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,7 +61,7 @@ public class RouteTravelController implements Initializable {
         vicinityChBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
             if (newVal != null) {
                 vicinity = Double.parseDouble(newVal.toString());
-                refreshRoute();
+                refreshPointsOnRoute();
             }
         });
     }
@@ -72,28 +82,36 @@ public class RouteTravelController implements Initializable {
     }
 
     public void generateRouteButtonHandler(ActionEvent actionEvent) {
-        getRoute();
-        refreshRoute();
+        setRoute();
+        refreshPointsOnRoute();
+        refreshAudioTracks();
     }
 
-    private void refreshRoute() {
-        if (route != null) {
-            routePointsList.getItems().setAll(getObIndividualsInRouteProximity().values());
-            routePointsList.getSelectionModel().selectFirst();
+    private void refreshPointsOnRoute() {
+        if (!route.isEmpty()) {
+            routePointsListView.getItems().setAll(getObIndividualsOnRoute().values());
+            routePointsListView.getSelectionModel().selectFirst();
         } else {
             System.out.println("Generate ROUTE first.");
         }
     }
 
-    private ObservableMap<OWLNamedIndividual, String> getObIndividualsInRouteProximity() {
-        Set<OWLNamedIndividual> individualsInRouteProximity = OwlUtils.getIndividualsInRouteProximity(route, vicinity, UNIT);
-        Map<OWLNamedIndividual, String> individualsWithLabels = OwlUtils.getIndividualsWithLabels(individualsInRouteProximity);
-        ObservableMap<OWLNamedIndividual, String> obIndividualsInRouteProximity = FXCollections.observableMap(individualsWithLabels);
-        return obIndividualsInRouteProximity;
+    private ObservableMap<OWLNamedIndividual, String> getObIndividualsOnRoute() {
+        individualsOnRoute = getOwlNamedIndividualsOnRoute();
+        Map<OWLNamedIndividual, String> individualsOnRouteWithLabels = OwlUtils.getIndividualsWithLabels(individualsOnRoute);
+        ObservableMap<OWLNamedIndividual, String> obIndOnRouteWithLabels = FXCollections.observableMap(individualsOnRouteWithLabels);
+        return obIndOnRouteWithLabels;
+    }
+
+    private Set<OWLNamedIndividual> getOwlNamedIndividualsOnRoute() {
+        if (!route.isEmpty()) {
+            return OwlUtils.getIndividualsInRouteProximity(route, vicinity, UNIT);
+        } else
+            return new HashSet<>();
     }
 
 
-    private void getRoute() {
+    private void setRoute() {
         if(!(startLatitudeText.getText().isEmpty() || startLongitudeText.getText().isEmpty() || endLatitudeText.getText().isEmpty() || endLongitudeText.getText().isEmpty())) {
             route = HopperUtils.getRoute(
                     Double.parseDouble(startLatitudeText.getText()),
@@ -105,14 +123,44 @@ public class RouteTravelController implements Initializable {
             System.out.println("Missing gps coordinates.");
         }
     }
-
+    private void refreshAudioTracks() {
+        if (!individualsOnRoute.isEmpty()) {
+            audioTracks = FxUtils.getAudioTracks(individualsOnRoute);
+        } else {
+            System.out.println("List with points is empty.");
+        }
+    }
 
     public void playAudio(ActionEvent actionEvent) {
+        if(!route.isEmpty()) {
+            routePointsListView.getSelectionModel().selectFirst();
+            LinkedList<Media> tempAudioTracks = new LinkedList<>();
+            Collections.addAll(tempAudioTracks, audioTracks.toArray(new Media[0]));
+            playAudioTracks(tempAudioTracks);
+        } else {
+            System.out.println("No route to play with.");
+        }
+    }
+
+    private void playAudioTracks(LinkedList<Media> audioList) {
+        if (!audioList.isEmpty()) {
+            media = audioList.poll();
+            player = new MediaPlayer(media);
+            player.setOnEndOfMedia(() -> {
+                routePointsListView.getSelectionModel().selectNext();
+                playAudioTracks(audioList);
+            });
+            player.play();
+        } else {
+            System.out.println("No audio to play");
+        }
     }
 
     public void pauseAudio(ActionEvent actionEvent) {
+        MediaUtils.pause(player);
     }
 
     public void stopAudio(ActionEvent actionEvent) {
+        MediaUtils.stop(player);
     }
 }

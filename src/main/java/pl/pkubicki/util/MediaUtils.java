@@ -15,18 +15,18 @@ public class MediaUtils {
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }
-    public static void play(Media audioFile) {
-        media = audioFile;
+    public static void play(Media audioTrack) {
+        media = audioTrack;
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }
-    public static void play(LinkedList<Media> audioList) {
-        if (audioList.isEmpty())
+    public static void play(LinkedList<Media> audioTracks) {
+        if (audioTracks.isEmpty())
             return;
-        media = audioList.poll();
+        media = audioTracks.poll();
         MediaPlayer player = new MediaPlayer(media);
         player.setOnEndOfMedia(() -> {
-            MediaUtils.play(audioList);
+            MediaUtils.play(audioTracks);
         });
         player.play();
     }
@@ -40,5 +40,22 @@ public class MediaUtils {
             MediaUtils.play(observableList);
         });
         player.play();
+    }
+    public static void pause(MediaPlayer player) {
+        if(player != null) {
+            if(player.getStatus() == MediaPlayer.Status.PLAYING) {
+                    player.pause();
+                } else if (player.getStatus() == MediaPlayer.Status.PAUSED){
+                    player.play();
+                }
+        }
+    }
+
+    public static void stop(MediaPlayer player) {
+        if(player != null) {
+            if (player.getStatus() != MediaPlayer.Status.STOPPED) {
+                player.stop();
+            }
+        }
     }
 }

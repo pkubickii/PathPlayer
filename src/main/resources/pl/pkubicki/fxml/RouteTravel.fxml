@@ -7,7 +7,7 @@
 
 <GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.RouteTravelController">
     <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
-    <gridLinesVisible>true</gridLinesVisible>
+<!--    <gridLinesVisible>true</gridLinesVisible>-->
     <Label text="Search START:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
     <TextField fx:id="searchStartText" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
     <Button fx:id="searchStartButton" onAction="#searchStartButtonHandler" text="Search" GridPane.columnIndex="2" />
@@ -40,7 +40,7 @@
         </children>
     </GridPane>
 
-    <ListView fx:id="routePointsList" prefHeight="300" prefWidth="400" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+    <ListView fx:id="routePointsListView" prefHeight="300" prefWidth="400" GridPane.columnIndex="1" GridPane.rowIndex="9" />
 
     <GridPane GridPane.columnIndex="1" GridPane.rowIndex="10">
         <columnConstraints>

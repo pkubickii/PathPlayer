@@ -7,12 +7,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
 import javafx.util.StringConverter;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import pl.pkubicki.controllers.RouteTravelController;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class FxUtils {
     public static void generateSearchResultsInChBox(ChoiceBox<Address> choiceBox, String query) throws IOException {
@@ -66,6 +67,14 @@ public class FxUtils {
         vicinityChBox.getItems().clear();
         vicinityChBox.setItems(obListForVicinityDistances);
         vicinityChBox.setValue(50.0);
+    }
+    public static LinkedList<Media> getAudioTracks(Set<OWLNamedIndividual> proximityPoints) {
+        LinkedList<Media> audioTracks = new LinkedList<>();
+        Map<OWLNamedIndividual, String> audioFileNames = OwlUtils.getAudioFileNames(proximityPoints);
+        audioFileNames.forEach( (k , v) -> {
+            audioTracks.add(new Media((S3Utils.downloadFile(v)).toURI().toString()));
+        });
+        return audioTracks;
     }
 
 }
