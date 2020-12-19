@@ -7,11 +7,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayerBuilder;
@@ -56,6 +59,8 @@ public class RouteTravelController implements Initializable {
         searchStartText.setText("dworzec pkp siedlce");
         searchEndText.setText("3 maja 54 siedlce");
         initializeVicinityDistancesListenerToRefreshRoutePoints();
+        searchStartText.setOnKeyReleased(new SubmitTextFieldHandler(searchStartResultsChBox, searchStartText));
+        searchEndText.setOnKeyReleased(new SubmitTextFieldHandler(searchEndResultsChBox, searchEndText));
     }
     private void initializeVicinityDistancesListenerToRefreshRoutePoints() {
         vicinityChBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
@@ -66,14 +71,14 @@ public class RouteTravelController implements Initializable {
         });
     }
     @FXML
-    public void searchStartButtonHandler(ActionEvent actionEvent) throws IOException {
+    public void searchStartButtonHandler(ActionEvent actionEvent) {
         if (!searchStartText.getText().isEmpty()) {
             FxUtils.generateSearchResultsInChBox(searchStartResultsChBox, searchStartText.getText());
         } else {
             System.out.println("Search query is empty.");
         }
     }
-    public void searchEndButtonHandler(ActionEvent actionEvent) throws IOException {
+    public void searchEndButtonHandler(ActionEvent actionEvent) {
         if (!searchEndText.getText().isEmpty()) {
             FxUtils.generateSearchResultsInChBox(searchEndResultsChBox, searchEndText.getText());
         } else {
@@ -132,6 +137,7 @@ public class RouteTravelController implements Initializable {
     }
 
     public void playAudio(ActionEvent actionEvent) {
+        if (player != null && player.getStatus() == MediaPlayer.Status.PLAYING) return;
         if(!route.isEmpty()) {
             routePointsListView.getSelectionModel().selectFirst();
             LinkedList<Media> tempAudioTracks = new LinkedList<>();
@@ -153,6 +159,7 @@ public class RouteTravelController implements Initializable {
             player.play();
         } else {
             System.out.println("No audio to play");
+            player.dispose();
         }
     }
 
@@ -162,5 +169,24 @@ public class RouteTravelController implements Initializable {
 
     public void stopAudio(ActionEvent actionEvent) {
         MediaUtils.stop(player);
+    }
+
+    private class SubmitTextFieldHandler implements EventHandler<KeyEvent> {
+        private ChoiceBox searchResults;
+        private TextField searchText;
+        private SubmitTextFieldHandler(ChoiceBox searchResults, TextField searchText) {
+            this.searchResults = searchResults;
+            this.searchText = searchText;
+        }
+        @Override
+        public void handle(KeyEvent keyEvent) {
+            if(keyEvent.getCode() == KeyCode.ENTER) {
+                if (!searchStartText.getText().isEmpty()) {
+                    FxUtils.generateSearchResultsInChBox(searchResults, searchText.getText());
+                } else {
+                    System.out.println("Search query is empty.");
+                }
+            }
+        }
     }
 }

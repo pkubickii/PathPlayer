@@ -16,8 +16,13 @@ import java.io.IOException;
 import java.util.*;
 
 public class FxUtils {
-    public static void generateSearchResultsInChBox(ChoiceBox<Address> choiceBox, String query) throws IOException {
-        ObservableList<Address> observableList = NominatimUtils.search(query);
+    public static void generateSearchResultsInChBox(ChoiceBox<Address> choiceBox, String query){
+        ObservableList<Address> observableList = null;
+        try {
+            observableList = NominatimUtils.search(query);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         choiceBox.getItems().clear();
         choiceBox.setItems(observableList);
         setSearchResultsChBoxStringConverter(choiceBox);
