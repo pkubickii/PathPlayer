@@ -49,7 +49,6 @@ public class NominatimUtils {
 
     public static Address getCurrentLocationAddress(LatLng point) throws IOException {
         initializeNominatimClient();
-        Address address = nominatimClient.getAddress(point.getLongitude(), point.getLatitude());
-        return address;
+        return nominatimClient.getAddress(point.getLongitude(), point.getLatitude());
     }
 }

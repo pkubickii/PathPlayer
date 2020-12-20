@@ -27,7 +27,7 @@ public class OwlUtils {
             e.printStackTrace();
         }
     }
-    private static final OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);;
+    private static final OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);
 
     public static Set<OWLNamedIndividual> getIndividualsInRouteProximity(List<LatLng> route, Double proximity, LengthUnit unit) {
         Set<OWLNamedIndividual> proximityIndividuals = new HashSet<>();
@@ -59,8 +59,7 @@ public class OwlUtils {
     }
 
     public static boolean checkProximity(LatLng point1, LatLng point2, double proximity, LengthUnit unit) {
-        if (LatLngTool.distance(point1, point2, unit) < proximity) return true;
-        return false;
+        return LatLngTool.distance(point1, point2, unit) < proximity;
     }
 
     public static LatLng stringToLatLng(String stringGps) {
@@ -97,9 +96,7 @@ public class OwlUtils {
             namedIndividuals.forEach( o -> {
                 if (recordedInLocationObject.containsEntity(o)) {
                     Set<OWLLiteral> fileNameLiteral = reasoner.getDataPropertyValues(ati.getRepresentativeElement(), owlDataProperty);
-                    fileNameLiteral.forEach( l -> {
-                        audioFileNames.put(o, l.getLiteral());
-                    });
+                    fileNameLiteral.forEach( l -> audioFileNames.put(o, l.getLiteral()));
                 }
             });
         });

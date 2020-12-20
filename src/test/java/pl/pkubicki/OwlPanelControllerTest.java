@@ -4,7 +4,7 @@ import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
 import org.junit.jupiter.api.Test;
 
-public class AddPoiControllerTest {
+public class OwlPanelControllerTest {
     double lat1 = 52.162995;
     double lng1 = 22.271528;
     double lat2 = 52.162407;

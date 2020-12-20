@@ -7,32 +7,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaPlayerBuilder;
-import javafx.stage.Stage;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import pl.pkubicki.util.FxUtils;
 import pl.pkubicki.util.HopperUtils;
 import pl.pkubicki.util.MediaUtils;
 import pl.pkubicki.util.OwlUtils;
-import sun.awt.image.ImageWatched;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class RouteTravelController implements Initializable {
-    @FXML private ChoiceBox vicinityChBox;
-    @FXML private ListView routePointsListView;
+    @FXML private ChoiceBox<Double> vicinityChBox;
+    @FXML private ListView<String> routePointsListView;
     @FXML private TextField startLatitudeText;
     @FXML private TextField startLongitudeText;
     @FXML private TextField endLatitudeText;
@@ -45,7 +38,7 @@ public class RouteTravelController implements Initializable {
     private static Set<OWLNamedIndividual> individualsOnRoute = new HashSet<>();
     private static LinkedList<Media> audioTracks = new LinkedList<>();
     private static List<LatLng> route = new ArrayList<>();
-    private static ObservableList vicinityDistances = FXCollections.emptyObservableList();
+    private static ObservableList<Double> vicinityDistances = FXCollections.emptyObservableList();
     private static double vicinity = 50.0;
     private static final LengthUnit UNIT = LengthUnit.METER;
     private static MediaPlayer player = null;
@@ -114,8 +107,7 @@ public class RouteTravelController implements Initializable {
     private ObservableMap<OWLNamedIndividual, String> getObIndividualsOnRoute() {
         individualsOnRoute = getOwlNamedIndividualsOnRoute();
         Map<OWLNamedIndividual, String> individualsOnRouteWithLabels = OwlUtils.getIndividualsWithLabels(individualsOnRoute);
-        ObservableMap<OWLNamedIndividual, String> obIndOnRouteWithLabels = FXCollections.observableMap(individualsOnRouteWithLabels);
-        return obIndOnRouteWithLabels;
+        return FXCollections.observableMap(individualsOnRouteWithLabels);
     }
 
     private Set<OWLNamedIndividual> getOwlNamedIndividualsOnRoute() {

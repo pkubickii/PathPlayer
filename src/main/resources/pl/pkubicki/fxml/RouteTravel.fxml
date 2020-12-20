@@ -60,15 +60,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
-            <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#playAudio" prefHeight="40.0" prefWidth="40.0" styleClass="play" text="|&gt;" GridPane.halignment="CENTER">
+            <Button fx:id="buttonPlay" minHeight="50.0" minWidth="70.0" mnemonicParsing="false" onAction="#playAudio" styleClass="play" text="|&gt;" GridPane.halignment="CENTER">
                 <GridPane.margin>
                     <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                 </GridPane.margin></Button>
-            <Button fx:id="buttonPause" mnemonicParsing="false" onAction="#pauseAudio" prefHeight="40.0" prefWidth="40.0" styleClass="pause" text="||" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Button fx:id="buttonPause" mnemonicParsing="false" onAction="#pauseAudio" minHeight="50.0" minWidth="70.0" styleClass="pause" text="||" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                 <GridPane.margin>
                     <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                 </GridPane.margin></Button>
-            <Button fx:id="buttonStop" mnemonicParsing="false" onAction="#stopAudio" prefHeight="40.0" prefWidth="40.0" styleClass="stop" text="[x]" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+            <Button fx:id="buttonStop" mnemonicParsing="false" onAction="#stopAudio" minHeight="50.0" minWidth="70.0" styleClass="stop" text="[x]" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                 <GridPane.margin>
                     <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                 </GridPane.margin></Button>
@@ -76,7 +76,7 @@
     </GridPane>
 
     <stylesheets>
-        <URL value="@../css/FreeTravel.css" />
+        <URL value="@../css/BasicStyle.css" />
     </stylesheets>
    <columnConstraints>
       <ColumnConstraints />
@@ -94,6 +94,6 @@
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="100.0" />
    </rowConstraints>
 </GridPane>

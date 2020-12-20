@@ -33,7 +33,7 @@ public class FreeTravelController implements Initializable {
     @FXML private TextField longitudeText;
     @FXML private TextField proximityText;
     @FXML private ChoiceBox<Address> searchResultsChoiceBox;
-    @FXML private TextField startPoiText;
+    @FXML private TextField startPointText;
     @FXML private TextField searchText;
     @FXML private Button buttonN;
     @FXML private Button buttonNE;
@@ -123,7 +123,7 @@ public class FreeTravelController implements Initializable {
             if (newVal != null) {
                vicinity = Double.parseDouble(newVal.toString());
                if (startPoint != null) {
-                   refreshProximityList(startPoint);
+                   refreshProximityPoints(startPoint);
                } else {
                    System.out.println("No starting point.");
                }
@@ -160,13 +160,17 @@ public class FreeTravelController implements Initializable {
     }
 
     @FXML
-    public void createProximityListWithLabels(ActionEvent actionEvent) {
-        LatLng poi = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
-        double proximityDistance = Double.parseDouble(proximityText.getText());
-        refreshProximityListView(poi, proximityDistance);
+    public void createProximityPoints(ActionEvent actionEvent) {
+        if(latitudeText.getText().isEmpty() && longitudeText.getText().isEmpty() && proximityText.getText().isEmpty()) {
+            LatLng poi = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
+            double proximityDistance = Double.parseDouble(proximityText.getText());
+            refreshProximityListView(poi, proximityDistance);
+        } else {
+            System.out.println("Point and/or vicinity is not defined.");
+        }
     }
 
-    private void refreshProximityList(LatLng poi) {
+    private void refreshProximityPoints(LatLng poi) {
         double proximityDistance = vicinityDistChoiceBox.getValue();
         refreshProximityListView(poi, proximityDistance);
     }
@@ -193,7 +197,7 @@ public class FreeTravelController implements Initializable {
     public void makeStartPointFromGps(ActionEvent actionEvent) throws IOException {
         if (!latitudeText.getText().isEmpty() && !longitudeText.getText().isEmpty()) {
             startPoint = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
-            startPoiText.setText(NominatimUtils.getCurrentLocationAddress(startPoint).getDisplayName());
+            startPointText.setText(NominatimUtils.getCurrentLocationAddress(startPoint).getDisplayName());
         } else {
             System.out.println("Empty gps coords.");
         }
@@ -267,7 +271,7 @@ public class FreeTravelController implements Initializable {
         public void handle(ActionEvent event) {
             if (startPoint != null) {
                 LatLng nextPoint = LatLngTool.travel(startPoint, this.bearing, stepLength, LengthUnit.METER);
-                refreshProximityList(nextPoint);
+                refreshProximityPoints(nextPoint);
                 try {
                     refreshCurrentLocation();
                 } catch (IOException e) {
@@ -275,7 +279,7 @@ public class FreeTravelController implements Initializable {
                     e.printStackTrace();
                 }
                 startPoint = nextPoint;
-                System.out.println("NEXT POI: " + nextPoint.toString());
+                System.out.println("NEXT POINT: " + nextPoint.toString());
             } else {
                 System.out.println("No starting point.");
             }

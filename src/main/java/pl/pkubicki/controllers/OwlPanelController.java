@@ -5,17 +5,15 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
+
 import java.io.File;
 
 
-public class AddPoiController {
-    private final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+public class OwlPanelController {
     private static Region region = Region.EU_NORTH_1;
     @FXML private Text submitStatus;
     @FXML private Text fileName;

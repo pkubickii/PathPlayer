@@ -8,10 +8,7 @@ import com.graphhopper.config.CHProfile;
 import com.graphhopper.config.Profile;
 import com.graphhopper.reader.osm.GraphHopperOSM;
 import com.graphhopper.routing.util.EncodingManager;
-import com.graphhopper.util.Instruction;
-import com.graphhopper.util.InstructionList;
 import com.graphhopper.util.PointList;
-import com.graphhopper.util.Translation;
 import com.javadocmd.simplelatlng.LatLng;
 
 import java.util.ArrayList;
@@ -59,9 +56,7 @@ public class HopperUtils {
     private static List<LatLng> pointListToLatLngList(PointList pointList, LatLng startPoint, LatLng endPoint) {
         List<LatLng> latLngs = new ArrayList<>();
         latLngs.add(startPoint);
-        pointList.forEach( p -> {
-            latLngs.add(new LatLng(p.getLat(), p.getLon()));
-        });
+        pointList.forEach( p -> latLngs.add(new LatLng(p.getLat(), p.getLon())));
         latLngs.add(endPoint);
         return latLngs;
     }

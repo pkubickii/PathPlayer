@@ -8,34 +8,24 @@
 
 <GridPane alignment="CENTER" hgap="20" styleClass="root" vgap="20" xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.PrimaryController">
    <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
-   <gridLinesVisible>true</gridLinesVisible>
-   <Text id="welcome-text" text="Path Player 1.0 Welcome" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
-<HBox GridPane.columnIndex="0" GridPane.rowIndex="1">
-   <Button fx:id="secondaryControllerButton" onAction="#switchToSecondary" text="Secondary Con" />
-</HBox>
-   <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
-      <Button fx:id="routeTravelButton" onAction="#switchToRouteTravel" text="Routing Travel" />
+<!--   <gridLinesVisible>true</gridLinesVisible>-->
+   <HBox GridPane.rowIndex="0" >
+      <Text id="welcome-text" text="Welcome to PathPlayer" />
    </HBox>
-   <HBox GridPane.columnIndex="0" GridPane.rowIndex="2">
-      <Button fx:id="addPoiButton" onAction="#openUploadForm" text="Add POI" />
+   <HBox GridPane.rowIndex="1" alignment="CENTER">
+      <Button fx:id="secondaryControllerButton" onAction="#switchToSecondary" text="Login" minHeight="50" minWidth="100" alignment="CENTER" />
    </HBox>
-   <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
-      <Button fx:id="downloadPoiButton" onAction="#openDownloadForm" text="Download POI" />
+   <HBox GridPane.rowIndex="2" alignment="CENTER">
+      <Button fx:id="owlPanelButton" onAction="#switchToOwlPanel" text="OWL Panel" minHeight="50" minWidth="100" alignment="CENTER" />
    </HBox>
-   <HBox GridPane.columnIndex="0" GridPane.rowIndex="3">
-      <Button fx:id="freeTravelButton" onAction="#switchToFreeTravel" text="Free Travel" />
+   <HBox GridPane.rowIndex="3" alignment="CENTER">
+      <Button fx:id="freeTravelButton" onAction="#switchToFreeTravel" text="Free Travel" minHeight="50" minWidth="100" alignment="CENTER" />
    </HBox>
-   <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
+   <HBox GridPane.rowIndex="4" alignment="CENTER">
+      <Button fx:id="routeTravelButton" onAction="#switchToRouteTravel" text="Routing Travel" minHeight="50" minWidth="100" alignment="CENTER" />
+   </HBox>
+
    <stylesheets>
-      <URL value="@../css/FreeTravel.css" />
+      <URL value="@../css/BasicStyle.css" />
    </stylesheets>
 </GridPane>

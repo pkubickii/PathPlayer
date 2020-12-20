@@ -7,8 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 /**
@@ -21,23 +19,23 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        this.stage = stage;
-        scene = new Scene(loadFXML("fxml/Primary"), 300, 300);
-        this.stage.setTitle("PathPlayer 0.1");
-        this.stage.setScene(scene);
-        this.stage.show();
-        this.stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+        App.stage = stage;
+        scene = new Scene(loadFXML("fxml/Primary"), 300, 360);
+        App.stage.setTitle("PathPlayer 0.1");
+        App.stage.setScene(scene);
+        App.stage.show();
+        App.stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
             if (KeyCode.ESCAPE == event.getCode()) {
                 try {
-                    this.stage.setWidth(300);
-                    this.stage.setHeight(300);
+                    App.stage.setWidth(300);
+                    App.stage.setHeight(360);
                     App.setRoot("fxml/Primary");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
             if (KeyCode.F12 == event.getCode()) {
-                this.stage.setFullScreen(true);
+                App.stage.setFullScreen(true);
             }
         });
     }

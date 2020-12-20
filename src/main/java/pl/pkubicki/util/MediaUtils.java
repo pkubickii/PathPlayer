@@ -15,11 +15,13 @@ public class MediaUtils {
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }
+
     public static void play(Media audioTrack) {
         media = audioTrack;
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }
+
     public static void play(LinkedList<Media> audioTracks) {
         if (audioTracks.isEmpty())
             return;
@@ -30,6 +32,7 @@ public class MediaUtils {
         });
         player.play();
     }
+
     public static void play(ObservableList<Media> observableList) {
         if (observableList.isEmpty())
             return;
@@ -41,6 +44,7 @@ public class MediaUtils {
         });
         player.play();
     }
+
     public static void pause(MediaPlayer player) {
         if(player != null) {
             if(player.getStatus() == MediaPlayer.Status.PLAYING) {
