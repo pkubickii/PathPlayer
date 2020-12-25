@@ -6,42 +6,92 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.OwlPanelController">
-    <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
-    <gridLinesVisible>true</gridLinesVisible>
-    <Text id="welcome-text" text="OWL PANEL" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+<VBox xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.OwlPanelController">
+   <MenuBar>
+     <menus>
+       <Menu mnemonicParsing="false" text="File">
+         <items>
+           <MenuItem mnemonicParsing="false" text="Close" />
+         </items>
+       </Menu>
+       <Menu mnemonicParsing="false" text="Edit">
+         <items>
+           <MenuItem mnemonicParsing="false" text="Delete" />
+         </items>
+       </Menu>
+       <Menu mnemonicParsing="false" text="Help">
+         <items>
+           <MenuItem mnemonicParsing="false" text="About" />
+         </items>
+       </Menu>
+     </menus>
+   </MenuBar>
 
-    <Label text="Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TabPane minHeight="800" minWidth="800" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Create new point">
+                <AnchorPane>
+                    <GridPane alignment="center" hgap="10" vgap="10">
+                        <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
+<!--                        <gridLinesVisible>true</gridLinesVisible>-->
 
-    <TextField fx:id="latitude" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="latitudeText" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-    <Label text="Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <Label text="Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="longitudeText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-    <TextField fx:id="longitude" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Point label:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="labelText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <Label text="Audio file:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-    <Text fx:id="fileName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-    <HBox alignment="BOTTOM_RIGHT" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="3">
-        <Button onAction="#selectFile" text="Open File" />
-    </HBox>
-    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
-        <Button onAction="#submitNewPoiButton" text="Submit POI" />
-    </HBox>
-    <Text fx:id="submitStatus" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-    <stylesheets>
-        <URL value="@../css/BasicStyle.css" />
-    </stylesheets>
-   <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
-</GridPane>
+                        <Label text="Point class:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <ChoiceBox fx:id="realEstatesChoiceBox" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" />
+
+                        <Label text="Point comment:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                        <TextArea fx:id="commentText" maxHeight="50" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
+                        <Label text="Audio file:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+                        <Text fx:id="fileName" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+
+                        <HBox alignment="BOTTOM_RIGHT" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                            <Button onAction="#selectFile" text="Open File" />
+                        </HBox>
+                        <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                            <Button onAction="#submitHandler" text="Submit Point" />
+                        </HBox>
+                        <Text fx:id="submitStatus" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                        <stylesheets>
+                            <URL value="@../css/BasicStyle.css" />
+                        </stylesheets>
+                        <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints />
+                            <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+
+                </AnchorPane>
+            </Tab>
+            <Tab text="Untitled Tab 2">
+                <ListView fx:id="individualsListView" layoutX="294.0" layoutY="237.0" minHeight="200" minWidth="100" prefHeight="292.0" prefWidth="160.0" />
+            </Tab>
+        </tabs>
+    </TabPane>
+
+
+</VBox>

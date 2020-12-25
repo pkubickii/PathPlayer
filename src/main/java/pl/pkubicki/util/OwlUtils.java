@@ -13,12 +13,15 @@ import org.semanticweb.owlapi.util.*;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class OwlUtils {
     private static final File owlFile = new File("src/main/java/pl/pkubicki/CityOnto.owl");
     private static final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
     private static final OWLDataFactory dataFactory = manager.getOWLDataFactory();
     private static final OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
+    private static final IRI baseIRI = IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi");
+
     private static OWLOntology ontology;
     static {
         try {
@@ -101,5 +104,29 @@ public class OwlUtils {
             });
         });
         return audioFileNames;
+    }
+
+    public static NodeSet<OWLClass> getRealEstateSubClasses() {
+        IRI iri = IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate");
+        return reasoner.getSubClasses(dataFactory.getOWLClass(iri));
+    }
+
+    public static OWLClass getBlockOfFlatsOWLClass() {
+        return dataFactory.getOWLClass(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BlockOfFlats"));
+    }
+
+    public static OWLNamedIndividual getNewTrack(OWLNamedIndividual individual) {
+        return dataFactory.getOWLNamedIndividual(baseIRI + "#Track_" + individual.getIRI().getShortForm() + String.format("_%04d", getTrackCount(individual) + 1));
+    }
+    public static int getTrackCount(OWLNamedIndividual point) {
+        OWLClassExpression voiceClassExp = dataFactory.getOWLClass(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"));
+        OWLObjectPropertyExpression recordedInLocationExp = dataFactory.getOWLObjectProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#recordedInTheLocation"));
+        AtomicInteger counter = new AtomicInteger(0);
+        NodeSet<OWLNamedIndividual> voiceInstances = reasoner.getInstances(voiceClassExp);
+        voiceInstances.forEach( v -> {
+            NodeSet<OWLNamedIndividual> objectPropertyValues = reasoner.getObjectPropertyValues(v.getRepresentativeElement(), recordedInLocationExp);
+            if(objectPropertyValues.containsEntity(point)) counter.getAndIncrement();
+        });
+        return counter.get();
     }
 }

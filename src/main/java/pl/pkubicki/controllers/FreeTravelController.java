@@ -161,7 +161,7 @@ public class FreeTravelController implements Initializable {
 
     @FXML
     public void createProximityPoints(ActionEvent actionEvent) {
-        if(latitudeText.getText().isEmpty() && longitudeText.getText().isEmpty() && proximityText.getText().isEmpty()) {
+        if(!latitudeText.getText().isEmpty() && !longitudeText.getText().isEmpty() && !proximityText.getText().isEmpty()) {
             LatLng poi = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
             double proximityDistance = Double.parseDouble(proximityText.getText());
             refreshProximityListView(poi, proximityDistance);

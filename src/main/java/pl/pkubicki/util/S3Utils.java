@@ -2,10 +2,12 @@ package pl.pkubicki.util;
 
 import org.apache.commons.io.IOUtils;
 import software.amazon.awssdk.core.ResponseBytes;
+import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,5 +42,16 @@ public class S3Utils {
             IOUtils.closeQuietly(inputStream);
         }
         return file;
+    }
+
+    public static void uploadFile(File file, String keyName) {
+        S3Client s3 = S3Client.builder().region(region).build();
+        System.out.format("Uploading %s to the cloud. %n", file.getName());
+        s3.putObject(PutObjectRequest.builder()
+                        .bucket(bucketName)
+                        .key(keyName)
+                        .build(),
+                RequestBody.fromFile(file));
+        System.out.format("File %s uploaded successfully. %n", file.getName());
     }
 }

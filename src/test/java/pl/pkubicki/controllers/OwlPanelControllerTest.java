@@ -1,4 +1,4 @@
-package pl.pkubicki;
+package pl.pkubicki.controllers;
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
@@ -15,11 +15,11 @@ public class OwlPanelControllerTest {
     LatLng poi1 = new LatLng(lat2, lng2);
     LatLng poi2 = new LatLng(lat3, lng3);
 
-    @Test
+
     public void distanceCheck() {
         System.out.println(LatLngTool.distance(poi0, poi1, LengthUnit.METER));
     }
-    @Test
+
     public void stringTest() {
         String poi = "52.164171, 22.272156";
         String[] pois = poi.split(", ");

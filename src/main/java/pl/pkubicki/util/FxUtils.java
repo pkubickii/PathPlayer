@@ -3,6 +3,7 @@ package pl.pkubicki.util;
 import fr.dudie.nominatim.model.Address;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -10,13 +11,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.util.StringConverter;
+import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.reasoner.NodeSet;
+
 import java.io.IOException;
 import java.util.*;
 
 public class FxUtils {
     public static void generateSearchResultsInChBox(ChoiceBox<Address> choiceBox, String query){
-        ObservableList<Address> observableList = null;
+        ObservableList<Address> observableList = FXCollections.emptyObservableList();
         try {
             observableList = NominatimUtils.search(query);
         } catch (IOException e) {
@@ -65,11 +69,22 @@ public class FxUtils {
         };
         return FXCollections.observableList(vicinityDistances);
     }
+
     public static LinkedList<Media> getAudioTracks(Set<OWLNamedIndividual> proximityPoints) {
         LinkedList<Media> audioTracks = new LinkedList<>();
         Map<OWLNamedIndividual, String> audioFileNames = OwlUtils.getAudioFileNames(proximityPoints);
         audioFileNames.forEach( (k , v) -> audioTracks.add(new Media((S3Utils.downloadFile(v)).toURI().toString())));
         return audioTracks;
+    }
+
+    public static ObservableList<OWLClass> getObRealEstateSubClasses() {
+        NodeSet<OWLClass> realEstateSubClasses = OwlUtils.getRealEstateSubClasses();
+        List<OWLClass> realEstates = new ArrayList<>();
+        realEstateSubClasses.forEach(c -> {
+            if (!c.isBottomNode())
+            realEstates.add(c.getRepresentativeElement());
+        });
+        return FXCollections.observableList(realEstates);
     }
 
     public static class SubmitTextFieldHandler implements EventHandler<KeyEvent> {

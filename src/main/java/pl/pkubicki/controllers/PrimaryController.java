@@ -24,6 +24,6 @@ public class PrimaryController {
 
     @FXML
     private void switchToOwlPanel() throws IOException {
-        App.setRoot("fxml/OwlPanel", 800, 800);
+        App.setRoot("fxml/OwlPanel", 800, 600);
     }
 }

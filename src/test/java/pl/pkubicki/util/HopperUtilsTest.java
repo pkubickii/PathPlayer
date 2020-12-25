@@ -1,4 +1,4 @@
-package pl.pkubicki;
+package pl.pkubicki.util;
 
 import com.graphhopper.GHRequest;
 import com.graphhopper.GHResponse;
@@ -24,7 +24,7 @@ public class HopperUtilsTest {
         hopper = HopperUtils.createGraphHopperInstance(ghLoc);
     }
 
-    @Test
+
     public void testGraphHopper() {
         GHRequest req = new GHRequest(52.162995, 22.271528, 52.16553841009015, 22.27621565578134)
                 .setProfile("foot")
@@ -47,7 +47,7 @@ public class HopperUtilsTest {
         }
         System.out.println(pointList);
     }
-    @Test
+
     void testGetProximityListFromPointList () {
         GHRequest req = new GHRequest(52.162995, 22.271528, 52.16855105916234, 22.271195745978176)
                 .setProfile("foot")

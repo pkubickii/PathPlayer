@@ -1,23 +1,42 @@
 package pl.pkubicki.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import software.amazon.awssdk.core.sync.RequestBody;
+import javafx.util.StringConverter;
+import org.semanticweb.owlapi.model.OWLClass;
+import pl.pkubicki.models.OWLAudioTrack;
+import pl.pkubicki.models.OWLPoint;
+import pl.pkubicki.util.FxUtils;
+import pl.pkubicki.util.OwlManagement;
+import pl.pkubicki.util.S3Utils;
 import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.*;
 
 import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class OwlPanelController {
+public class OwlPanelController implements Initializable {
     private static Region region = Region.EU_NORTH_1;
+    @FXML private TextField latitudeText;
+    @FXML private TextField longitudeText;
+    @FXML private TextField labelText;
+    @FXML private ChoiceBox<OWLClass> realEstatesChoiceBox;
+    @FXML private TextArea commentText;
     @FXML private Text submitStatus;
     @FXML private Text fileName;
     private static File audioFile;
+
+    private static ObservableList<OWLClass> realEstates = FXCollections.emptyObservableList();
 
     @FXML
     public void selectFile(ActionEvent actionEvent){
@@ -32,68 +51,59 @@ public class OwlPanelController {
     }
 
     @FXML
-    public void submitNewPoiButton(ActionEvent actionEvent) {
-        S3Client s3 = S3Client.builder().region(region).build();
-        String bucket = "siedlce";
-//        String stringObjKeyName = "objKey "+ System.currentTimeMillis();
-//        String fileObjKeyName = "fileKey " + System.currentTimeMillis();
-        if (audioFile.exists()) {
+    public void submitHandler() {
+        if(!latitudeText.getText().isEmpty() &&
+                !longitudeText.getText().isEmpty() &&
+                !labelText.getText().isEmpty() &&
+                !commentText.getText().isEmpty() &&
+                !fileName.getText().isEmpty() &&
+                realEstatesChoiceBox.getValue() != null) {
 
-            s3.putObject(PutObjectRequest.builder()
-                            .bucket(bucket)
-                            .key(audioFile.getName())
-                            .build(),
-                    RequestBody.fromFile(audioFile));
-//                    RequestBody.fromString("Test String Object"));
-//            System.out.println("Uploading file: " + audioFile.getName());
-//            s3.waiter().waitUntilObjectExists(HeadObjectRequest.builder().bucket(bucket).build());
-//            System.out.println(audioFile.getName() +" successfully uploaded.");
-//            System.out.printf("%n");
+            OWLPoint newPoint = new OWLPoint(
+                    Double.parseDouble(latitudeText.getText()),
+                    Double.parseDouble(longitudeText.getText()),
+                    labelText.getText(),
+                    commentText.getText(),
+                    realEstatesChoiceBox.getValue());
+            OWLAudioTrack newAudioTrack = new OWLAudioTrack(newPoint.getPointIndividual());
+            OwlManagement.savePoint(newPoint);
+            OwlManagement.saveAudioTrack(newAudioTrack);
+            S3Utils.uploadFile(audioFile, newAudioTrack.getName() + ".mp3");
         } else {
-            submitStatus.setText("You need to choose a file!");
+            System.out.println("Empty fields in form.");
+            submitStatus.setText("Empty fields in form.");
         }
 
-        submitStatus.setText("Thank you for your support!");
     }
 
-    @FXML
-    public void submitNewBucket(ActionEvent actionEvent) {
-
-        S3Client s3 = S3Client.builder().region(region).build();
-        String bucket = "bucket" + System.currentTimeMillis();
-        String key = "key";
-
-        setupNewBucket(s3, bucket, region);
-
-        System.out.println("Uploading POI...");
-
-        s3.putObject(PutObjectRequest.builder().bucket(bucket).key(key)
-                .build(), RequestBody.fromString("new key in bucket"));
-
-        System.out.println("Upload complete");
-        System.out.printf("%n");
-
-        submitStatus.setText("Thank you for your support!");
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        latitudeText.setText("52.16354555");
+        longitudeText.setText("22.27205220610704");
+        labelText.setText("UPH - Dom Studenta Nr 1");
+        commentText.setText("UPH - Dom Studenta Nr1 przy ulicy 3 Maja");
+        initializeRealEstatesChoiceBox();
     }
 
-    public static void setupNewBucket(S3Client s3Client, String bucketName, Region region) {
-        try {
-            s3Client.createBucket(CreateBucketRequest
-                    .builder()
-                    .bucket(bucketName)
-                    .createBucketConfiguration(
-                            CreateBucketConfiguration.builder()
-                                    .locationConstraint(region.id())
-                                    .build())
-                    .build());
-            System.out.println("Creating bucket: " + bucketName);
-            s3Client.waiter().waitUntilBucketExists(HeadBucketRequest.builder().bucket(bucketName).build());
-            System.out.println(bucketName +" is ready.");
-            System.out.printf("%n");
-        }catch (S3Exception e) {
-            System.err.println(e.awsErrorDetails().errorMessage());
-            System.exit(1);
-        }
+    private void initializeRealEstatesChoiceBox() {
+        realEstates = FxUtils.getObRealEstateSubClasses();
+        realEstatesChoiceBox.getItems().clear();
+        realEstatesChoiceBox.setItems(realEstates);
+        setRealEstatesChoiceBoxStringConverter(realEstatesChoiceBox);
     }
 
+    private void setRealEstatesChoiceBoxStringConverter(ChoiceBox<OWLClass> choiceBox) {
+        choiceBox.setConverter(new StringConverter<OWLClass>() {
+            @Override
+            public String toString(OWLClass object) {
+                return object.getIRI().getRemainder().get();
+            }
+
+            @Override
+            public OWLClass fromString(String string) {
+                return choiceBox.getItems().stream().filter(owlClass ->
+                        owlClass.getIRI().getRemainder().get().equals(string)).findFirst().orElse(null);
+            }
+        });
+    }
 }
