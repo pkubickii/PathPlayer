@@ -17,7 +17,7 @@ import pl.pkubicki.models.OWLAudioTrack;
 import pl.pkubicki.models.OWLPoint;
 import pl.pkubicki.util.FxUtils;
 import pl.pkubicki.util.OwlManagement;
-import pl.pkubicki.util.S3Utils;
+import pl.pkubicki.repositories.S3Repo;
 import software.amazon.awssdk.regions.Region;
 
 import java.io.File;
@@ -68,7 +68,7 @@ public class OwlPanelController implements Initializable {
             OWLAudioTrack newAudioTrack = new OWLAudioTrack(newPoint.getPointIndividual());
             OwlManagement.savePoint(newPoint);
             OwlManagement.saveAudioTrack(newAudioTrack);
-            S3Utils.uploadFile(audioFile, newAudioTrack.getName() + ".mp3");
+            S3Repo.uploadFile(audioFile, newAudioTrack.getName() + ".mp3");
         } else {
             System.out.println("Empty fields in form.");
             submitStatus.setText("Empty fields in form.");

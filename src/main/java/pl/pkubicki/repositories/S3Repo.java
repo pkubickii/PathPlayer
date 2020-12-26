@@ -1,4 +1,4 @@
-package pl.pkubicki.util;
+package pl.pkubicki.repositories;
 
 import org.apache.commons.io.IOUtils;
 import software.amazon.awssdk.core.ResponseBytes;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.StandardCopyOption;
 
-public class S3Utils {
+public class S3Repo {
     private static final String bucketName = "siedlce";
     private static final String downloadPath = "C:\\Users\\pkubicki\\IntelliJIDEAProjects\\PathPlayer\\downloads\\";
     private static final Region region = Region.EU_NORTH_1;

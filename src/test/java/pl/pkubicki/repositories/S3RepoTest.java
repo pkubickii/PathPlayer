@@ -1,4 +1,4 @@
-package pl.pkubicki.util;
+package pl.pkubicki.repositories;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +19,7 @@ import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class S3UtilsTest {
+class S3RepoTest {
     private static final String bucketName = "siedlce";
     private static final String downloadPath = "C:\\Users\\pkubicki\\IntelliJIDEAProjects\\PathPlayer\\downloads\\";
     private static final Region region = Region.EU_NORTH_1;

@@ -3,7 +3,6 @@ package pl.pkubicki.util;
 import fr.dudie.nominatim.model.Address;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -14,6 +13,7 @@ import javafx.util.StringConverter;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.reasoner.NodeSet;
+import pl.pkubicki.repositories.S3Repo;
 
 import java.io.IOException;
 import java.util.*;
@@ -73,7 +73,7 @@ public class FxUtils {
     public static LinkedList<Media> getAudioTracks(Set<OWLNamedIndividual> proximityPoints) {
         LinkedList<Media> audioTracks = new LinkedList<>();
         Map<OWLNamedIndividual, String> audioFileNames = OwlUtils.getAudioFileNames(proximityPoints);
-        audioFileNames.forEach( (k , v) -> audioTracks.add(new Media((S3Utils.downloadFile(v)).toURI().toString())));
+        audioFileNames.forEach( (k , v) -> audioTracks.add(new Media((S3Repo.downloadFile(v)).toURI().toString())));
         return audioTracks;
     }
 

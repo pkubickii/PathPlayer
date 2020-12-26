@@ -2,11 +2,8 @@ package pl.pkubicki.util;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
-import pl.pkubicki.models.OWLPoint;
 import pl.pkubicki.models.OWLAudioTrack;
+import pl.pkubicki.models.OWLPoint;
 
 import java.io.File;
 import java.util.Locale;
@@ -15,7 +12,6 @@ public class OwlManagement {
     private static final File owlFile = new File("src/main/java/pl/pkubicki/CityOnto.owl");
     private static final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
     private static final OWLDataFactory dataFactory = manager.getOWLDataFactory();
-    private static final OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
     private static OWLOntology ontology;
     static {
         try {
@@ -24,7 +20,7 @@ public class OwlManagement {
             e.printStackTrace();
         }
     }
-    private static final OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);
+
     private static final IRI baseIRI = IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi");
 
     public static void savePoint(OWLPoint point) {
@@ -61,12 +57,12 @@ public class OwlManagement {
     }
 
     private static void addGpsClass(OWLPoint point) {
-        OWLClass gpsClass = dataFactory.getOWLClass(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"));
+        OWLClass gpsClass = dataFactory.getOWLClass(IRI.create(baseIRI + "#GPSCoordinates"));
         ontology.add(dataFactory.getOWLClassAssertionAxiom(gpsClass, point.getPointIndividual()));
     }
 
     private static void addGpsLocationData(OWLPoint point) {
-        OWLDataProperty gpsCoordsProp = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#location_gps_coordinates"));
+        OWLDataProperty gpsCoordsProp = dataFactory.getOWLDataProperty(IRI.create(baseIRI + "#location_gps_coordinates"));
         String gps = String.format(Locale.ROOT, "%1$.6f, %2$.6f", point.getLatitude(), point.getLongitude());
         OWLAxiom gpsAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(gpsCoordsProp, point.getPointIndividual(), dataFactory.getOWLLiteral(gps));
         ontology.add(gpsAxiom);
@@ -86,19 +82,19 @@ public class OwlManagement {
     }
 
     private static void addVoiceClass(OWLNamedIndividual trackIndividual) {
-        OWLClassExpression voiceClassExp = dataFactory.getOWLClass(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"));
+        OWLClassExpression voiceClassExp = dataFactory.getOWLClass(IRI.create(baseIRI + "#Voice"));
         OWLClassAssertionAxiom classAxiom = dataFactory.getOWLClassAssertionAxiom(voiceClassExp, trackIndividual);
         ontology.add(classAxiom);
     }
 
     private static void addRecordedInLocationObject(OWLNamedIndividual trackIndividual, OWLNamedIndividual pointIndividual) {
-        OWLObjectPropertyExpression recInLocationExp = dataFactory.getOWLObjectProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#recordedInTheLocation"));
+        OWLObjectPropertyExpression recInLocationExp = dataFactory.getOWLObjectProperty(IRI.create(baseIRI + "#recordedInTheLocation"));
         OWLObjectPropertyAssertionAxiom objectPropertyAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(recInLocationExp, trackIndividual, pointIndividual);
         ontology.add(objectPropertyAxiom);
     }
 
     private static void addFileNameData(OWLNamedIndividual trackIndividual) {
-        OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileName"));
+        OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create(baseIRI + "#fileName"));
         OWLDataPropertyAssertionAxiom fileNameAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(owlDataProperty, trackIndividual, trackIndividual.getIRI().getShortForm() + ".mp3");
         ontology.add(fileNameAxiom);
     }

@@ -43,7 +43,7 @@ public class OwlUtils {
 
     public static Set<OWLNamedIndividual> getIndividualsInPointProximity(LatLng poi, Double proximity, LengthUnit unit) {
         NodeSet<OWLNamedIndividual> nodes = getIndividualsWithGpsClass();
-        OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#location_gps_coordinates"));
+        OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create(baseIRI + "#location_gps_coordinates"));
         Set<OWLNamedIndividual> proximitySet = new HashSet<>();
         nodes.forEach(node -> (reasoner.getDataPropertyValues(node.getRepresentativeElement(), owlDataProperty)).forEach(owlLiteral -> {
             LatLng temp = OwlUtils.stringToLatLng(owlLiteral.getLiteral());
@@ -57,7 +57,7 @@ public class OwlUtils {
     // method to gather all individuals from ontology which have GPS coordinates,
     // TODO: change it into one which will narrow this list picking points from some area of vicinity in correlation to starting point
     public static NodeSet<OWLNamedIndividual> getIndividualsWithGpsClass() {
-        IRI owlGpsClassIRI = IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates");
+        IRI owlGpsClassIRI = IRI.create(baseIRI + "g#GPSCoordinates");
         return reasoner.getInstances(dataFactory.getOWLClass(owlGpsClassIRI));
     }
 
@@ -90,9 +90,9 @@ public class OwlUtils {
 
     public static Map<OWLNamedIndividual, String> getAudioFileNames(Set<OWLNamedIndividual> namedIndividuals) {
         HashMap<OWLNamedIndividual, String> audioFileNames = new HashMap<>();
-        OWLClassExpression classExpression = dataFactory.getOWLClass(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"));
-        OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileName"));
-        OWLObjectPropertyExpression propertyExpression = dataFactory.getOWLObjectProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#recordedInTheLocation"));
+        OWLClassExpression classExpression = dataFactory.getOWLClass(IRI.create(baseIRI + "#Voice"));
+        OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create(baseIRI + "#fileName"));
+        OWLObjectPropertyExpression propertyExpression = dataFactory.getOWLObjectProperty(IRI.create(baseIRI + "#recordedInTheLocation"));
         NodeSet<OWLNamedIndividual> audioTrackIndividuals = reasoner.getInstances(classExpression);
         audioTrackIndividuals.forEach( ati -> {
             NodeSet<OWLNamedIndividual> recordedInLocationObject = reasoner.getObjectPropertyValues(ati.getRepresentativeElement(), propertyExpression);
@@ -107,20 +107,20 @@ public class OwlUtils {
     }
 
     public static NodeSet<OWLClass> getRealEstateSubClasses() {
-        IRI iri = IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate");
+        IRI iri = IRI.create(baseIRI + "#RealEstate");
         return reasoner.getSubClasses(dataFactory.getOWLClass(iri));
     }
 
     public static OWLClass getBlockOfFlatsOWLClass() {
-        return dataFactory.getOWLClass(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BlockOfFlats"));
+        return dataFactory.getOWLClass(IRI.create(baseIRI + "#BlockOfFlats"));
     }
 
     public static OWLNamedIndividual getNewTrack(OWLNamedIndividual individual) {
         return dataFactory.getOWLNamedIndividual(baseIRI + "#Track_" + individual.getIRI().getShortForm() + String.format("_%04d", getTrackCount(individual) + 1));
     }
     public static int getTrackCount(OWLNamedIndividual point) {
-        OWLClassExpression voiceClassExp = dataFactory.getOWLClass(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"));
-        OWLObjectPropertyExpression recordedInLocationExp = dataFactory.getOWLObjectProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#recordedInTheLocation"));
+        OWLClassExpression voiceClassExp = dataFactory.getOWLClass(IRI.create(baseIRI + "#Voice"));
+        OWLObjectPropertyExpression recordedInLocationExp = dataFactory.getOWLObjectProperty(IRI.create(baseIRI + "#recordedInTheLocation"));
         AtomicInteger counter = new AtomicInteger(0);
         NodeSet<OWLNamedIndividual> voiceInstances = reasoner.getInstances(voiceClassExp);
         voiceInstances.forEach( v -> {
