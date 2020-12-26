@@ -6,31 +6,17 @@ import com.javadocmd.simplelatlng.util.LengthUnit;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.reasoner.NodeSet;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
-import org.semanticweb.owlapi.util.*;
+import org.semanticweb.owlapi.util.OWLOntologyWalker;
+import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
+import pl.pkubicki.repositories.OwlRepo;
 
-import java.io.File;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class OwlUtils {
-    private static final File owlFile = new File("src/main/java/pl/pkubicki/CityOnto.owl");
     private static final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
     private static final OWLDataFactory dataFactory = manager.getOWLDataFactory();
-    private static final OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
     private static final IRI baseIRI = IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi");
-
-    private static OWLOntology ontology;
-    static {
-        try {
-            ontology = manager.loadOntologyFromOntologyDocument(owlFile);
-        } catch (OWLOntologyCreationException e) {
-            e.printStackTrace();
-        }
-    }
-    private static final OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);
 
     public static Set<OWLNamedIndividual> getIndividualsInRouteProximity(List<LatLng> route, Double proximity, LengthUnit unit) {
         Set<OWLNamedIndividual> proximityIndividuals = new HashSet<>();
@@ -45,7 +31,7 @@ public class OwlUtils {
         NodeSet<OWLNamedIndividual> nodes = getIndividualsWithGpsClass();
         OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create(baseIRI + "#location_gps_coordinates"));
         Set<OWLNamedIndividual> proximitySet = new HashSet<>();
-        nodes.forEach(node -> (reasoner.getDataPropertyValues(node.getRepresentativeElement(), owlDataProperty)).forEach(owlLiteral -> {
+        nodes.forEach(node -> (OwlRepo.getReasoner().getDataPropertyValues(node.getRepresentativeElement(), owlDataProperty)).forEach(owlLiteral -> {
             LatLng temp = OwlUtils.stringToLatLng(owlLiteral.getLiteral());
             if (OwlUtils.checkProximity(poi, temp, proximity, unit)) {
                 proximitySet.add(node.getRepresentativeElement());
@@ -58,7 +44,7 @@ public class OwlUtils {
     // TODO: change it into one which will narrow this list picking points from some area of vicinity in correlation to starting point
     public static NodeSet<OWLNamedIndividual> getIndividualsWithGpsClass() {
         IRI owlGpsClassIRI = IRI.create(baseIRI + "g#GPSCoordinates");
-        return reasoner.getInstances(dataFactory.getOWLClass(owlGpsClassIRI));
+        return OwlRepo.getReasoner().getInstances(dataFactory.getOWLClass(owlGpsClassIRI));
     }
 
     public static boolean checkProximity(LatLng point1, LatLng point2, double proximity, LengthUnit unit) {
@@ -72,7 +58,7 @@ public class OwlUtils {
 
     public static Map<OWLNamedIndividual, String> getIndividualsWithLabels(Set<OWLNamedIndividual> set) {
         Map<OWLNamedIndividual, String> individualsLabels = new HashMap<>();
-        OWLOntologyWalker walker = new OWLOntologyWalker(Collections.singleton(ontology));
+        OWLOntologyWalker walker = new OWLOntologyWalker(OwlRepo.getOntologyCollection());
         OWLOntologyWalkerVisitor visitor = new OWLOntologyWalkerVisitor(walker) {
             public void visit(OWLAnnotationAssertionAxiom axiom) {
                 if (axiom.getProperty().isLabel()) {
@@ -93,12 +79,12 @@ public class OwlUtils {
         OWLClassExpression classExpression = dataFactory.getOWLClass(IRI.create(baseIRI + "#Voice"));
         OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create(baseIRI + "#fileName"));
         OWLObjectPropertyExpression propertyExpression = dataFactory.getOWLObjectProperty(IRI.create(baseIRI + "#recordedInTheLocation"));
-        NodeSet<OWLNamedIndividual> audioTrackIndividuals = reasoner.getInstances(classExpression);
+        NodeSet<OWLNamedIndividual> audioTrackIndividuals = OwlRepo.getReasoner().getInstances(classExpression);
         audioTrackIndividuals.forEach( ati -> {
-            NodeSet<OWLNamedIndividual> recordedInLocationObject = reasoner.getObjectPropertyValues(ati.getRepresentativeElement(), propertyExpression);
+            NodeSet<OWLNamedIndividual> recordedInLocationObject = OwlRepo.getReasoner().getObjectPropertyValues(ati.getRepresentativeElement(), propertyExpression);
             namedIndividuals.forEach( o -> {
                 if (recordedInLocationObject.containsEntity(o)) {
-                    Set<OWLLiteral> fileNameLiteral = reasoner.getDataPropertyValues(ati.getRepresentativeElement(), owlDataProperty);
+                    Set<OWLLiteral> fileNameLiteral = OwlRepo.getReasoner().getDataPropertyValues(ati.getRepresentativeElement(), owlDataProperty);
                     fileNameLiteral.forEach( l -> audioFileNames.put(o, l.getLiteral()));
                 }
             });
@@ -108,7 +94,7 @@ public class OwlUtils {
 
     public static NodeSet<OWLClass> getRealEstateSubClasses() {
         IRI iri = IRI.create(baseIRI + "g#RealEstate");
-        return reasoner.getSubClasses(dataFactory.getOWLClass(iri));
+        return OwlRepo.getReasoner().getSubClasses(dataFactory.getOWLClass(iri));
     }
 
     public static OWLClass getBlockOfFlatsOWLClass() {
@@ -122,9 +108,9 @@ public class OwlUtils {
         OWLClassExpression voiceClassExp = dataFactory.getOWLClass(IRI.create(baseIRI + "#Voice"));
         OWLObjectPropertyExpression recordedInLocationExp = dataFactory.getOWLObjectProperty(IRI.create(baseIRI + "#recordedInTheLocation"));
         AtomicInteger counter = new AtomicInteger(0);
-        NodeSet<OWLNamedIndividual> voiceInstances = reasoner.getInstances(voiceClassExp);
+        NodeSet<OWLNamedIndividual> voiceInstances = OwlRepo.getReasoner().getInstances(voiceClassExp);
         voiceInstances.forEach( v -> {
-            NodeSet<OWLNamedIndividual> objectPropertyValues = reasoner.getObjectPropertyValues(v.getRepresentativeElement(), recordedInLocationExp);
+            NodeSet<OWLNamedIndividual> objectPropertyValues = OwlRepo.getReasoner().getObjectPropertyValues(v.getRepresentativeElement(), recordedInLocationExp);
             if(objectPropertyValues.containsEntity(point)) counter.getAndIncrement();
         });
         return counter.get();

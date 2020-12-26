@@ -668,6 +668,16 @@
     
 
 
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_blockOfFlatsUphDomStudentaNr1_0001 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_blockOfFlatsUphDomStudentaNr1_0001">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
+        <CityOntoNavi:recordedInTheLocation rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#blockOfFlatsUphDomStudentaNr1"/>
+        <CityOntoNavi:fileName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Track_blockOfFlatsUphDomStudentaNr1_0001.mp3</CityOntoNavi:fileName>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_busStop_0003 -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_busStop_0003">
@@ -769,6 +779,18 @@
         <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
         <CityOntoNavi:location_gps_coordinates>52.165071, 22.271703</CityOntoNavi:location_gps_coordinates>
         <rdfs:comment xml:lang="pl">Bankomat.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#blockOfFlatsUphDomStudentaNr1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#blockOfFlatsUphDomStudentaNr1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BlockOfFlats"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"/>
+        <CityOntoNavi:location_gps_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string">52.163546, 22.272052</CityOntoNavi:location_gps_coordinates>
+        <rdfs:comment xml:lang="pl">UPH - Dom Studenta Nr1 przy ulicy 3 Maja</rdfs:comment>
+        <rdfs:label xml:lang="pl">UPH - Dom Studenta Nr 1</rdfs:label>
     </owl:NamedIndividual>
     
 
