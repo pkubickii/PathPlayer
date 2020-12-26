@@ -57,7 +57,7 @@ public class OwlManagement {
     }
 
     private static void addGpsClass(OWLPoint point) {
-        OWLClass gpsClass = dataFactory.getOWLClass(IRI.create(baseIRI + "#GPSCoordinates"));
+        OWLClass gpsClass = dataFactory.getOWLClass(IRI.create(baseIRI + "g#GPSCoordinates"));
         ontology.add(dataFactory.getOWLClassAssertionAxiom(gpsClass, point.getPointIndividual()));
     }
 

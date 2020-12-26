@@ -107,12 +107,12 @@ public class OwlUtils {
     }
 
     public static NodeSet<OWLClass> getRealEstateSubClasses() {
-        IRI iri = IRI.create(baseIRI + "#RealEstate");
+        IRI iri = IRI.create(baseIRI + "g#RealEstate");
         return reasoner.getSubClasses(dataFactory.getOWLClass(iri));
     }
 
     public static OWLClass getBlockOfFlatsOWLClass() {
-        return dataFactory.getOWLClass(IRI.create(baseIRI + "#BlockOfFlats"));
+        return dataFactory.getOWLClass(IRI.create(baseIRI + "g#BlockOfFlats"));
     }
 
     public static OWLNamedIndividual getNewTrack(OWLNamedIndividual individual) {
