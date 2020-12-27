@@ -5,8 +5,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import pl.pkubicki.models.ValidatedTextField?>
+
+<?import java.lang.String?>
+
 
 <VBox xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.OwlPanelController">
+    <fx:define>
+        <String fx:id="LATITUDE_PATTERN" fx:value="^(\+|-)?(?:90(?:(?:\.0+)?)|(?:[0-9]|[1-8][0-9])(?:(?:\.\d+)?))$"/>
+        <String fx:id="LONGITUDE_PATTERN" fx:value="^(\+|-)?(?:180(?:(?:\.0+)?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.\d+)?))$"/>
+    </fx:define>
    <MenuBar>
      <menus>
        <Menu mnemonicParsing="false" text="File">
@@ -36,13 +44,13 @@
 <!--                        <gridLinesVisible>true</gridLinesVisible>-->
 
                         <Label text="Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                        <TextField fx:id="latitudeText" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <ValidatedTextField fx:id="latitudeText" minLength="4" maxLength="20" mask="$LATITUDE_PATTERN" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                         <Label text="Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                        <TextField fx:id="longitudeText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ValidatedTextField fx:id="longitudeText" minLength="4" maxLength="20" mask="$LONGITUDE_PATTERN" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                         <Label text="Point label:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                        <TextField fx:id="labelText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ValidatedTextField fx:id="labelText" minLength="3" maxLength="30" mask=".*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                         <Label text="Point class:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                         <ChoiceBox fx:id="realEstatesChoiceBox" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" />
@@ -54,7 +62,7 @@
                         <Text fx:id="fileName" GridPane.columnIndex="1" GridPane.rowIndex="9" />
 
                         <HBox alignment="BOTTOM_RIGHT" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="9">
-                            <Button onAction="#selectFile" text="Open File" />
+                            <Button fx:id="selectFileButton" onAction="#selectFile" text="Open File" />
                         </HBox>
                         <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="12">
                             <Button onAction="#submitHandler" text="Submit Point" />

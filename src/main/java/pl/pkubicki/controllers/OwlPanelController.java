@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -15,27 +14,26 @@ import javafx.util.StringConverter;
 import org.semanticweb.owlapi.model.OWLClass;
 import pl.pkubicki.models.OWLAudioTrack;
 import pl.pkubicki.models.OWLPoint;
+import pl.pkubicki.models.ValidatedTextField;
+import pl.pkubicki.repositories.S3Repo;
 import pl.pkubicki.util.FxUtils;
 import pl.pkubicki.util.OwlManagement;
-import pl.pkubicki.repositories.S3Repo;
-import software.amazon.awssdk.regions.Region;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 public class OwlPanelController implements Initializable {
-    private static Region region = Region.EU_NORTH_1;
-    @FXML private TextField latitudeText;
-    @FXML private TextField longitudeText;
-    @FXML private TextField labelText;
+
+    @FXML private ValidatedTextField latitudeText;
+    @FXML private ValidatedTextField longitudeText;
+    @FXML private ValidatedTextField labelText;
     @FXML private ChoiceBox<OWLClass> realEstatesChoiceBox;
     @FXML private TextArea commentText;
     @FXML private Text submitStatus;
     @FXML private Text fileName;
-    private static File audioFile;
 
+    private static File audioFile;
     private static ObservableList<OWLClass> realEstates = FXCollections.emptyObservableList();
 
     @FXML
