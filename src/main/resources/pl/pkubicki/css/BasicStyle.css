@@ -16,6 +16,8 @@
     -fx-font-family: "Arial";
     -fx-font-weight: bold;
     -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+}
+.button.shadow {
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 .button.play {
@@ -26,4 +28,8 @@
 }
 .button.stop {
     -fx-background-color: linear-gradient(#ff8080 0%, #ff4d4d 25%, #ff1a1a 75%, #e60000 100%);
+}
+.error {
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
 }

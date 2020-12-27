@@ -1,14 +1,21 @@
 package pl.pkubicki.util;
 
 import fr.dudie.nominatim.model.Address;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
+import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
@@ -19,6 +26,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class FxUtils {
+    private static final Effect focusEffect = new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 8, 0.9, 3, 3);
+
     public static void generateSearchResultsInChBox(ChoiceBox<Address> choiceBox, String query){
         ObservableList<Address> observableList = FXCollections.emptyObservableList();
         try {
@@ -30,6 +39,7 @@ public class FxUtils {
         choiceBox.setItems(observableList);
         setSearchResultsChBoxStringConverter(choiceBox);
         choiceBox.getSelectionModel().selectFirst();
+        choiceBox.show();
     }
     private static void setSearchResultsChBoxStringConverter(ChoiceBox<Address> choiceBox) {
         choiceBox.setConverter(new StringConverter<Address>() {
@@ -87,6 +97,34 @@ public class FxUtils {
         return FXCollections.observableList(realEstates);
     }
 
+    public static void getFocusListener(Node focusedNode, Node nodeLabel) {
+        focusedNode.focusedProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean oldVal, Boolean newVal) -> {
+            focusEffect(newVal, nodeLabel);
+        });
+    }
+
+    public static void getFocusListener(Node focusedNode) {
+        focusedNode.focusedProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean oldVal, Boolean newVal) -> {
+            focusEffect(newVal, focusedNode);
+        });
+    }
+
+    private static void focusEffect(boolean state, Node node) {
+        if(state) {
+            if (node instanceof Button) {
+                node.getStyleClass().remove("shadow");
+                node.setEffect(focusEffect);
+            }
+            node.setEffect(focusEffect);
+        } else {
+            if (node instanceof Button) {
+                node.getStyleClass().add("shadow");
+            }
+            node.setEffect(null);
+        }
+    }
+
+
     public static class SubmitTextFieldHandler implements EventHandler<KeyEvent> {
         private final ChoiceBox<Address> searchResults;
         private final TextField searchText;
@@ -107,4 +145,27 @@ public class FxUtils {
             }
         }
     }
+
+    public static class TabTraversalEventHandler implements EventHandler<KeyEvent> {
+
+        @Override
+        public void handle(KeyEvent event) {
+            KeyCode code = event.getCode();
+
+            if (code == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown()) {
+                event.consume();
+                Node node = (Node) event.getSource();
+                KeyEvent newEvent
+                        = new KeyEvent(event.getSource(),
+                        event.getTarget(), event.getEventType(),
+                        event.getCharacter(), event.getText(),
+                        event.getCode(), event.isShiftDown(),
+                        true, event.isAltDown(),
+                        event.isMetaDown());
+
+                node.fireEvent(newEvent);
+            }
+        }
+    }
+
 }

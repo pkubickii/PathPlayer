@@ -11,11 +11,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class OwlRepo {
-    private static final File owlFile = new File("src/main/java/pl/pkubicki/CityOnto.owl");
+    private static final File owlFile = new File("./ontology/CityOnto.owl");
     private static final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-    private static final OWLDataFactory dataFactory = manager.getOWLDataFactory();
     private static final OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
-//    private static final IRI baseIRI = IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi");
     private static OWLOntology ontology;
     static {
         try {

@@ -13,16 +13,16 @@
       <Text id="welcome-text" text="Welcome to PathPlayer" />
    </HBox>
    <HBox GridPane.rowIndex="1" alignment="CENTER">
-      <Button fx:id="secondaryControllerButton" onAction="#switchToSecondary" text="Login" minHeight="50" minWidth="100" alignment="CENTER" />
+      <Button fx:id="secondaryControllerButton" onAction="#switchToSecondary" styleClass="shadow" text="Login" minHeight="50" minWidth="100" alignment="CENTER" />
    </HBox>
    <HBox GridPane.rowIndex="2" alignment="CENTER">
-      <Button fx:id="owlPanelButton" onAction="#switchToOwlPanel" text="OWL Panel" minHeight="50" minWidth="100" alignment="CENTER" />
+      <Button fx:id="owlPanelButton" onAction="#switchToOwlPanel" styleClass="shadow" text="OWL Panel" minHeight="50" minWidth="100" alignment="CENTER" />
    </HBox>
    <HBox GridPane.rowIndex="3" alignment="CENTER">
-      <Button fx:id="freeTravelButton" onAction="#switchToFreeTravel" text="Free Travel" minHeight="50" minWidth="100" alignment="CENTER" />
+      <Button fx:id="freeTravelButton" onAction="#switchToFreeTravel" styleClass="shadow" text="Free Travel" minHeight="50" minWidth="100" alignment="CENTER" />
    </HBox>
    <HBox GridPane.rowIndex="4" alignment="CENTER">
-      <Button fx:id="routeTravelButton" onAction="#switchToRouteTravel" text="Routing Travel" minHeight="50" minWidth="100" alignment="CENTER" />
+      <Button fx:id="routeTravelButton" onAction="#switchToRouteTravel" styleClass="shadow" text="Routing Travel" minHeight="50" minWidth="100" alignment="CENTER" />
    </HBox>
 
    <stylesheets>
