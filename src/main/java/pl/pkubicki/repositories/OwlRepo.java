@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class OwlRepo {
-    private static final File owlFile = new File("./ontology/CityOnto.owl");
+    private static final File owlFile = new File("ontology/CityOnto.owl");
     private static final OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
     private static final OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
     private static OWLOntology ontology;

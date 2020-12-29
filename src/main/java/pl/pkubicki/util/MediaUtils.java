@@ -5,10 +5,30 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
-import java.util.LinkedList;
+import java.util.*;
 
 public class MediaUtils {
     private static Media media;
+    private static final File[] SOUNDS = new File("sounds").listFiles(((dir, name) -> name.endsWith(".mp3")));
+    private static final List<Media> AUDIO_CUES = new ArrayList<Media>() {
+        {
+            for (File file : SOUNDS) {
+                if (file.isFile()) add(new Media(file.toURI().toString()));
+            }
+        }
+    };
+
+    public static void playAudioCue(String audioCue) {
+        MediaPlayer mediaPlayer = new MediaPlayer(Objects.requireNonNull(getAudioCue(audioCue)));
+        mediaPlayer.play();
+    }
+
+    private static Media getAudioCue(String fileName) {
+        for (Media media : AUDIO_CUES) {
+            if(media.getSource().contains("/" + fileName + ".mp3")) return media;
+        }
+        return null;
+    }
 
     public static void playAudioFile(File file) {
         media = new Media(file.toURI().toString());

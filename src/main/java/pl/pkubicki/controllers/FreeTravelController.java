@@ -72,7 +72,7 @@ public class FreeTravelController implements Initializable {
         initializeStepLengthChoiceBoxListener();
         initializeVicinityDistances();
         initializeVicinityDistancesListenerToRefreshProximityValues();
-        initializeSearchResultsListenerToRefreshGpsValues();
+        initializeSearchResultsListeners();
         initializeTravelButtonsHandler();
     }
 
@@ -139,7 +139,7 @@ public class FreeTravelController implements Initializable {
         vicinityDistChoiceBox.setValue(200.0);
     }
 
-    private void initializeSearchResultsListenerToRefreshGpsValues() {
+    private void initializeSearchResultsListeners() {
         searchResultsChoiceBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
             if (newVal != null) {
                 latitudeText.setText(String.valueOf(newVal.getLatitude()));

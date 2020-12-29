@@ -3,7 +3,7 @@
     -fx-text-fill: white;
 }
 
-.list-cell:even { /* <=== changed to even */
+.list-cell:even {
     -fx-background-color: white;
 }
 
@@ -32,4 +32,7 @@
 .error {
     -fx-font-weight: bold;
     -fx-text-fill: red;
+}
+.text {
+    -fx-font-size: 12pt;
 }

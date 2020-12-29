@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -22,6 +23,7 @@ import pl.pkubicki.models.OWLPoint;
 import pl.pkubicki.models.ValidatedTextField;
 import pl.pkubicki.repositories.S3Repo;
 import pl.pkubicki.util.FxUtils;
+import pl.pkubicki.util.MediaUtils;
 import pl.pkubicki.util.OwlManagement;
 
 import java.io.File;
@@ -54,32 +56,32 @@ public class OwlPanelController implements Initializable {
     private static ObservableList<OWLClass> realEstates = FXCollections.emptyObservableList();
     private static final Effect invalidEffect = new DropShadow(BlurType.GAUSSIAN, Color.RED, 9, 0.9, 2, 2);
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         searchText.setOnKeyReleased(new FxUtils.SubmitTextFieldHandler(searchResultsChoiceBox, searchText));
         initializeRealEstatesChoiceBox();
-        initializeSearchResultsListenerToRefreshGpsValues();
+        initializeSearchResultsListeners();
         initializeCommentText();
-
-        initializeFocusListener(searchText, labelForSearchText);
-        initializeFocusListener(searchButton);
-        initializeFocusListener(searchResultsChoiceBox, labelForSearchResultsChoiceBox);
-        initializeFocusListener(latitudeText, labelForLatitudeText);
-        initializeFocusListener(longitudeText, labelForLongitudeText);
-        initializeFocusListener(labelText, labelForLabelText);
-        initializeFocusListener(realEstatesChoiceBox, labelForRealEstatesChoiceBox);
-        initializeFocusListener(commentText, labelForCommentText);
-        initializeFocusListener(commentText, labelForCommentText);
-        initializeFocusListener(selectFileButton);
-        initializeFocusListener(submitButton);
+        initializeFocusListener(searchText, labelForSearchText, true);
+        initializeFocusListener(searchButton, true);
+        initializeFocusListener(searchResultsChoiceBox, labelForSearchResultsChoiceBox, false);
+        initializeFocusListener(latitudeText, labelForLatitudeText, true);
+        initializeFocusListener(longitudeText, labelForLongitudeText, true);
+        initializeFocusListener(labelText, labelForLabelText, true);
+        initializeFocusListener(realEstatesChoiceBox, labelForRealEstatesChoiceBox, false);
+        initializeFocusListener(commentText, labelForCommentText, true);
+        initializeFocusListener(commentText, labelForCommentText, true);
+        initializeFocusListener(selectFileButton, true);
+        initializeFocusListener(submitButton, true);
     }
 
-    private void initializeFocusListener(Node focusedNode, Node nodeLabel) {
-        FxUtils.getFocusListener(focusedNode, nodeLabel);
+    private void initializeFocusListener(Node focusedNode, Node nodeLabel, boolean sound) {
+        FxUtils.getFocusListener(focusedNode, nodeLabel, sound);
     }
 
-    private void initializeFocusListener(Node focusedNode) {
-        FxUtils.getFocusListener(focusedNode);
+    private void initializeFocusListener(Node focusedNode, boolean sound) {
+        FxUtils.getFocusListener(focusedNode, sound);
     }
 
     private void initializeCommentText() {
@@ -94,17 +96,22 @@ public class OwlPanelController implements Initializable {
         realEstatesChoiceBox.getItems().clear();
         realEstatesChoiceBox.setItems(realEstates);
         setRealEstatesChoiceBoxStringConverter(realEstatesChoiceBox);
+
         realEstatesChoiceBox.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) realEstatesChoiceBox.setEffect(null);
-        });
-    }
-    private void initializeSearchResultsListenerToRefreshGpsValues() {
-        searchResultsChoiceBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
             if (newVal != null) {
-                latitudeText.setText(String.valueOf(newVal.getLatitude()));
-                longitudeText.setText(String.valueOf(newVal.getLongitude()));
+                realEstatesChoiceBox.setEffect(null);
+                MediaUtils.playAudioCue("select");
             }
         });
+
+        realEstatesChoiceBox.addEventFilter(KeyEvent.KEY_RELEASED, (event -> {
+            if(event.getCode() == KeyCode.TAB) MediaUtils.playAudioCue("beep");
+        }));
+    }
+
+    private void initializeSearchResultsListeners() {
+        FxUtils.updateGpsValuesFromSearchChoice(searchResultsChoiceBox, latitudeText, longitudeText);
+        FxUtils.getChoiceBoxListenerForBeepSound(searchResultsChoiceBox);
     }
 
     private void setRealEstatesChoiceBoxStringConverter(ChoiceBox<OWLClass> choiceBox) {
@@ -125,9 +132,13 @@ public class OwlPanelController implements Initializable {
     public void searchButtonHandler() {
         if (!searchText.getText().isEmpty()) {
             FxUtils.generateSearchResultsInChBox(searchResultsChoiceBox, searchText.getText());
+            searchResultsChoiceBox.requestFocus();
+            MediaUtils.playAudioCue("select");
         } else {
             System.out.println("Search query is empty.");
+            MediaUtils.playAudioCue("error");
         }
+
     }
 
     @FXML
@@ -143,10 +154,13 @@ public class OwlPanelController implements Initializable {
             OwlManagement.savePoint(newPoint);
             OwlManagement.saveAudioTrack(newAudioTrack);
             S3Repo.uploadFile(audioFile, newAudioTrack.getName() + ".mp3");
+            MediaUtils.playAudioCue("push");
         } else {
+            MediaUtils.playAudioCue("error");
             setErrorsOnInvalidFields();
             submitStatus.setText("Please check and correct highlighted fields in form.");
         }
+
     }
 
     private boolean isFormValid() {
@@ -172,6 +186,7 @@ public class OwlPanelController implements Initializable {
 
     @FXML
     public void selectFile(){
+        MediaUtils.playAudioCue("open");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open file");
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Audio files (*.mp3)", "*.mp3");
@@ -180,6 +195,7 @@ public class OwlPanelController implements Initializable {
         if (audioFile != null) {
             fileName.setText(audioFile.getName());
         }
+
     }
 
 }

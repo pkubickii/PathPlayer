@@ -40,6 +40,7 @@ public class FxUtils {
         setSearchResultsChBoxStringConverter(choiceBox);
         choiceBox.getSelectionModel().selectFirst();
         choiceBox.show();
+        MediaUtils.playAudioCue("open");
     }
     private static void setSearchResultsChBoxStringConverter(ChoiceBox<Address> choiceBox) {
         choiceBox.setConverter(new StringConverter<Address>() {
@@ -63,6 +64,12 @@ public class FxUtils {
                 lng.setText(String.valueOf(newVal.getLongitude()));
             }
         });
+    }
+    public static void getChoiceBoxListenerForBeepSound(ChoiceBox<?> cB) {
+        cB.addEventFilter(KeyEvent.KEY_RELEASED, (event -> {
+            KeyCode code = event.getCode();
+            if(code == KeyCode.TAB) MediaUtils.playAudioCue("beep");
+        }));
     }
 
     public static ObservableList<Double> getObListForVicinity() {
@@ -97,29 +104,30 @@ public class FxUtils {
         return FXCollections.observableList(realEstates);
     }
 
-    public static void getFocusListener(Node focusedNode, Node nodeLabel) {
+    public static void getFocusListener(Node focusedNode, Node nodeLabel, boolean sound) {
         focusedNode.focusedProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean oldVal, Boolean newVal) -> {
-            focusEffect(newVal, nodeLabel);
+            focusEffect(newVal, nodeLabel, sound);
         });
     }
 
-    public static void getFocusListener(Node focusedNode) {
+    public static void getFocusListener(Node focusedNode, boolean sound) {
         focusedNode.focusedProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean oldVal, Boolean newVal) -> {
-            focusEffect(newVal, focusedNode);
+            focusEffect(newVal, focusedNode, sound);
         });
     }
 
-    private static void focusEffect(boolean state, Node node) {
+    private static void focusEffect(boolean state, Node node, boolean sound) {
         if(state) {
             if (node instanceof Button) {
                 node.getStyleClass().remove("shadow");
-                node.setEffect(focusEffect);
             }
             node.setEffect(focusEffect);
+            if (sound)
+            MediaUtils.playAudioCue("beep");
         } else {
             if (node instanceof Button) {
                 node.getStyleClass().add("shadow");
-            }
+            } else
             node.setEffect(null);
         }
     }
@@ -139,7 +147,10 @@ public class FxUtils {
             if(keyEvent.getCode() == KeyCode.ENTER) {
                 if (!searchText.getText().isEmpty()) {
                     FxUtils.generateSearchResultsInChBox(searchResults, searchText.getText());
+                    MediaUtils.playAudioCue("select");
+                    searchResults.requestFocus();
                 } else {
+                    MediaUtils.playAudioCue("error");
                     System.out.println("Search query is empty.");
                 }
             }
@@ -164,6 +175,18 @@ public class FxUtils {
                         event.isMetaDown());
 
                 node.fireEvent(newEvent);
+            }
+        }
+    }
+
+    public static class FocusInPopupWindowHandler implements EventHandler<KeyEvent> {
+
+        @Override
+        public void handle(KeyEvent event) {
+            KeyCode code = event.getCode();
+            if (code == KeyCode.TAB) {
+                event.consume();
+                MediaUtils.playAudioCue("ballbeep");
             }
         }
     }
