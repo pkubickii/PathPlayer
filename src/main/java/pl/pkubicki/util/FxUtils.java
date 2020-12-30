@@ -1,5 +1,6 @@
 package pl.pkubicki.util;
 
+import com.javadocmd.simplelatlng.util.LengthUnit;
 import fr.dudie.nominatim.model.Address;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -57,19 +58,13 @@ public class FxUtils {
         });
     }
 
-    public static void updateGpsValuesFromSearchChoice(ChoiceBox<Address> cB, TextField lat, TextField lng) {
+    public static void updateGpsValuesFromSearchResultsChoiceBox(ChoiceBox<Address> cB, TextField lat, TextField lng) {
         cB.valueProperty().addListener((obs, oldVal, newVal) -> {
             if(newVal != null) {
                 lat.setText(String.valueOf(newVal.getLatitude()));
                 lng.setText(String.valueOf(newVal.getLongitude()));
             }
         });
-    }
-    public static void getChoiceBoxListenerForBeepSound(ChoiceBox<?> cB) {
-        cB.addEventFilter(KeyEvent.KEY_RELEASED, (event -> {
-            KeyCode code = event.getCode();
-            if(code == KeyCode.TAB) MediaUtils.playAudioCue("beep");
-        }));
     }
 
     public static ObservableList<Double> getObListForVicinity() {
@@ -85,6 +80,20 @@ public class FxUtils {
             }
         };
         return FXCollections.observableList(vicinityDistances);
+    }
+
+    public static ObservableList<Double> getObListForStepLength() {
+        List<Double> stepLengths = new ArrayList<Double>() {
+            {
+                add(1.0);
+                add(5.0);
+                add(10.0);
+                add(20.0);
+                add(50.0);
+                add(100.0);
+            }
+        };
+        return FXCollections.observableList(stepLengths);
     }
 
     public static LinkedList<Media> getAudioTracks(Set<OWLNamedIndividual> proximityPoints) {
@@ -105,15 +114,11 @@ public class FxUtils {
     }
 
     public static void getFocusListener(Node focusedNode, Node nodeLabel, boolean sound) {
-        focusedNode.focusedProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean oldVal, Boolean newVal) -> {
-            focusEffect(newVal, nodeLabel, sound);
-        });
+        focusedNode.focusedProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean oldVal, Boolean newVal) -> focusEffect(newVal, nodeLabel, sound));
     }
 
     public static void getFocusListener(Node focusedNode, boolean sound) {
-        focusedNode.focusedProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean oldVal, Boolean newVal) -> {
-            focusEffect(newVal, focusedNode, sound);
-        });
+        focusedNode.focusedProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean oldVal, Boolean newVal) -> focusEffect(newVal, focusedNode, sound));
     }
 
     private static void focusEffect(boolean state, Node node, boolean sound) {
@@ -132,6 +137,39 @@ public class FxUtils {
         }
     }
 
+    public static void getChoiceBoxListenersForSound(ChoiceBox<?> cB) {
+        getChoiceBoxListenerForSelectValueToPlaySound(cB);
+        getChoiceBoxListenerForBeepSound(cB);
+    }
+
+    private static void getChoiceBoxListenerForSelectValueToPlaySound(ChoiceBox<?> cB) {
+        cB.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                cB.setEffect(null);
+                MediaUtils.playAudioCue("select");
+            }
+        });
+    }
+
+    private static void getChoiceBoxListenerForBeepSound(ChoiceBox<?> cB) {
+        cB.addEventFilter(KeyEvent.KEY_RELEASED, (event -> {
+            KeyCode code = event.getCode();
+            if(code == KeyCode.TAB) MediaUtils.playAudioCue("beep");
+        }));
+    }
+
+    public static ObservableList<LengthUnit> getObListForLengthUnits() {
+        List<LengthUnit> unitTypes = new ArrayList<LengthUnit>() {
+            {
+                add(LengthUnit.METER);
+                add(LengthUnit.KILOMETER);
+                add(LengthUnit.MILE);
+                add(LengthUnit.NAUTICAL_MILE);
+                add(LengthUnit.ROD);
+            }
+        };
+        return FXCollections.observableList(unitTypes);
+    }
 
     public static class SubmitTextFieldHandler implements EventHandler<KeyEvent> {
         private final ChoiceBox<Address> searchResults;
@@ -175,18 +213,6 @@ public class FxUtils {
                         event.isMetaDown());
 
                 node.fireEvent(newEvent);
-            }
-        }
-    }
-
-    public static class FocusInPopupWindowHandler implements EventHandler<KeyEvent> {
-
-        @Override
-        public void handle(KeyEvent event) {
-            KeyCode code = event.getCode();
-            if (code == KeyCode.TAB) {
-                event.consume();
-                MediaUtils.playAudioCue("ballbeep");
             }
         }
     }

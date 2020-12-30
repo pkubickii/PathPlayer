@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -20,7 +19,7 @@ import javafx.util.StringConverter;
 import org.semanticweb.owlapi.model.OWLClass;
 import pl.pkubicki.models.OWLAudioTrack;
 import pl.pkubicki.models.OWLPoint;
-import pl.pkubicki.models.ValidatedTextField;
+import pl.pkubicki.extensions.ValidatedTextField;
 import pl.pkubicki.repositories.S3Repo;
 import pl.pkubicki.util.FxUtils;
 import pl.pkubicki.util.MediaUtils;
@@ -96,22 +95,12 @@ public class OwlPanelController implements Initializable {
         realEstatesChoiceBox.getItems().clear();
         realEstatesChoiceBox.setItems(realEstates);
         setRealEstatesChoiceBoxStringConverter(realEstatesChoiceBox);
-
-        realEstatesChoiceBox.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                realEstatesChoiceBox.setEffect(null);
-                MediaUtils.playAudioCue("select");
-            }
-        });
-
-        realEstatesChoiceBox.addEventFilter(KeyEvent.KEY_RELEASED, (event -> {
-            if(event.getCode() == KeyCode.TAB) MediaUtils.playAudioCue("beep");
-        }));
+        FxUtils.getChoiceBoxListenersForSound(realEstatesChoiceBox);
     }
 
     private void initializeSearchResultsListeners() {
-        FxUtils.updateGpsValuesFromSearchChoice(searchResultsChoiceBox, latitudeText, longitudeText);
-        FxUtils.getChoiceBoxListenerForBeepSound(searchResultsChoiceBox);
+        FxUtils.updateGpsValuesFromSearchResultsChoiceBox(searchResultsChoiceBox, latitudeText, longitudeText);
+        FxUtils.getChoiceBoxListenersForSound(searchResultsChoiceBox);
     }
 
     private void setRealEstatesChoiceBoxStringConverter(ChoiceBox<OWLClass> choiceBox) {
@@ -128,6 +117,7 @@ public class OwlPanelController implements Initializable {
             }
         });
     }
+
     @FXML
     public void searchButtonHandler() {
         if (!searchText.getText().isEmpty()) {
@@ -164,15 +154,12 @@ public class OwlPanelController implements Initializable {
     }
 
     private boolean isFormValid() {
-        if(!latitudeText.getInvalid() &&
+        return !latitudeText.getInvalid() &&
                 !longitudeText.getInvalid() &&
                 !labelText.getInvalid() &&
                 !commentText.getText().isEmpty() &&
                 !fileName.getText().isEmpty() &&
-                realEstatesChoiceBox.getValue() != null) {
-            return true;
-        }
-        return false;
+                realEstatesChoiceBox.getValue() != null;
     }
 
     private void setErrorsOnInvalidFields() {
@@ -195,7 +182,5 @@ public class OwlPanelController implements Initializable {
         if (audioFile != null) {
             fileName.setText(audioFile.getName());
         }
-
     }
-
 }

@@ -1,4 +1,4 @@
-package pl.pkubicki.models;
+package pl.pkubicki.extensions;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;

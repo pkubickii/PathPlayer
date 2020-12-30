@@ -40,8 +40,7 @@ public class OwlUtils {
         return proximitySet;
     }
 
-    // method to gather all individuals from ontology which have GPS coordinates,
-    // TODO: change it into one which will narrow this list picking points from some area of vicinity in correlation to starting point
+    // TODO: change it into a method which will narrow this list picking points from some area of vicinity in correlation to starting point
     public static NodeSet<OWLNamedIndividual> getIndividualsWithGpsClass() {
         IRI owlGpsClassIRI = IRI.create(baseIRI + "g#GPSCoordinates");
         return OwlRepo.getReasoner().getInstances(dataFactory.getOWLClass(owlGpsClassIRI));

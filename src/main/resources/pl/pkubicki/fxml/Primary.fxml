@@ -5,23 +5,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<VBox styleClass="root" xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.PrimaryController">
+   <MenuBar>
+      <Menu text="_File">
+         <MenuItem text="_Close" onAction="#close"/>
+      </Menu>
+      <Menu text="_Help">
+         <MenuItem text="_Info"/>
+         <MenuItem text="_About"/>
+      </Menu>
+   </MenuBar>
 
-<GridPane alignment="CENTER" hgap="20" styleClass="root" vgap="20" xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.PrimaryController">
+   <GridPane alignment="CENTER" hgap="20"  vgap="20">
    <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
-<!--   <gridLinesVisible>true</gridLinesVisible>-->
    <HBox GridPane.rowIndex="0" >
-      <Text id="welcome-text" text="Welcome to PathPlayer" />
-   </HBox>
-   <HBox GridPane.rowIndex="1" alignment="CENTER">
-      <Button fx:id="secondaryControllerButton" onAction="#switchToSecondary" styleClass="shadow" text="Login" minHeight="50" minWidth="100" alignment="CENTER" />
+      <Text id="welcome-text" text="Welcome to PathPlayer" style="-fx-font-size: 12pt;" />
    </HBox>
    <HBox GridPane.rowIndex="2" alignment="CENTER">
-      <Button fx:id="owlPanelButton" onAction="#switchToOwlPanel" styleClass="shadow" text="OWL Panel" minHeight="50" minWidth="100" alignment="CENTER" />
+      <Button fx:id="loginButton" onAction="#switchToSecondary" styleClass="shadow" text="Login" minHeight="50" minWidth="100" alignment="CENTER" />
    </HBox>
    <HBox GridPane.rowIndex="3" alignment="CENTER">
-      <Button fx:id="freeTravelButton" onAction="#switchToFreeTravel" styleClass="shadow" text="Free Travel" minHeight="50" minWidth="100" alignment="CENTER" />
+      <Button fx:id="owlPanelButton" onAction="#switchToOwlPanel" styleClass="shadow" text="OWL Panel" minHeight="50" minWidth="100" alignment="CENTER" />
    </HBox>
    <HBox GridPane.rowIndex="4" alignment="CENTER">
+      <Button fx:id="freeTravelButton" onAction="#switchToFreeTravel" styleClass="shadow" text="Free Travel" minHeight="50" minWidth="100" alignment="CENTER" />
+   </HBox>
+   <HBox GridPane.rowIndex="5" alignment="CENTER">
       <Button fx:id="routeTravelButton" onAction="#switchToRouteTravel" styleClass="shadow" text="Routing Travel" minHeight="50" minWidth="100" alignment="CENTER" />
    </HBox>
 
@@ -29,3 +38,4 @@
       <URL value="@../css/BasicStyle.css" />
    </stylesheets>
 </GridPane>
+</VBox>

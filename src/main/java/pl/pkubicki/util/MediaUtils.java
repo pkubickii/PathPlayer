@@ -12,6 +12,7 @@ public class MediaUtils {
     private static final File[] SOUNDS = new File("sounds").listFiles(((dir, name) -> name.endsWith(".mp3")));
     private static final List<Media> AUDIO_CUES = new ArrayList<Media>() {
         {
+            assert SOUNDS != null;
             for (File file : SOUNDS) {
                 if (file.isFile()) add(new Media(file.toURI().toString()));
             }
@@ -47,9 +48,7 @@ public class MediaUtils {
             return;
         media = audioTracks.poll();
         MediaPlayer player = new MediaPlayer(media);
-        player.setOnEndOfMedia(() -> {
-            MediaUtils.play(audioTracks);
-        });
+        player.setOnEndOfMedia(() -> MediaUtils.play(audioTracks));
         player.play();
     }
 

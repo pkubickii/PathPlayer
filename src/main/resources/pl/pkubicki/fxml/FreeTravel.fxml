@@ -5,169 +5,209 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.FreeTravelController">
+<?import java.lang.String?>
+<?import pl.pkubicki.extensions.ValidatedTextField?>
+<GridPane alignment="center" hgap="10" prefWidth="816.0" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.pkubicki.controllers.FreeTravelController">
+    <fx:define>
+        <String fx:id="LATITUDE_PATTERN" fx:value="^(\+|-)?(?:90(?:(?:\.0+)?)|(?:[0-9]|[1-8][0-9])(?:(?:\.\d+)?))$"/>
+        <String fx:id="LONGITUDE_PATTERN" fx:value="^(\+|-)?(?:180(?:(?:\.0+)?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.\d+)?))$"/>
+        <String fx:id="PROXIMITY_PATTERN" fx:value="^\d+(\.\d+)?" />
+    </fx:define>
     <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
-<!--    <gridLinesVisible>true</gridLinesVisible>-->
-    <Label text="Search:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
 
+    <Label fx:id="labelForSearchText" text="Search:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
     <TextField fx:id="searchText" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-    <Label text="Search results:" GridPane.rowIndex="1" />
+
+    <Button fx:id="searchButton" onAction="#searchButtonHandler" styleClass="shadow" text="Search" GridPane.columnIndex="2" />
+
+    <Label fx:id="labelForSearchResults" text="Search results:" GridPane.rowIndex="1" />
     <ChoiceBox fx:id="searchResultsChoiceBox" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-    <Label text="Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Label fx:id="labelForLatitudeText" text="Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <ValidatedTextField fx:id="latitudeText" minLength="3" maxLength="20" mask="$LATITUDE_PATTERN" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <TextField fx:id="latitudeText" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <Label fx:id="labelForLongitudeText" text="Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <ValidatedTextField fx:id="longitudeText" minLength="3" maxLength="20" mask="$LONGITUDE_PATTERN" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-    <Label text="Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-
-    <TextField fx:id="longitudeText" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-    <Label text="Proximity[m]:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-
-    <TextField fx:id="proximityText" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <Label fx:id="labelForProximityText" text="Proximity:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <ValidatedTextField fx:id="proximityText" minLength="1" maxLength="20" mask="$PROXIMITY_PATTERN" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
     <ChoiceBox fx:id="unitChoiceBox" GridPane.columnIndex="2" GridPane.rowIndex="4" />
 
+   <Label fx:id="labelForStartPointText" text="Start Point:" GridPane.rowIndex="5" />
     <TextField fx:id="startPointText" editable="false" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-     <Button fx:id="createProxPointsButton" styleClass="shadow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#createProximityPoints" prefHeight="25.0" prefWidth="373.0" text="Create POI list in vicinity" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-     <Button fx:id="searchButton" onAction="#searchButtonHandler" styleClass="shadow" text="Search" GridPane.columnIndex="2" />
-   <Label text="Start Point:" GridPane.rowIndex="5" />
-   <Button fx:id="createStartPointButton" mnemonicParsing="false" styleClass="shadow" onAction="#makeStartPointFromGps" text="Create Start Point" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
-     <columnConstraints>
-       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-     </columnConstraints>
-     <rowConstraints>
-       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-     </rowConstraints>
-      <children>
-         <Button fx:id="buttonS" styleClass="shadow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="SOUTH" GridPane.columnIndex="1" GridPane.rowIndex="2">
-            <padding>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-            <GridPane.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </GridPane.margin>
-         </Button>
-         <Button fx:id="buttonN" styleClass="shadow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="NORTH" GridPane.columnIndex="1">
-            <padding>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-            <GridPane.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </GridPane.margin>
-         </Button>
-         <Button fx:id="buttonW" styleClass="shadow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="WEST" GridPane.rowIndex="1">
-            <padding>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-            <GridPane.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </GridPane.margin>
-         </Button>
-         <Button fx:id="buttonE" styleClass="shadow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="EAST" GridPane.columnIndex="2" GridPane.rowIndex="1">
-            <padding>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-            <GridPane.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </GridPane.margin>
-         </Button>
-         <Button fx:id="buttonNW" styleClass="shadow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="NORTH WEST">
-            <GridPane.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </GridPane.margin>
-            <padding>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-         </Button>
-         <Button fx:id="buttonNE" styleClass="shadow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="NORTH EAST" GridPane.columnIndex="2">
-            <GridPane.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </GridPane.margin>
-            <padding>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-         </Button>
-         <Button fx:id="buttonSW" styleClass="shadow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="SOUTH WEST" GridPane.rowIndex="2">
-            <GridPane.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </GridPane.margin>
-            <padding>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-         </Button>
-         <Button fx:id="buttonSE" styleClass="shadow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="SOUTH EAST" GridPane.columnIndex="2" GridPane.rowIndex="2">
-            <GridPane.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </GridPane.margin>
-            <padding>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-         </Button>
-         <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-           <columnConstraints>
-             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-           </columnConstraints>
-           <rowConstraints>
-             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-           </rowConstraints>
-            <children>
-               <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#playAudio" prefHeight="40.0" prefWidth="40.0" styleClass="shadow, play" text="|&gt;" GridPane.halignment="CENTER">
-                  <GridPane.margin>
-                     <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                  </GridPane.margin></Button>
-               <Button fx:id="buttonPause" mnemonicParsing="false" onAction="#pauseAudio" prefHeight="40.0" prefWidth="40.0" styleClass="shadow, pause" text="||" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                  <GridPane.margin>
-                     <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                  </GridPane.margin></Button>
-               <Button fx:id="buttonStop" mnemonicParsing="false" onAction="#stopAudio" prefHeight="40.0" prefWidth="40.0" styleClass="shadow, stop" text="[x]" GridPane.columnIndex="2" GridPane.halignment="CENTER">
-                  <GridPane.margin>
-                     <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                  </GridPane.margin></Button>
-            </children>
-         </GridPane>
-      </children>
-   </GridPane>
-   <GridPane GridPane.rowIndex="8">
-     <columnConstraints>
-       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-     </columnConstraints>
-     <rowConstraints>
-         <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-       <RowConstraints maxHeight="168.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-       <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-         <RowConstraints maxHeight="217.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-     </rowConstraints>
-      <children>
-         <Label text="Step length [m]:" />
-         <ChoiceBox fx:id="stepLengthChoiceBox" prefHeight="20.0" prefWidth="100.0" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-         <Label text="Vicinity dist. [m]:" GridPane.rowIndex="2" />
-         <ChoiceBox fx:id="vicinityDistChoiceBox" prefHeight="20.0" prefWidth="100.0" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-      </children>
-   </GridPane>
-   <Label text="POI's in vicinity:" GridPane.columnIndex="2" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+    <Button fx:id="createStartPointButton" mnemonicParsing="false" onAction="#makeStartPointFromGps" styleClass="shadow" text="Create Start Point" GridPane.columnIndex="2" GridPane.rowIndex="5" />
 
-   <TextArea fx:id="currentLocationText" editable="false" maxHeight="80.0" maxWidth="400.0" prefHeight="80.0" prefWidth="400.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
-      <GridPane.margin>
-         <Insets bottom="10.0" top="10.0" />
-      </GridPane.margin></TextArea>
-   <Label text="Current location:" GridPane.rowIndex="7" />
-   <ListView fx:id="proximityListView" minWidth="180.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+
+    <Button fx:id="createProximityPointsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#createProximityPoints" prefHeight="25.0" prefWidth="373.0" styleClass="shadow" text="Check for points in proximity" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+    <Label fx:id="labelForCurrentLocationTextArea" text="Current location:" GridPane.rowIndex="7" />
+    <TextArea fx:id="currentLocationText" editable="false" maxHeight="80.0" maxWidth="400.0" prefHeight="80.0" prefWidth="400.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
+        <GridPane.margin>
+            <Insets bottom="10.0" top="10.0" />
+        </GridPane.margin></TextArea>
+
+    <GridPane GridPane.rowIndex="8">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="168.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="217.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <Label fx:id="labelForStepLengthChoiceBox" text="Step length:"/>
+        <ChoiceBox fx:id="stepLengthChoiceBox" prefHeight="20.0" prefWidth="100.0" GridPane.rowIndex="1"
+                   GridPane.valignment="TOP">
+        <GridPane.margin>
+            <Insets top="10.0"/>
+        </GridPane.margin>
+        </ChoiceBox>
+        <Label fx:id="labelForVicinityChoiceBox" text="Vicinity dist.:" GridPane.rowIndex="2"/>
+        <ChoiceBox fx:id="vicinityDistChoiceBox" prefHeight="20.0" prefWidth="100.0" GridPane.rowIndex="3"
+                   GridPane.valignment="TOP">
+        <GridPane.margin>
+            <Insets top="10.0"/>
+        </GridPane.margin>
+        </ChoiceBox>
+    </GridPane>
+
+    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <Button fx:id="buttonNW" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                mnemonicParsing="false" styleClass="shadow" text="NW">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </GridPane.margin>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+        </Button>
+
+        <Button fx:id="buttonN" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                mnemonicParsing="false" styleClass="shadow" text="NORTH" GridPane.columnIndex="1">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </GridPane.margin>
+        </Button>
+
+        <Button fx:id="buttonNE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                mnemonicParsing="false" styleClass="shadow" text="NE" GridPane.columnIndex="2">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </GridPane.margin>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+        </Button>
+
+        <Button fx:id="buttonW" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                mnemonicParsing="false" styleClass="shadow" text="WEST" GridPane.rowIndex="1">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </GridPane.margin>
+        </Button>
+
+        <Button fx:id="buttonE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                mnemonicParsing="false" styleClass="shadow" text="EAST" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </GridPane.margin>
+        </Button>
+
+        <Button fx:id="buttonSW" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                mnemonicParsing="false" styleClass="shadow" text="SW" GridPane.rowIndex="2">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </GridPane.margin>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+        </Button>
+
+        <Button fx:id="buttonS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                mnemonicParsing="false" styleClass="shadow" text="SOUTH" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </GridPane.margin>
+        </Button>
+
+        <Button fx:id="buttonSE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                mnemonicParsing="false" styleClass="shadow" text="SE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+           <GridPane.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+           </GridPane.margin>
+           <padding>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+           </padding>
+        </Button>
+
+        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Button fx:id="playButton" mnemonicParsing="false" onAction="#playAudio" prefHeight="40.0"
+                    prefWidth="40.0" styleClass="shadow, play" text="|&gt;" GridPane.halignment="CENTER">
+                <GridPane.margin>
+                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+                </GridPane.margin>
+            </Button>
+            <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#pauseAudio" prefHeight="40.0"
+                    prefWidth="40.0" styleClass="shadow, pause" text="||" GridPane.columnIndex="1"
+                    GridPane.halignment="CENTER">
+                <GridPane.margin>
+                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+                </GridPane.margin>
+            </Button>
+            <Button fx:id="stopButton" mnemonicParsing="false" onAction="#stopAudio" prefHeight="40.0"
+                    prefWidth="40.0" styleClass="shadow, stop" text="[x]" GridPane.columnIndex="2"
+                    GridPane.halignment="CENTER">
+                <GridPane.margin>
+                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+                </GridPane.margin>
+            </Button>
+        </GridPane>
+    </GridPane>
+
+    <Label fx:id="labelForPointsListView" text="Points in vicinity:" GridPane.columnIndex="2" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+    <ListView fx:id="proximityListView" minWidth="230.0" prefHeight="200.0" prefWidth="230.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+
     <stylesheets>
         <URL value="@../css/BasicStyle.css" />
     </stylesheets>
-   <columnConstraints>
-      <ColumnConstraints maxWidth="125.0" minWidth="100.0" prefWidth="100.0" />
+
+    <columnConstraints>
+      <ColumnConstraints maxWidth="125.0" minWidth="150.0" prefWidth="100.0" />
       <ColumnConstraints maxWidth="472.0" minWidth="400.0" prefWidth="400.0" />
-      <ColumnConstraints maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />
+      <ColumnConstraints maxWidth="160.0" minWidth="200.0" prefWidth="160.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints minHeight="40.0" prefHeight="40.0" />
