@@ -22,6 +22,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import pl.pkubicki.repositories.S3Repo;
+import software.amazon.awssdk.services.polly.PollyClient;
 
 import java.io.IOException;
 import java.util.*;
@@ -216,5 +217,4 @@ public class FxUtils {
             }
         }
     }
-
 }

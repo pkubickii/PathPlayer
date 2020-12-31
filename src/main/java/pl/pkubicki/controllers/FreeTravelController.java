@@ -23,10 +23,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import pl.pkubicki.extensions.ValidatedTextField;
-import pl.pkubicki.util.FxUtils;
-import pl.pkubicki.util.MediaUtils;
-import pl.pkubicki.util.NominatimUtils;
-import pl.pkubicki.util.OwlUtils;
+import pl.pkubicki.util.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -86,6 +83,8 @@ public class FreeTravelController implements Initializable {
     private static Media media;
     private static MediaPlayer player;
     private static final Effect invalidEffect = new DropShadow(BlurType.GAUSSIAN, Color.RED, 9, 0.9, 2, 2);
+    private static String currentLocationString = "";
+    private static String startPointString = "";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -129,7 +128,10 @@ public class FreeTravelController implements Initializable {
         initializeFocusListener(pauseButton, true);
         initializeFocusListener(stopButton, true);
 
-
+        currentLocationText.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene == null) return;
+                newScene.addEventFilter(KeyEvent.KEY_RELEASED, new VoiceCueEventHandler());
+        });
     }
 
     private void initializeFocusListener(Node focusedNode, Node nodeLabel, boolean sound) {
@@ -286,7 +288,9 @@ public class FreeTravelController implements Initializable {
         if (!latitudeText.getInvalid() && !longitudeText.getInvalid()) {
             startPoint = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
             try {
-                startPointText.setText(NominatimUtils.getCurrentLocationAddress(startPoint).getDisplayName());
+                String text = NominatimUtils.getCurrentLocationAddress(startPoint).getDisplayName();
+                startPointText.setText(text);
+                startPointString = text;
             } catch (IOException e) {
                 System.out.println("Nominatim error: " + e.getMessage() + "cause: " + e.getCause());
                 e.printStackTrace();
@@ -294,7 +298,7 @@ public class FreeTravelController implements Initializable {
         } else {
             MediaUtils.playAudioCue("error");
             setErrorsOnInvalidFields();
-            System.out.println("Empty gps coords.");
+            System.out.println("Invalid gps coords.");
         }
     }
 
@@ -302,9 +306,9 @@ public class FreeTravelController implements Initializable {
         if (startPoint != null) {
             Address address = NominatimUtils.getCurrentLocationAddress(startPoint);
             currentLocationText.setText(address.getDisplayName());
+            currentLocationString = address.getDisplayName();
         } else {
             makeStartPointFromGps();
-            System.out.println("No Starting Point.");
         }
     }
 
@@ -443,6 +447,24 @@ public class FreeTravelController implements Initializable {
                 MediaUtils.playAudioCue("error");
                 setErrorsOnInvalidFields();
                 System.out.println("Empty GPS coordinates.");
+            }
+        }
+    }
+
+    private static class VoiceCueEventHandler implements EventHandler<KeyEvent> {
+
+        @Override
+        public void handle(KeyEvent event) {
+            KeyCode code = event.getCode();
+            if(code == KeyCode.F1) {
+                if (!currentLocationString.isEmpty())
+                    new Thread (() -> PollyUtils.play(currentLocationString)).start();
+                else System.out.println("No current location.");
+            }
+            if(code == KeyCode.F2) {
+                if (!startPointString.isEmpty())
+                    new Thread(() -> PollyUtils.play(startPointString)).start();
+                else System.out.println("No starting point.");
             }
         }
     }

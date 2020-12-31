@@ -1,12 +1,9 @@
-package pl.pkubicki.controllers;
+package pl.pkubicki.util;
 
-import javafx.embed.swing.JFXPanel;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import javazoom.jl.player.advanced.PlaybackEvent;
 import javazoom.jl.player.advanced.PlaybackListener;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.polly.PollyClient;
@@ -15,29 +12,15 @@ import software.amazon.awssdk.services.polly.model.*;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class PrimaryControllerTest {
+public class PollyUtils {
     private static final Region region = Region.EU_NORTH_1;
-    private static final String SAMPLE = "Test języka polskiego w syntezatorze mowy llllll.77777";
 
-    @BeforeEach
-    public void setUp() {
-        JFXPanel fxPanel = new JFXPanel();
-    }
-    @Test
-    public void pollyTest() {
+    public static void play(String text) {
         PollyClient polly = PollyClient.builder().region(region).build();
-        new Thread( () -> {
-            talkPolly(polly);
-            try {
-                Thread.sleep( 2000 );
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            polly.close();
-        });
+        talkPolly(polly, text);
+        polly.close();
     }
-
-    public static void talkPolly(PollyClient polly) {
+    public static void talkPolly(PollyClient polly, String text) {
         try {
             DescribeVoicesRequest describeVoiceRequest = DescribeVoicesRequest.builder()
                     .engine("standard")
@@ -47,14 +30,14 @@ public class PrimaryControllerTest {
             DescribeVoicesResponse describeVoicesResult = polly.describeVoices(describeVoiceRequest);
             Voice voice = describeVoicesResult.voices().get(0);
 
-            InputStream stream = synthesize(polly, SAMPLE, voice, OutputFormat.MP3);
+            InputStream stream = synthesize(polly, text, voice, OutputFormat.MP3);
 
             AdvancedPlayer player = new AdvancedPlayer(stream, javazoom.jl.player.FactoryRegistry.systemRegistry().createAudioDevice());
             player.setPlayBackListener(new PlaybackListener() {
 
                 public void playbackStarted(PlaybackEvent evt) {
                     System.out.println("Playback started");
-                    System.out.println(SAMPLE);
+                    System.out.println(text);
                 }
 
                 public void playbackFinished(PlaybackEvent evt) {
@@ -62,7 +45,6 @@ public class PrimaryControllerTest {
                 }
             });
 
-            // play it!
             player.play();
         } catch (PollyException | JavaLayerException | IOException e) {
             System.err.println(e.getMessage());
