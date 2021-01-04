@@ -456,12 +456,12 @@ public class FreeTravelController implements Initializable {
         @Override
         public void handle(KeyEvent event) {
             KeyCode code = event.getCode();
-            if(code == KeyCode.F1) {
+            if(code == KeyCode.NUMPAD5) {
                 if (!currentLocationString.isEmpty())
                     new Thread (() -> PollyUtils.play(currentLocationString)).start();
                 else System.out.println("No current location.");
             }
-            if(code == KeyCode.F2) {
+            if(code == KeyCode.F1) {
                 if (!startPointString.isEmpty())
                     new Thread(() -> PollyUtils.play(startPointString)).start();
                 else System.out.println("No starting point.");

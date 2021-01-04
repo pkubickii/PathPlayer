@@ -43,7 +43,7 @@ public class PrimaryController implements Initializable {
     @FXML
     private void switchToOwlPanel() throws IOException {
         MediaUtils.playAudioCue("push");
-        App.setRoot("fxml/OwlPanel", 800, 600);
+        App.setRoot("fxml/OwlPanel", 1000, 600);
         App.centerOnStage();
     }
 

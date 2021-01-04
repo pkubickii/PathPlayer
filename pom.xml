@@ -83,7 +83,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.junit.vintage/junit-vintage-engine -->
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
@@ -91,6 +90,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.lwjgl/lwjgl-openal -->
+        <dependency>
+            <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-openal</artifactId>
+            <version>3.2.3</version>
+        </dependency>
 
         <dependency>
             <groupId>com.javadocmd</groupId>
