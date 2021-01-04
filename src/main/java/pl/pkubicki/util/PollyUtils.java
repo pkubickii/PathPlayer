@@ -11,11 +11,18 @@ import software.amazon.awssdk.services.polly.model.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PollyUtils {
     private static final Region region = Region.EU_NORTH_1;
+    private static AdvancedPlayer player;
+    private static AtomicBoolean isPlaying = new AtomicBoolean(false);
 
     public static void play(String text) {
+        if (isPlaying()) {
+            player.stop();
+            player.close();
+        }
         PollyClient polly = PollyClient.builder().region(region).build();
         talkPolly(polly, text);
         polly.close();
@@ -32,15 +39,18 @@ public class PollyUtils {
 
             InputStream stream = synthesize(polly, text, voice, OutputFormat.MP3);
 
-            AdvancedPlayer player = new AdvancedPlayer(stream, javazoom.jl.player.FactoryRegistry.systemRegistry().createAudioDevice());
+            player = new AdvancedPlayer(stream, javazoom.jl.player.FactoryRegistry.systemRegistry().createAudioDevice());
+
             player.setPlayBackListener(new PlaybackListener() {
 
                 public void playbackStarted(PlaybackEvent evt) {
                     System.out.println("Playback started");
                     System.out.println(text);
+                    isPlaying.getAndSet(true);
                 }
 
                 public void playbackFinished(PlaybackEvent evt) {
+                    isPlaying.getAndSet(false);
                     System.out.println("Playback finished");
                 }
             });
@@ -62,5 +72,9 @@ public class PollyUtils {
 
         ResponseInputStream<SynthesizeSpeechResponse> synthRes = polly.synthesizeSpeech(synthReq);
         return synthRes;
+    }
+
+    public static boolean isPlaying() {
+        return isPlaying.get();
     }
 }

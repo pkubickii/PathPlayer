@@ -29,6 +29,7 @@ import java.util.*;
 
 public class FxUtils {
     private static final Effect focusEffect = new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 8, 0.9, 3, 3);
+    private static Properties audioCues = new HelpProperties().loadProperties();
 
     public static void generateSearchResultsInChBox(ChoiceBox<Address> choiceBox, String query){
         ObservableList<Address> observableList = FXCollections.emptyObservableList();
@@ -214,6 +215,23 @@ public class FxUtils {
                         event.isMetaDown());
 
                 node.fireEvent(newEvent);
+            }
+        }
+    }
+
+    public static class AudioHelpEventHandler implements EventHandler<KeyEvent> {
+        private String helpKey;
+
+        public AudioHelpEventHandler(String helpKey) {
+            this.helpKey = helpKey;
+        }
+
+        @Override
+        public void handle(KeyEvent event) {
+            KeyCode code = event.getCode();
+
+            if(code == KeyCode.F1) {
+                new Thread(() -> PollyUtils.play(audioCues.getProperty(helpKey))).start();
             }
         }
     }

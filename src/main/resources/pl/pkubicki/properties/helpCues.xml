@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="latitudeHelp">Pole do wprowadzenia szerokości geograficznej. Dopuszczalny zakres od -90.0 do 90.0 Wymagany separator to kropka oraz conajmniej jedna cyfra po kropce.</entry>
+    <entry key="longitudeHelp">Pole do wprowadzenia długości geograficznej. Dopuszczalny zakres od -180.0 do 180.0 Wymagany separator to kropka oraz conajmniej jedna cyfra po kropce.</entry>
+    <entry key="searchHelp">Pole do wprowadzenia adresu nazwy miejsca miejscowości w celu wybrania koordynatów GPS</entry>
+    <entry key="searchButtonHelp">Przycisk szukaj który przeniesie na pole wyboru wyników wyszukiwania</entry>
+    <entry key="searchResultsHelp">Pole zawierające listę wyników wyszukiwania. Można wybrać jeden adres spacją</entry>
+    <entry key="proximityHelp">Pole do wprowadzenia promienia w postaci liczbowej odległości od punktu startowego w jakim program ma znaleźć punkty z nagraniami audio</entry>
+    <entry key="unitChoiceHelp">Pole wyboru jednostki miary do określenia wyszukiwania najbliższych punktów podczas podróży.</entry>
+    <entry key="startPointHelp">Punkt startowy podróży. Wciśnij F2 aby sprawdzić jaki punkt został ustawiony.</entry>
+    <entry key="startPointButtonHelp">Przycisk do utworzenia punktu startowego podróży z podanych lub wyszukanych koordynatów GPS</entry>
+    <entry key="currentLocationHelp">Pole wyświetlające aktualny adres, pod którym się znajdujesz. Wciśnij w dowolnym momencie NUMPAD 5 aby go sprawdzić.</entry>
+    <entry key="stepLengthChoiceHelp">Pole wyboru długości kroku. Wciśnij F2 aby sprawdzić ustawioną wartość.</entry>
+    <entry key="vicinityChoiceHelp">Pole wyboru odległości wyszukiwania punktów audio w trakcie podróży. Wciśnij F2 aby sprawdzić ustawioną wartość.</entry>
+    <entry key="buttonNHelp">Przycisk idź na północ</entry>
+    <entry key="buttonNEHelp">Przycisk idź na północny wschód</entry>
+    <entry key="buttonNWHelp">Przycisk idź na północny zachód</entry>
+    <entry key="buttonSHelp">Przycisk idź na południe</entry>
+    <entry key="buttonSEHelp">Przycisk idź na południowy wschód</entry>
+    <entry key="buttonSWHelp">Przycisk idź na południowy zachód</entry>
+    <entry key="buttonWHelp">Przycisk idź na zachód</entry>
+    <entry key="buttonEHelp">Przycisk idź na wschód</entry>
+    <entry key="playButtonHelp">Przycisk play</entry>
+    <entry key="pauseButtonHelp">Przycisk pauza</entry>
+    <entry key="stopButtonHelp">Przycisk stop</entry>
+</properties>

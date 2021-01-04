@@ -132,7 +132,20 @@ public class FreeTravelController implements Initializable {
             if (newScene == null) return;
                 newScene.addEventFilter(KeyEvent.KEY_RELEASED, new VoiceCueEventHandler());
         });
+
+        startPointText.setOnKeyReleased(event -> {
+            KeyCode code = event.getCode();
+            if(code == KeyCode.F2) {
+                if (!startPointString.isEmpty())
+                    new Thread(() -> PollyUtils.play(startPointString)).start();
+                else System.out.println("No starting point.");
+            }
+        });
+
+        initializeAudioHelpers();
     }
+
+
 
     private void initializeFocusListener(Node focusedNode, Node nodeLabel, boolean sound) {
         FxUtils.getFocusListener(focusedNode, nodeLabel, sound);
@@ -244,6 +257,33 @@ public class FreeTravelController implements Initializable {
                 makeStartPointFromGps();
             }
         });
+    }
+
+    private void initializeAudioHelpers() {
+        latitudeText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("latitudeHelp"));
+        longitudeText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("longitudeHelp"));
+        searchText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchHelp"));
+        searchButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchButtonHelp"));
+        searchResultsChoiceBox.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchResultsHelp"));
+        proximityText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("proximityHelp"));
+        unitChoiceBox.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("unitChoiceHelp"));
+        startPointText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("startPointHelp"));
+        createStartPointButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("startPointButtonHelp"));
+        currentLocationText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("currentLocationHelp"));
+        stepLengthChoiceBox.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("stepLengthChoiceHelp"));
+        vicinityDistChoiceBox.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("vicinityChoiceHelp"));
+        buttonN.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("buttonNHelp"));
+        buttonNE.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("buttonNEHelp"));
+        buttonNW.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("buttonNWHelp"));
+        buttonS.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("buttonSHelp"));
+        buttonSE.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("buttonSEHelp"));
+        buttonSW.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("buttonSWHelp"));
+        buttonW.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("buttonWHelp"));
+        buttonE.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("buttonEHelp"));
+        playButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("playButtonHelp"));
+        pauseButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("pauseButtonHelp"));
+        stopButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("stopButtonHelp"));
+
     }
 
     @FXML
@@ -460,11 +500,6 @@ public class FreeTravelController implements Initializable {
                 if (!currentLocationString.isEmpty())
                     new Thread (() -> PollyUtils.play(currentLocationString)).start();
                 else System.out.println("No current location.");
-            }
-            if(code == KeyCode.F1) {
-                if (!startPointString.isEmpty())
-                    new Thread(() -> PollyUtils.play(startPointString)).start();
-                else System.out.println("No starting point.");
             }
         }
     }
