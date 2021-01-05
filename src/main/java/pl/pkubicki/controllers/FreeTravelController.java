@@ -86,6 +86,123 @@ public class FreeTravelController implements Initializable {
     private static String currentLocationString = "";
     private static String startPointString = "";
 
+    @FXML
+    public void createProximityPoints() {
+        if(!latitudeText.getInvalid() && !longitudeText.getInvalid() && !proximityText.getInvalid()) {
+            LatLng poi = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
+            double proximityDistance = Double.parseDouble(proximityText.getText());
+            refreshProximityListView(poi, proximityDistance);
+        } else {
+            MediaUtils.playAudioCue("error");
+            setErrorsOnInvalidFields();
+            if (proximityText.getInvalid()) proximityText.setEffect(invalidEffect);
+            new Thread (() -> PollyUtils.play("Nie ustawiono koordynatów GPS i odległości w jakiej szukać nagrań audio.")).start();
+        }
+    }
+
+    private void refreshProximityPoints(LatLng poi) {
+            double proximityDistance = vicinity;
+            refreshProximityListView(poi, proximityDistance);
+    }
+
+    private void refreshProximityListView(LatLng poi, double proximityDistance) {
+        namedIndividualsInProximity = OwlUtils.getIndividualsInPointProximity(poi, proximityDistance, unitType);
+        Map<OWLNamedIndividual, String> points = OwlUtils.getIndividualsWithLabels(namedIndividualsInProximity);
+        individualsWithLabels = FXCollections.observableMap(points);
+        proximityListView.getItems().setAll(individualsWithLabels.values());
+        proximityListView.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    public void searchButtonHandler() {
+        if (!searchText.getText().isEmpty()) {
+            FxUtils.generateSearchResultsInChBox(searchResultsChoiceBox, searchText.getText());
+        } else {
+            MediaUtils.playAudioCue("error");
+            new Thread (() -> PollyUtils.play("Nie wprowadzono adresu do wyszukiwarki.")).start();
+        }
+    }
+
+    @FXML
+    public void makeStartPointFromGps() {
+        if (!latitudeText.getInvalid() && !longitudeText.getInvalid()) {
+            startPoint = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
+            try {
+                String text = NominatimUtils.getCurrentLocationAddress(startPoint).getDisplayName();
+                startPointText.setText(text);
+                startPointString = text;
+            } catch (IOException e) {
+                System.out.println("Nominatim error: " + e.getMessage() + "cause: " + e.getCause());
+                e.printStackTrace();
+            }
+        } else {
+            MediaUtils.playAudioCue("error");
+            setErrorsOnInvalidFields();
+            new Thread (() -> PollyUtils.play("Nieprawidłowy format lub brak koordynatów GPS. Wciśnij F1 na polu wprowadzania aby usłyszeć podpowiedź.")).start();
+        }
+    }
+
+    private void refreshCurrentLocation() throws IOException {
+        if (startPoint != null) {
+            Address address = NominatimUtils.getCurrentLocationAddress(startPoint);
+            currentLocationText.setText(address.getDisplayName());
+            currentLocationString = address.getDisplayName();
+        } else {
+            makeStartPointFromGps();
+        }
+    }
+
+    private void setErrorsOnInvalidFields() {
+        if (latitudeText.getInvalid()) latitudeText.setEffect(invalidEffect);
+        if (longitudeText.getInvalid()) longitudeText.setEffect(invalidEffect);
+    }
+
+    @FXML
+    public void playAudio() {
+        refreshAudioList();
+        if (player != null && player.getStatus() == MediaPlayer.Status.PLAYING) return;
+        if(!audioTracks.isEmpty()) {
+            proximityListView.getSelectionModel().selectFirst();
+            LinkedList<Media> tempAudioTracks = new LinkedList<>();
+            Collections.addAll(tempAudioTracks, audioTracks.toArray(new Media[0]));
+            playAudioTracks(tempAudioTracks);
+        }
+    }
+
+    private void refreshAudioList() {
+        if (!namedIndividualsInProximity.isEmpty()) {
+            audioTracks = FxUtils.getAudioTracks(namedIndividualsInProximity);
+        } else {
+            audioTracks.clear();
+            new Thread (() -> PollyUtils.play("Brak nagrań w podanym obszarze.")).start();
+        }
+    }
+
+    private void playAudioTracks(LinkedList<Media> audioList) {
+        if (!audioList.isEmpty()) {
+            media = audioList.poll();
+            player = new MediaPlayer(media);
+            player.setOnEndOfMedia(() -> {
+                proximityListView.getSelectionModel().selectNext();
+                playAudioTracks(audioList);
+            });
+            player.play();
+        } else {
+            player.dispose();
+        }
+    }
+
+    @FXML
+    public void pauseAudio() {
+        MediaUtils.pause(player);
+    }
+
+    @FXML
+    public void stopAudio() {
+        MediaUtils.stop(player);
+        audioTracks.clear();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -93,59 +210,16 @@ public class FreeTravelController implements Initializable {
         longitudeText.setText("22.271528");
         proximityText.setText("100.0");
 
-        searchText.setOnKeyReleased(new FxUtils.SubmitTextFieldHandler(searchResultsChoiceBox, searchText));
+        searchText.setOnKeyPressed(new FxUtils.SubmitTextFieldHandler(searchResultsChoiceBox, searchText));
         initializeUnitTypeChoiceBox();
         initializeStepLengthChoiceBox();
         initializeLengthUnitListenerToRefreshProximityValues();
         initializeVicinityDistancesChoiceBox();
         initializeSearchResultsListeners();
         initializeTravelButtonsHandler();
-
-        initializeFocusListener(searchText, labelForSearchText, true);
-        initializeFocusListener(searchResultsChoiceBox, labelForSearchResults, false);
-        initializeFocusListener(latitudeText, labelForLatitudeText, true);
-        initializeFocusListener(longitudeText, labelForLongitudeText, true);
-        initializeFocusListener(proximityText, labelForProximityText, true);
-        initializeFocusListener(startPointText, labelForStartPointText, true);
-        initializeFocusListener(currentLocationText, labelForCurrentLocationTextArea, true);
-        initializeFocusListener(stepLengthChoiceBox, labelForStepLengthChoiceBox, false);
-        initializeFocusListener(vicinityDistChoiceBox, labelForVicinityChoiceBox, false);
-        initializeFocusListener(proximityListView, labelForPointsListView, true);
-        initializeFocusListener(unitChoiceBox, false);
-        initializeStartPointTextFieldActionListener();
-        initializeFocusListener(createStartPointButton, true);
-        initializeFocusListener(searchButton, true);
-        initializeFocusListener(createProximityPointsButton, true);
-        initializeFocusListener(buttonN, true);
-        initializeFocusListener(buttonNW, true);
-        initializeFocusListener(buttonNE, true);
-        initializeFocusListener(buttonW, true);
-        initializeFocusListener(buttonE, true);
-        initializeFocusListener(buttonS, true);
-        initializeFocusListener(buttonSW, true);
-        initializeFocusListener(buttonSE, true);
-        initializeFocusListener(playButton, true);
-        initializeFocusListener(pauseButton, true);
-        initializeFocusListener(stopButton, true);
-
-        currentLocationText.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            if (newScene == null) return;
-                newScene.addEventFilter(KeyEvent.KEY_RELEASED, new VoiceCueEventHandler());
-        });
-
-        startPointText.setOnKeyReleased(event -> {
-            KeyCode code = event.getCode();
-            if(code == KeyCode.F2) {
-                if (!startPointString.isEmpty())
-                    new Thread(() -> PollyUtils.play(startPointString)).start();
-                else System.out.println("No starting point.");
-            }
-        });
-
+        initializeFocusListeners();
         initializeAudioHelpers();
     }
-
-
 
     private void initializeFocusListener(Node focusedNode, Node nodeLabel, boolean sound) {
         FxUtils.getFocusListener(focusedNode, nodeLabel, sound);
@@ -189,9 +263,9 @@ public class FreeTravelController implements Initializable {
 
     private void initializeStepLengthChoiceBoxChangeListener() {
         stepLengthChoiceBox.valueProperty().addListener((obs, oldVal, newVal) -> {
-                if (newVal != null) {
-                    stepLength = newVal;
-                }
+            if (newVal != null) {
+                stepLength = newVal;
+            }
         });
     }
     private void initializeVicinityDistancesChoiceBox() {
@@ -252,11 +326,40 @@ public class FreeTravelController implements Initializable {
     }
 
     private void initializeStartPointTextFieldActionListener() {
-        startPointText.setOnKeyReleased(event -> {
+        startPointText.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE) {
                 makeStartPointFromGps();
             }
         });
+    }
+
+    private void initializeFocusListeners() {
+        initializeFocusListener(searchText, labelForSearchText, true);
+        initializeFocusListener(searchResultsChoiceBox, labelForSearchResults, false);
+        initializeFocusListener(latitudeText, labelForLatitudeText, true);
+        initializeFocusListener(longitudeText, labelForLongitudeText, true);
+        initializeFocusListener(proximityText, labelForProximityText, true);
+        initializeFocusListener(startPointText, labelForStartPointText, true);
+        initializeFocusListener(currentLocationText, labelForCurrentLocationTextArea, true);
+        initializeFocusListener(stepLengthChoiceBox, labelForStepLengthChoiceBox, false);
+        initializeFocusListener(vicinityDistChoiceBox, labelForVicinityChoiceBox, false);
+        initializeFocusListener(proximityListView, labelForPointsListView, true);
+        initializeFocusListener(unitChoiceBox, false);
+        initializeStartPointTextFieldActionListener();
+        initializeFocusListener(createStartPointButton, true);
+        initializeFocusListener(searchButton, true);
+        initializeFocusListener(createProximityPointsButton, true);
+        initializeFocusListener(buttonN, true);
+        initializeFocusListener(buttonNW, true);
+        initializeFocusListener(buttonNE, true);
+        initializeFocusListener(buttonW, true);
+        initializeFocusListener(buttonE, true);
+        initializeFocusListener(buttonS, true);
+        initializeFocusListener(buttonSW, true);
+        initializeFocusListener(buttonSE, true);
+        initializeFocusListener(playButton, true);
+        initializeFocusListener(pauseButton, true);
+        initializeFocusListener(stopButton, true);
     }
 
     private void initializeAudioHelpers() {
@@ -283,125 +386,54 @@ public class FreeTravelController implements Initializable {
         playButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("playButtonHelp"));
         pauseButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("pauseButtonHelp"));
         stopButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("stopButtonHelp"));
+        proximityListView.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("proximityPointsHelp"));
 
+        initializeCurrentLocationAudioRead();
+        initializeStartPointAudioRead();
+        initializeVicinityAudioRead();
+        initializeStepLengthAudioRead();
+        initializeSearchResultsAudioRead();
+        initializeUnitChoiceAudioRead();
+        initializeGpsAudioRead();
+        initializeProximityTextAudioRead();
     }
 
-    @FXML
-    public void createProximityPoints() {
-        if(!latitudeText.getInvalid() && !longitudeText.getInvalid() && !proximityText.getInvalid()) {
-            LatLng poi = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
-            double proximityDistance = Double.parseDouble(proximityText.getText());
-            refreshProximityListView(poi, proximityDistance);
-        } else {
-            MediaUtils.playAudioCue("error");
-            setErrorsOnInvalidFields();
-            if (proximityText.getInvalid()) proximityText.setEffect(invalidEffect);
-            System.out.println("Point and/or vicinity is not defined.");
-        }
+    private void initializeCurrentLocationAudioRead() {
+        currentLocationText.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene == null) return;
+            newScene.addEventFilter(KeyEvent.KEY_PRESSED, new VoiceCueEventHandler());
+        });
     }
 
-    private void refreshProximityPoints(LatLng poi) {
-            double proximityDistance = vicinity;
-            refreshProximityListView(poi, proximityDistance);
+    private void initializeStartPointAudioRead() {
+        AudioUtils.initializeTextAudioRead(startPointText, "Punkt startowy nie jest ustawiony.");
     }
 
-    private void refreshProximityListView(LatLng poi, double proximityDistance) {
-        namedIndividualsInProximity = OwlUtils.getIndividualsInPointProximity(poi, proximityDistance, unitType);
-        Map<OWLNamedIndividual, String> points = OwlUtils.getIndividualsWithLabels(namedIndividualsInProximity);
-        individualsWithLabels = FXCollections.observableMap(points);
-        proximityListView.getItems().setAll(individualsWithLabels.values());
-        proximityListView.getSelectionModel().selectFirst();
+    private void initializeVicinityAudioRead() {
+        AudioUtils.initializeChoiceBoxAudioRead(vicinityDistChoiceBox, "Brak wartości.");
     }
 
-    @FXML
-    public void searchButtonHandler() {
-        if (!searchText.getText().isEmpty()) {
-            FxUtils.generateSearchResultsInChBox(searchResultsChoiceBox, searchText.getText());
-        } else {
-            MediaUtils.playAudioCue("error");
-            System.out.println("Search query is empty.");
-        }
+    private void initializeStepLengthAudioRead() {
+        AudioUtils.initializeChoiceBoxAudioRead(stepLengthChoiceBox, "Brak wartości.");
     }
 
-    @FXML
-    public void makeStartPointFromGps() {
-        if (!latitudeText.getInvalid() && !longitudeText.getInvalid()) {
-            startPoint = new LatLng(Double.parseDouble(latitudeText.getText()), Double.parseDouble(longitudeText.getText()));
-            try {
-                String text = NominatimUtils.getCurrentLocationAddress(startPoint).getDisplayName();
-                startPointText.setText(text);
-                startPointString = text;
-            } catch (IOException e) {
-                System.out.println("Nominatim error: " + e.getMessage() + "cause: " + e.getCause());
-                e.printStackTrace();
-            }
-        } else {
-            MediaUtils.playAudioCue("error");
-            setErrorsOnInvalidFields();
-            System.out.println("Invalid gps coords.");
-        }
+    private void initializeSearchResultsAudioRead() {
+        AudioUtils.initializeChoiceBoxAudioRead(searchResultsChoiceBox, "Brak wyników wyszukiwania. Wprowadź zapytanie w wyszukiwarkę i wciśnij ENTER.");
     }
 
-    private void refreshCurrentLocation() throws IOException {
-        if (startPoint != null) {
-            Address address = NominatimUtils.getCurrentLocationAddress(startPoint);
-            currentLocationText.setText(address.getDisplayName());
-            currentLocationString = address.getDisplayName();
-        } else {
-            makeStartPointFromGps();
-        }
+    private void initializeUnitChoiceAudioRead() {
+        AudioUtils.initializeChoiceBoxAudioRead(unitChoiceBox, "Brak wartości.");
     }
 
-    private void setErrorsOnInvalidFields() {
-        if (latitudeText.getInvalid()) latitudeText.setEffect(invalidEffect);
-        if (longitudeText.getInvalid()) longitudeText.setEffect(invalidEffect);
+    private void initializeGpsAudioRead() {
+        AudioUtils.initializeTextAudioRead(latitudeText, "Pole szerokości geograficznej jest puste.");
+        AudioUtils.initializeTextAudioRead(longitudeText, "Pole długości geograficznej jest puste.");
     }
 
-    @FXML
-    public void playAudio() {
-        refreshAudioList();
-        if (player != null && player.getStatus() == MediaPlayer.Status.PLAYING) return;
-        if(!audioTracks.isEmpty()) {
-            proximityListView.getSelectionModel().selectFirst();
-            LinkedList<Media> tempAudioTracks = new LinkedList<>();
-            Collections.addAll(tempAudioTracks, audioTracks.toArray(new Media[0]));
-            playAudioTracks(tempAudioTracks);
-        }
+    private void initializeProximityTextAudioRead() {
+        AudioUtils.initializeTextAudioRead(proximityText, "Pole jest puste.");
     }
 
-    private void refreshAudioList() {
-        if (!namedIndividualsInProximity.isEmpty()) {
-            audioTracks = FxUtils.getAudioTracks(namedIndividualsInProximity);
-        } else {
-            audioTracks.clear();
-            System.out.println("Nothing to play.");
-        }
-    }
-
-    private void playAudioTracks(LinkedList<Media> audioList) {
-        if (!audioList.isEmpty()) {
-            media = audioList.poll();
-            player = new MediaPlayer(media);
-            player.setOnEndOfMedia(() -> {
-                proximityListView.getSelectionModel().selectNext();
-                playAudioTracks(audioList);
-            });
-            player.play();
-        } else {
-            player.dispose();
-        }
-    }
-
-    @FXML
-    public void pauseAudio() {
-        MediaUtils.pause(player);
-    }
-
-    @FXML
-    public void stopAudio() {
-        MediaUtils.stop(player);
-        audioTracks.clear();
-    }
 
     private class NumPadTraversalHandler implements EventHandler<KeyEvent> {
 
@@ -486,7 +518,7 @@ public class FreeTravelController implements Initializable {
             } else {
                 MediaUtils.playAudioCue("error");
                 setErrorsOnInvalidFields();
-                System.out.println("Empty GPS coordinates.");
+                new Thread (() -> PollyUtils.play("Nie ustawiono koordynatów GPS.")).start();
             }
         }
     }
@@ -499,7 +531,8 @@ public class FreeTravelController implements Initializable {
             if(code == KeyCode.NUMPAD5) {
                 if (!currentLocationString.isEmpty())
                     new Thread (() -> PollyUtils.play(currentLocationString)).start();
-                else System.out.println("No current location.");
+                else
+                    new Thread (() -> PollyUtils.play("Brak bieżącej lokalizacji. Ustaw punkt startowy i rozpocznij podróż klawiszami kierunkowymi NUMPAD.")).start();
             }
         }
     }

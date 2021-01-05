@@ -20,10 +20,10 @@
     <Label fx:id="labelForSearchStartResults" text="Start point:" GridPane.rowIndex="1" />
     <ChoiceBox fx:id="searchStartResultsChBox" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-    <Label fx:id="labelForStartLatitude" text="Start Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-    <ValidatedTextField fx:id="startLatitudeText" minLength="3" maxLength="20" mask="$LATITUDE_PATTERN" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-    <Label fx:id="labelForStartLongitude" text="Start Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-    <ValidatedTextField fx:id="startLongitudeText" minLength="3" maxLength="20" mask="$LONGITUDE_PATTERN" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <Label fx:id="labelForLatitudeStart" text="Start Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <ValidatedTextField fx:id="latitudeStartText" minLength="3" maxLength="20" mask="$LATITUDE_PATTERN" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <Label fx:id="labelForLongitudeStart" text="Start Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <ValidatedTextField fx:id="longitudeStartText" minLength="3" maxLength="20" mask="$LONGITUDE_PATTERN" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
     <Label fx:id="labelForSearchEndText" text="Search END:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
     <TextField fx:id="searchEndText" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -31,10 +31,10 @@
     <Label fx:id="labelForSearchEndResults" text="End point:" GridPane.rowIndex="5" />
     <ChoiceBox fx:id="searchEndResultsChBox" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-    <Label fx:id="labelForEndLatitude" text="End Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-    <ValidatedTextField fx:id="endLatitudeText" minLength="3" maxLength="20" mask="$LATITUDE_PATTERN" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-    <Label fx:id="labelForEndLongitude" text="End Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-    <ValidatedTextField fx:id="endLongitudeText" minLength="3" maxLength="20" mask="$LONGITUDE_PATTERN" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+    <Label fx:id="labelForLatitudeEnd" text="End Latitude:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+    <ValidatedTextField fx:id="latitudeEndText" minLength="3" maxLength="20" mask="$LATITUDE_PATTERN" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    <Label fx:id="labelForLongitudeEnd" text="End Longitude:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+    <ValidatedTextField fx:id="longitudeEndText" minLength="3" maxLength="20" mask="$LONGITUDE_PATTERN" prefWidth="380.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
     <Button fx:id="generateRouteButton" onAction="#generateRouteButtonHandler" styleClass="shadow" text="Generate Travel Route" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
 
@@ -49,7 +49,7 @@
             <RowConstraints/>
         </rowConstraints>
         <Label fx:id="labelForVicinityChBox" text="Vicinity dist. [m]:" GridPane.rowIndex="1"/>
-        <ChoiceBox fx:id="vicinityChBox" prefHeight="20.0" prefWidth="100.0" GridPane.rowIndex="2"
+        <ChoiceBox fx:id="vicinityDistChoiceBox" prefHeight="20.0" prefWidth="100.0" GridPane.rowIndex="2"
                    GridPane.valignment="TOP"/>
     </GridPane>
 

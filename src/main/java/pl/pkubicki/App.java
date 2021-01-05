@@ -24,7 +24,7 @@ public class App extends Application {
         App.stage.setTitle("PathPlayer 1.0");
         App.stage.setScene(scene);
         App.stage.show();
-        App.stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+        App.stage.addEventHandler(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (KeyCode.ESCAPE == event.getCode()) {
                 try {
                     App.stage.setWidth(356);

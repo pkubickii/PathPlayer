@@ -21,9 +21,7 @@ import pl.pkubicki.models.OWLAudioTrack;
 import pl.pkubicki.models.OWLPoint;
 import pl.pkubicki.extensions.ValidatedTextField;
 import pl.pkubicki.repositories.S3Repo;
-import pl.pkubicki.util.FxUtils;
-import pl.pkubicki.util.MediaUtils;
-import pl.pkubicki.util.OwlManagement;
+import pl.pkubicki.util.*;
 
 import java.io.File;
 import java.net.URL;
@@ -55,32 +53,79 @@ public class OwlPanelController implements Initializable {
     private static ObservableList<OWLClass> realEstates = FXCollections.emptyObservableList();
     private static final Effect invalidEffect = new DropShadow(BlurType.GAUSSIAN, Color.RED, 9, 0.9, 2, 2);
 
+    @FXML
+    public void searchButtonHandler() {
+        if (!searchText.getText().isEmpty()) {
+            FxUtils.generateSearchResultsInChBox(searchResultsChoiceBox, searchText.getText());
+            searchResultsChoiceBox.requestFocus();
+            MediaUtils.playAudioCue("select");
+        } else {
+            MediaUtils.playAudioCue("error");
+            new Thread (() -> PollyUtils.play("Nie wprowadzono adresu do wyszukiwarki.")).start();
+        }
+    }
+
+    @FXML
+    public void submitHandler() {
+        if(isFormValid()) {
+            OWLPoint newPoint = new OWLPoint(
+                    Double.parseDouble(latitudeText.getText()),
+                    Double.parseDouble(longitudeText.getText()),
+                    labelText.getText(),
+                    commentText.getText(),
+                    realEstatesChoiceBox.getValue());
+            OWLAudioTrack newAudioTrack = new OWLAudioTrack(newPoint.getPointIndividual());
+            OwlManagement.savePoint(newPoint);
+            OwlManagement.saveAudioTrack(newAudioTrack);
+            S3Repo.uploadFile(audioFile, newAudioTrack.getName() + ".mp3");
+            MediaUtils.playAudioCue("push");
+        } else {
+            MediaUtils.playAudioCue("error");
+            setErrorsOnInvalidFields();
+            submitStatus.setText("Please check and correct highlighted fields in form.");
+            new Thread (() -> PollyUtils.play("Formularz zawiera błędy.")).start();
+        }
+    }
+
+    private boolean isFormValid() {
+        return !latitudeText.getInvalid() &&
+                !longitudeText.getInvalid() &&
+                !labelText.getInvalid() &&
+                !commentText.getText().isEmpty() &&
+                !fileName.getText().isEmpty() &&
+                realEstatesChoiceBox.getValue() != null;
+    }
+
+    private void setErrorsOnInvalidFields() {
+        if (latitudeText.getInvalid()) latitudeText.setEffect(invalidEffect);
+        if (longitudeText.getInvalid()) longitudeText.setEffect(invalidEffect);
+        if (labelText.getInvalid()) labelText.setEffect(invalidEffect);
+        if (commentText.getText().isEmpty()) commentText.setEffect(invalidEffect);
+        if (fileName.getText().isEmpty()) selectFileButton.setEffect(invalidEffect);
+        if (realEstatesChoiceBox.getValue() == null) realEstatesChoiceBox.setEffect(invalidEffect);
+    }
+
+    @FXML
+    public void selectFile(){
+        MediaUtils.playAudioCue("open");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open file");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Audio files (*.mp3)", "*.mp3");
+        fileChooser.getExtensionFilters().add(extFilter);
+        audioFile = fileChooser.showOpenDialog(new Stage());
+        if (audioFile != null) {
+            fileName.setText(audioFile.getName());
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        searchText.setOnKeyReleased(new FxUtils.SubmitTextFieldHandler(searchResultsChoiceBox, searchText));
+        searchText.setOnKeyPressed(new FxUtils.SubmitTextFieldHandler(searchResultsChoiceBox, searchText));
         initializeRealEstatesChoiceBox();
         initializeSearchResultsListeners();
         initializeCommentText();
-        initializeFocusListener(searchText, labelForSearchText, true);
-        initializeFocusListener(searchButton, true);
-        initializeFocusListener(searchResultsChoiceBox, labelForSearchResultsChoiceBox, false);
-        initializeFocusListener(latitudeText, labelForLatitudeText, true);
-        initializeFocusListener(longitudeText, labelForLongitudeText, true);
-        initializeFocusListener(labelText, labelForLabelText, true);
-        initializeFocusListener(realEstatesChoiceBox, labelForRealEstatesChoiceBox, false);
-        initializeFocusListener(commentText, labelForCommentText, true);
-        initializeFocusListener(commentText, labelForCommentText, true);
-        initializeFocusListener(selectFileButton, true);
-        initializeFocusListener(submitButton, true);
-    }
-
-    private void initializeFocusListener(Node focusedNode, Node nodeLabel, boolean sound) {
-        FxUtils.getFocusListener(focusedNode, nodeLabel, sound);
-    }
-
-    private void initializeFocusListener(Node focusedNode, boolean sound) {
-        FxUtils.getFocusListener(focusedNode, sound);
+        initializeFocusListeners();
+        initializeAudioHelpers();
     }
 
     private void initializeCommentText() {
@@ -118,69 +163,63 @@ public class OwlPanelController implements Initializable {
         });
     }
 
-    @FXML
-    public void searchButtonHandler() {
-        if (!searchText.getText().isEmpty()) {
-            FxUtils.generateSearchResultsInChBox(searchResultsChoiceBox, searchText.getText());
-            searchResultsChoiceBox.requestFocus();
-            MediaUtils.playAudioCue("select");
-        } else {
-            System.out.println("Search query is empty.");
-            MediaUtils.playAudioCue("error");
-        }
-
+    private void initializeFocusListeners() {
+        initializeFocusListener(searchText, labelForSearchText, true);
+        initializeFocusListener(searchButton, true);
+        initializeFocusListener(searchResultsChoiceBox, labelForSearchResultsChoiceBox, false);
+        initializeFocusListener(latitudeText, labelForLatitudeText, true);
+        initializeFocusListener(longitudeText, labelForLongitudeText, true);
+        initializeFocusListener(labelText, labelForLabelText, true);
+        initializeFocusListener(realEstatesChoiceBox, labelForRealEstatesChoiceBox, false);
+        initializeFocusListener(commentText, labelForCommentText, true);
+        initializeFocusListener(selectFileButton, true);
+        initializeFocusListener(submitButton, true);
     }
 
-    @FXML
-    public void submitHandler() {
-        if(isFormValid()) {
-            OWLPoint newPoint = new OWLPoint(
-                    Double.parseDouble(latitudeText.getText()),
-                    Double.parseDouble(longitudeText.getText()),
-                    labelText.getText(),
-                    commentText.getText(),
-                    realEstatesChoiceBox.getValue());
-            OWLAudioTrack newAudioTrack = new OWLAudioTrack(newPoint.getPointIndividual());
-            OwlManagement.savePoint(newPoint);
-            OwlManagement.saveAudioTrack(newAudioTrack);
-            S3Repo.uploadFile(audioFile, newAudioTrack.getName() + ".mp3");
-            MediaUtils.playAudioCue("push");
-        } else {
-            MediaUtils.playAudioCue("error");
-            setErrorsOnInvalidFields();
-            submitStatus.setText("Please check and correct highlighted fields in form.");
-        }
-
+    private void initializeFocusListener(Node focusedNode, Node nodeLabel, boolean sound) {
+        FxUtils.getFocusListener(focusedNode, nodeLabel, sound);
     }
 
-    private boolean isFormValid() {
-        return !latitudeText.getInvalid() &&
-                !longitudeText.getInvalid() &&
-                !labelText.getInvalid() &&
-                !commentText.getText().isEmpty() &&
-                !fileName.getText().isEmpty() &&
-                realEstatesChoiceBox.getValue() != null;
+    private void initializeFocusListener(Node focusedNode, boolean sound) {
+        FxUtils.getFocusListener(focusedNode, sound);
     }
 
-    private void setErrorsOnInvalidFields() {
-        if (latitudeText.getInvalid()) latitudeText.setEffect(invalidEffect);
-        if (longitudeText.getInvalid()) longitudeText.setEffect(invalidEffect);
-        if (labelText.getInvalid()) labelText.setEffect(invalidEffect);
-        if (commentText.getText().isEmpty()) commentText.setEffect(invalidEffect);
-        if (fileName.getText().isEmpty()) selectFileButton.setEffect(invalidEffect);
-        if (realEstatesChoiceBox.getValue() == null) realEstatesChoiceBox.setEffect(invalidEffect);
+    private void initializeAudioHelpers() {
+        searchText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchHelp"));
+        searchButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchButtonHelp"));
+        searchResultsChoiceBox.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchResultsHelp"));
+        latitudeText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("latitudeHelp"));
+        longitudeText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("longitudeHelp"));
+        labelText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("labelHelp"));
+        commentText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("commentHelp"));
+        selectFileButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("selectFileHelp"));
+        realEstatesChoiceBox.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("realEstatesHelp"));
+        submitButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("submitButtonHelp"));
+        initializeSearchResultsAudioRead();
+        initializeGpsAudioRead();
+        initializeLabelAudioRead();
+        initializeCommentAudioRead();
+        initializeRealEstatesAudioRead();
     }
 
-    @FXML
-    public void selectFile(){
-        MediaUtils.playAudioCue("open");
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open file");
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Audio files (*.mp3)", "*.mp3");
-        fileChooser.getExtensionFilters().add(extFilter);
-        audioFile = fileChooser.showOpenDialog(new Stage());
-        if (audioFile != null) {
-            fileName.setText(audioFile.getName());
-        }
+    private void initializeSearchResultsAudioRead() {
+        AudioUtils.initializeChoiceBoxAudioRead(searchResultsChoiceBox, "Brak wyników wyszukiwania. Wprowadź zapytanie w wyszukiwarkę i wciśnij ENTER.");
+    }
+
+    private void initializeGpsAudioRead() {
+        AudioUtils.initializeTextAudioRead(latitudeText, "Pole szerokości geograficznej jest puste.");
+        AudioUtils.initializeTextAudioRead(longitudeText, "Pole długości geograficznej jest puste.");
+    }
+
+    private void initializeLabelAudioRead() {
+        AudioUtils.initializeTextAudioRead(labelText, "Pole etykiety jest puste.");
+    }
+
+    private void initializeCommentAudioRead() {
+        AudioUtils.initializeTextAudioRead(commentText, "Pole komentarza jest puste.");
+    }
+
+    private void initializeRealEstatesAudioRead() {
+        AudioUtils.initializeChoiceBoxAudioRead(realEstatesChoiceBox, "Nic nie wybrano. Wybierz jakiś rodzaj punktu, który dodajesz.");
     }
 }

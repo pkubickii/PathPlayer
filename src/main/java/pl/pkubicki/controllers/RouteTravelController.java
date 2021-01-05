@@ -18,10 +18,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import pl.pkubicki.extensions.ValidatedTextField;
-import pl.pkubicki.util.FxUtils;
-import pl.pkubicki.util.HopperUtils;
-import pl.pkubicki.util.MediaUtils;
-import pl.pkubicki.util.OwlUtils;
+import pl.pkubicki.util.*;
 
 import java.net.URL;
 import java.util.*;
@@ -36,16 +33,16 @@ public class RouteTravelController implements Initializable {
     @FXML private TextField searchEndText;
     @FXML private Label labelForSearchEndResults;
     @FXML private ChoiceBox<Address> searchEndResultsChBox;
-    @FXML private Label labelForStartLatitude;
-    @FXML private ValidatedTextField startLatitudeText;
-    @FXML private Label labelForStartLongitude;
-    @FXML private ValidatedTextField startLongitudeText;
-    @FXML private Label labelForEndLatitude;
-    @FXML private ValidatedTextField endLatitudeText;
-    @FXML private Label labelForEndLongitude;
-    @FXML private ValidatedTextField endLongitudeText;
+    @FXML private Label labelForLatitudeStart;
+    @FXML private ValidatedTextField latitudeStartText;
+    @FXML private Label labelForLongitudeStart;
+    @FXML private ValidatedTextField longitudeStartText;
+    @FXML private Label labelForLatitudeEnd;
+    @FXML private ValidatedTextField latitudeEndText;
+    @FXML private Label labelForLongitudeEnd;
+    @FXML private ValidatedTextField longitudeEndText;
     @FXML private Label labelForVicinityChBox;
-    @FXML private ChoiceBox<Double> vicinityChBox;
+    @FXML private ChoiceBox<Double> vicinityDistChoiceBox;
     @FXML private ListView<String> routePointsListView;
 
     @FXML private Button searchStartButton;
@@ -64,65 +61,6 @@ public class RouteTravelController implements Initializable {
     private static MediaPlayer player = null;
     private static Media media = null;
     private static final Effect invalidEffect = new DropShadow(BlurType.GAUSSIAN, Color.RED, 9, 0.9, 2, 2);
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initializeSearchResultsListeners();
-        initializeVicinityDistances();
-        searchStartText.setText("dworzec pkp siedlce");
-        searchEndText.setText("3 maja 54 siedlce");
-        initializeVicinityDistancesListenerToRefreshRoutePoints();
-        searchStartText.setOnKeyReleased(new FxUtils.SubmitTextFieldHandler(searchStartResultsChBox, searchStartText));
-        searchEndText.setOnKeyReleased(new FxUtils.SubmitTextFieldHandler(searchEndResultsChBox, searchEndText));
-        initializeFocusListener(searchStartText, labelForSearchStartText, true);
-        initializeFocusListener(searchStartResultsChBox, labelForSearchStartResults, false);
-        initializeFocusListener(searchEndText, labelForSearchEndText, true);
-        initializeFocusListener(searchEndResultsChBox, labelForSearchEndResults, false);
-        initializeFocusListener(startLatitudeText, labelForStartLatitude, true);
-        initializeFocusListener(startLongitudeText, labelForStartLongitude, true);
-        initializeFocusListener(endLatitudeText, labelForEndLatitude, true);
-        initializeFocusListener(endLongitudeText, labelForEndLongitude, true);
-        initializeFocusListener(vicinityChBox, labelForVicinityChBox, false);
-        initializeFocusListener(vicinityChBox, false);
-
-        initializeFocusListener(searchStartButton, true);
-        initializeFocusListener(searchEndButton, true);
-        initializeFocusListener(generateRouteButton, true);
-        initializeFocusListener(playButton, true);
-        initializeFocusListener(pauseButton, true);
-        initializeFocusListener(stopButton, true);
-    }
-    private void initializeSearchResultsListeners() {
-        FxUtils.updateGpsValuesFromSearchResultsChoiceBox(searchStartResultsChBox, startLatitudeText, startLongitudeText);
-        FxUtils.getChoiceBoxListenersForSound(searchStartResultsChBox);
-        FxUtils.updateGpsValuesFromSearchResultsChoiceBox(searchEndResultsChBox, endLatitudeText, endLongitudeText);
-        FxUtils.getChoiceBoxListenersForSound(searchEndResultsChBox);
-    }
-
-    private void initializeVicinityDistances() {
-        vicinityDistances = FxUtils.getObListForVicinity();
-        vicinityChBox.getItems().clear();
-        vicinityChBox.setItems(vicinityDistances);
-        vicinityChBox.setValue(50.0);
-        FxUtils.getChoiceBoxListenersForSound(vicinityChBox);
-    }
-
-    private void initializeVicinityDistancesListenerToRefreshRoutePoints() {
-        vicinityChBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                vicinity = Double.parseDouble(newVal.toString());
-                refreshPointsOnRoute();
-            }
-        });
-    }
-
-    private void initializeFocusListener(Node focusedNode, Node nodeLabel, boolean sound) {
-        FxUtils.getFocusListener(focusedNode, nodeLabel, sound);
-    }
-
-    private void initializeFocusListener(Node focusedNode, boolean sound) {
-        FxUtils.getFocusListener(focusedNode, sound);
-    }
 
     @FXML
     public void searchStartButtonHandler() {
@@ -164,10 +102,10 @@ public class RouteTravelController implements Initializable {
     private void setRoute() {
         if(isFormValid()) {
             route = HopperUtils.getRoute(
-                    Double.parseDouble(startLatitudeText.getText()),
-                    Double.parseDouble(startLongitudeText.getText()),
-                    Double.parseDouble(endLatitudeText.getText()),
-                    Double.parseDouble(endLongitudeText.getText())
+                    Double.parseDouble(latitudeStartText.getText()),
+                    Double.parseDouble(longitudeStartText.getText()),
+                    Double.parseDouble(latitudeEndText.getText()),
+                    Double.parseDouble(longitudeEndText.getText())
             );
         } else {
             MediaUtils.playAudioCue("error");
@@ -177,17 +115,17 @@ public class RouteTravelController implements Initializable {
     }
 
     private boolean isFormValid() {
-        return !(startLatitudeText.getInvalid() ||
-                startLongitudeText.getInvalid() ||
-                endLatitudeText.getInvalid() ||
-                endLongitudeText.getInvalid());
+        return !(latitudeStartText.getInvalid() ||
+                longitudeStartText.getInvalid() ||
+                latitudeEndText.getInvalid() ||
+                longitudeEndText.getInvalid());
     }
 
     private void setErrorsOnInvalidFields() {
-        if (startLatitudeText.getInvalid()) startLatitudeText.setEffect(invalidEffect);
-        if (startLongitudeText.getInvalid()) startLongitudeText.setEffect(invalidEffect);
-        if (endLatitudeText.getInvalid()) endLatitudeText.setEffect(invalidEffect);
-        if (endLongitudeText.getInvalid()) endLongitudeText.setEffect(invalidEffect);
+        if (latitudeStartText.getInvalid()) latitudeStartText.setEffect(invalidEffect);
+        if (longitudeStartText.getInvalid()) longitudeStartText.setEffect(invalidEffect);
+        if (latitudeEndText.getInvalid()) latitudeEndText.setEffect(invalidEffect);
+        if (longitudeEndText.getInvalid()) longitudeEndText.setEffect(invalidEffect);
     }
 
     private void refreshAudioTracks() {
@@ -248,5 +186,111 @@ public class RouteTravelController implements Initializable {
         MediaUtils.stop(player);
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initializeSearchResultsListeners();
+        initializeVicinityDistances();
+        searchStartText.setText("dworzec pkp siedlce");
+        searchEndText.setText("3 maja 54 siedlce");
+        initializeVicinityDistancesListenerToRefreshRoutePoints();
+        searchStartText.setOnKeyPressed(new FxUtils.SubmitTextFieldHandler(searchStartResultsChBox, searchStartText));
+        searchEndText.setOnKeyPressed(new FxUtils.SubmitTextFieldHandler(searchEndResultsChBox, searchEndText));
+        initializeFocusListeners();
+        initializeAudioHelpers();
+    }
+    private void initializeSearchResultsListeners() {
+        FxUtils.updateGpsValuesFromSearchResultsChoiceBox(searchStartResultsChBox, latitudeStartText, longitudeStartText);
+        FxUtils.getChoiceBoxListenersForSound(searchStartResultsChBox);
+        FxUtils.updateGpsValuesFromSearchResultsChoiceBox(searchEndResultsChBox, latitudeEndText, longitudeEndText);
+        FxUtils.getChoiceBoxListenersForSound(searchEndResultsChBox);
+    }
+
+    private void initializeVicinityDistances() {
+        vicinityDistances = FxUtils.getObListForVicinity();
+        vicinityDistChoiceBox.getItems().clear();
+        vicinityDistChoiceBox.setItems(vicinityDistances);
+        vicinityDistChoiceBox.setValue(50.0);
+        FxUtils.getChoiceBoxListenersForSound(vicinityDistChoiceBox);
+    }
+
+    private void initializeVicinityDistancesListenerToRefreshRoutePoints() {
+        vicinityDistChoiceBox.valueProperty().addListener( (obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                vicinity = Double.parseDouble(newVal.toString());
+                refreshPointsOnRoute();
+            }
+        });
+    }
+
+    private void initializeFocusListeners() {
+        initializeFocusListener(searchStartText, labelForSearchStartText, true);
+        initializeFocusListener(searchStartResultsChBox, labelForSearchStartResults, false);
+        initializeFocusListener(searchEndText, labelForSearchEndText, true);
+        initializeFocusListener(searchEndResultsChBox, labelForSearchEndResults, false);
+        initializeFocusListener(latitudeStartText, labelForLatitudeStart, true);
+        initializeFocusListener(longitudeStartText, labelForLongitudeStart, true);
+        initializeFocusListener(latitudeEndText, labelForLatitudeEnd, true);
+        initializeFocusListener(longitudeEndText, labelForLongitudeEnd, true);
+        initializeFocusListener(vicinityDistChoiceBox, labelForVicinityChBox, false);
+        initializeFocusListener(vicinityDistChoiceBox, false);
+
+        initializeFocusListener(searchStartButton, true);
+        initializeFocusListener(searchEndButton, true);
+        initializeFocusListener(generateRouteButton, true);
+        initializeFocusListener(playButton, true);
+        initializeFocusListener(pauseButton, true);
+        initializeFocusListener(stopButton, true);
+    }
+
+    private void initializeFocusListener(Node focusedNode, Node nodeLabel, boolean sound) {
+        FxUtils.getFocusListener(focusedNode, nodeLabel, sound);
+    }
+
+    private void initializeFocusListener(Node focusedNode, boolean sound) {
+        FxUtils.getFocusListener(focusedNode, sound);
+    }
+
+    private void initializeAudioHelpers() {
+        searchStartText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchStartHelp"));
+        searchStartButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchStartButtonHelp"));
+        searchStartResultsChBox.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchStartResultsHelp"));
+        latitudeStartText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("latitudeStartHelp"));
+        longitudeStartText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("longitudeStartHelp"));
+
+        searchEndText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchEndHelp"));
+        searchEndButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchEndButtonHelp"));
+        searchEndResultsChBox.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("searchEndResultsHelp"));
+        latitudeEndText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("latitudeEndHelp"));
+        longitudeEndText.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("longitudeEndHelp"));
+
+        generateRouteButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("generateRouteButtonHelp"));
+        vicinityDistChoiceBox.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("vicinityRouteHelp"));
+
+        playButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("playButtonHelp"));
+        pauseButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("pauseButtonHelp"));
+        stopButton.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("stopButtonHelp"));
+
+        routePointsListView.setOnKeyReleased(new FxUtils.AudioHelpEventHandler("proximityPointsHelp"));
+
+        initializeSearchResultsAudioRead();
+        initializeGpsAudioRead();
+        initializeVicinityAudioRead();
+    }
+
+    private void initializeSearchResultsAudioRead() {
+        AudioUtils.initializeChoiceBoxAudioRead(searchStartResultsChBox, "Brak wyników wyszukiwania. Wprowadź zapytanie w wyszukiwarkę i wciśnij ENTER.");
+        AudioUtils.initializeChoiceBoxAudioRead(searchEndResultsChBox, "Brak wyników wyszukiwania. Wprowadź zapytanie w wyszukiwarkę i wciśnij ENTER.");
+    }
+
+    private void initializeGpsAudioRead() {
+        AudioUtils.initializeTextAudioRead(latitudeStartText, "Pole startowe szerokości geograficznej jest puste.");
+        AudioUtils.initializeTextAudioRead(longitudeStartText, "Pole startowe długości geograficznej jest puste.");
+        AudioUtils.initializeTextAudioRead(latitudeEndText, "Pole startowe szerokości geograficznej jest puste.");
+        AudioUtils.initializeTextAudioRead(longitudeEndText, "Pole startowe długości geograficznej jest puste.");
+    }
+
+    private void initializeVicinityAudioRead() {
+        AudioUtils.initializeChoiceBoxAudioRead(vicinityDistChoiceBox, "Brak wartości.");
+    }
 
 }
