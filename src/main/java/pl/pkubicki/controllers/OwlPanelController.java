@@ -152,13 +152,13 @@ public class OwlPanelController implements Initializable {
         choiceBox.setConverter(new StringConverter<OWLClass>() {
             @Override
             public String toString(OWLClass object) {
-                return object.getIRI().getRemainder().get();
+                return object.getIRI().getRemainder().orElse(null);
             }
 
             @Override
             public OWLClass fromString(String string) {
                 return choiceBox.getItems().stream().filter(owlClass ->
-                        owlClass.getIRI().getRemainder().get().equals(string)).findFirst().orElse(null);
+                        owlClass.getIRI().getRemainder().orElse(null).equals(string)).findFirst().orElse(null);
             }
         });
     }
