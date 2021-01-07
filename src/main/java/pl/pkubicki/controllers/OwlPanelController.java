@@ -155,7 +155,7 @@ public class OwlPanelController implements Initializable {
                 if (object != null)
                     return object.getIRI().getRemainder().orElse(null);
                 else
-                    return "No class avaible";
+                    return "No class available";
             }
 
             @Override
