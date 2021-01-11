@@ -52,7 +52,7 @@ public class RouteTravelController implements Initializable {
     @FXML private Button pauseButton;
     @FXML private Button stopButton;
 
-    private static Set<OWLNamedIndividual> individualsOnRoute = new HashSet<>();
+    private static LinkedHashSet<OWLNamedIndividual> individualsOnRoute = new LinkedHashSet<>();
     private static LinkedList<Media> audioTracks = new LinkedList<>();
     private static List<LatLng> route = new ArrayList<>();
     private static ObservableList<Double> vicinityDistances = FXCollections.emptyObservableList();
@@ -90,17 +90,17 @@ public class RouteTravelController implements Initializable {
     }
 
     private void refreshPointsOnRoute() {
-        if (!route.isEmpty()) {
+        if (isFormValid()) {
+            setRoute();
             routePointsListView.getItems().setAll(getObIndividualsOnRoute().values());
             routePointsListView.getSelectionModel().selectFirst();
-        } else if (isFormValid()){
-            setRoute();
-            refreshPointsOnRoute();
         }
     }
 
     private void setRoute() {
-        if(isFormValid()) {
+        if(isFormValid() &&
+                isPointInRange(latitudeStartText.getText(), longitudeStartText.getText()) &&
+                        isPointInRange(latitudeEndText.getText(), longitudeEndText.getText())) {
             route = HopperUtils.getRoute(
                     Double.parseDouble(latitudeStartText.getText()),
                     Double.parseDouble(longitudeStartText.getText()),
@@ -110,7 +110,10 @@ public class RouteTravelController implements Initializable {
         } else {
             MediaUtils.playAudioCue("error");
             setErrorsOnInvalidFields();
-            System.out.println("Missing gps coordinates.");
+            if (!isFormValid())
+                System.out.println("Missing gps coordinates.");
+            else
+                System.out.println("Gps point out of range. latitude: [19.16651861741808, 23.16475711386108] longitude: [50.97398685605795, 53.55018627383231]");
         }
     }
 
@@ -119,6 +122,24 @@ public class RouteTravelController implements Initializable {
                 longitudeStartText.getInvalid() ||
                 latitudeEndText.getInvalid() ||
                 longitudeEndText.getInvalid());
+    }
+
+    private boolean isPointInRange(String latitude, String longitude) {
+        double lat = Double.parseDouble(latitude);
+        double lng = Double.parseDouble(longitude);
+        return isRangeValid(lat, lng);
+    }
+
+    private boolean isRangeValid(double latitude, double longitude) {
+        // values for mazowieckie.osm.pbf
+        double minLatitude = 19.16651861741808;
+        double maxLatitude = 23.16475711386108;
+        double minLongitude = 50.97398685605795;
+        double maxLongitude = 53.55018627383231;
+        return minLatitude < latitude &&
+                latitude < maxLatitude &&
+                minLongitude < longitude &&
+                longitude < maxLongitude;
     }
 
     private void setErrorsOnInvalidFields() {
@@ -139,15 +160,15 @@ public class RouteTravelController implements Initializable {
 
     private ObservableMap<OWLNamedIndividual, String> getObIndividualsOnRoute() {
         individualsOnRoute = getOwlNamedIndividualsOnRoute();
-        Map<OWLNamedIndividual, String> individualsOnRouteWithLabels = OwlUtils.getIndividualsWithLabels(individualsOnRoute);
+        LinkedHashMap<OWLNamedIndividual, String> individualsOnRouteWithLabels = OwlUtils.getLinkedIndividualsWithLabels(individualsOnRoute);
         return FXCollections.observableMap(individualsOnRouteWithLabels);
     }
 
-    private Set<OWLNamedIndividual> getOwlNamedIndividualsOnRoute() {
+    private LinkedHashSet<OWLNamedIndividual> getOwlNamedIndividualsOnRoute() {
         if (!route.isEmpty()) {
-            return OwlUtils.getIndividualsInRouteProximity(route, vicinity, UNIT);
+            return OwlUtils.getOwlPointsCloseToRoute(route, vicinity, UNIT);
         } else
-            return new HashSet<>();
+            return new LinkedHashSet<>();
     }
 
     public void playAudio() {

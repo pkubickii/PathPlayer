@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <rdf:RDF xmlns="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi"
      xml:base="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi"
-     xmlns:CityOntoNavi="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:CityOntoNavi="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#">
     <owl:Ontology rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi"/>
     
 
@@ -19,19 +19,16 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-
     
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#appliesToPedestrian -->
-
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#appliesToPedestrian"/>
     
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasDirectNeighbor -->
-
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasDirectNeighbor">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
@@ -41,13 +38,11 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasLocation -->
 
-
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#hasLocation"/>
     
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#isLocatedOn -->
-
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#isLocatedOn"/>
     
@@ -55,20 +50,17 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#recordedInTheLocation -->
 
-
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#recordedInTheLocation"/>
     
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#throughTheStreet -->
 
-
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#throughTheStreet"/>
     
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#stopsAtTheBusStop -->
-
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#stopsAtTheBusStop"/>
     
@@ -82,12 +74,10 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-
     
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_building_number -->
-
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_building_number">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
@@ -97,7 +87,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_city_name -->
-
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_city_name">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
@@ -109,7 +98,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_country -->
 
-
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_country">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -118,7 +106,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_flat_number -->
-
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_flat_number">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
@@ -129,7 +116,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_post_code -->
 
-
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_post_code">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -138,7 +124,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_province -->
-
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_province">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
@@ -150,7 +135,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_street_name -->
 
-
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_street_name">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -159,7 +143,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_telefone -->
-
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#address_telefone">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
@@ -170,7 +153,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileName -->
 
-
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileName">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#Name"/>
@@ -179,7 +161,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#filePath -->
-
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#filePath">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
@@ -190,7 +171,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileURI -->
 
-
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileURI">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
@@ -200,13 +180,11 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#location_gps_coordinates -->
 
-
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#location_gps_coordinates"/>
     
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#parking_capacity -->
-
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#parking_capacity">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Parking"/>
@@ -217,7 +195,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#realEstate_name -->
 
-
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#realEstate_name">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -226,7 +203,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#what_material_is_made -->
-
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#what_material_is_made">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Fence"/>
@@ -244,12 +220,10 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-
     
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#ATM -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#ATM">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
@@ -260,7 +234,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#AdvertisingColumn -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#AdvertisingColumn">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
     </owl:Class>
@@ -268,7 +241,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Bollard -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Bollard">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
@@ -279,7 +251,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Booth -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Booth">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
         <rdfs:comment xml:lang="pl">Budka handlowa, stragan, kiosk.</rdfs:comment>
@@ -289,7 +260,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Lawn -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Lawn">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
     </owl:Class>
@@ -298,7 +268,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#PedestrianCrossing -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#PedestrianCrossing">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians"/>
     </owl:Class>
@@ -306,7 +275,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
@@ -317,7 +285,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#RailwayStation -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#RailwayStation">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
     </owl:Class>
@@ -326,7 +293,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#TrafficCircle -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#TrafficCircle">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure"/>
     </owl:Class>
@@ -334,7 +300,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice">
         <owl:equivalentClass>
@@ -352,7 +317,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Address">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Location"/>
     </owl:Class>
@@ -360,7 +324,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bank -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bank">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
@@ -370,7 +333,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bike -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bike">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle"/>
     </owl:Class>
@@ -378,7 +340,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BlockOfFlats -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BlockOfFlats">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
@@ -388,7 +349,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bridge -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bridge">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure"/>
     </owl:Class>
@@ -396,7 +356,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bus -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Bus">
         <owl:equivalentClass>
@@ -412,7 +371,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BusStop -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BusStop">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
     </owl:Class>
@@ -421,7 +379,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Car -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Car">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle"/>
     </owl:Class>
@@ -429,7 +386,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents">
         <owl:equivalentClass>
@@ -457,7 +413,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CrossRoads -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CrossRoads">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure"/>
     </owl:Class>
@@ -465,7 +420,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents"/>
@@ -475,7 +429,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Fence -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Fence">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
     </owl:Class>
@@ -483,7 +436,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Fountain -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Fountain">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
@@ -493,7 +445,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Location"/>
     </owl:Class>
@@ -501,7 +452,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#House -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#House">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
@@ -511,7 +461,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InformationSign -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InformationSign">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadSign"/>
     </owl:Class>
@@ -519,7 +468,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents"/>
@@ -529,7 +477,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Lift -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Lift">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians"/>
     </owl:Class>
@@ -538,13 +485,11 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Location -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Location"/>
     
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Monument -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Monument">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
@@ -554,7 +499,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Motorcycle -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Motorcycle">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle"/>
     </owl:Class>
@@ -562,7 +506,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Parking -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Parking">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
@@ -572,7 +515,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Pavement -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Pavement">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians"/>
     </owl:Class>
@@ -581,7 +523,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ProhibitionSign -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ProhibitionSign">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadSign"/>
     </owl:Class>
@@ -589,7 +530,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate">
         <owl:equivalentClass>
@@ -618,7 +558,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#CityComponents"/>
     </owl:Class>
@@ -626,7 +565,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadSign -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadSign">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
@@ -636,7 +574,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#School -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#School">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
     </owl:Class>
@@ -644,7 +581,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Shop -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Shop">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RealEstate"/>
@@ -654,7 +590,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Square -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Square">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
     </owl:Class>
@@ -662,7 +597,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Stairs -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Stairs">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#InfrastructureForPedestrians"/>
@@ -672,7 +606,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure"/>
     </owl:Class>
@@ -680,7 +613,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrafficLight -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrafficLight">
         <owl:equivalentClass>
@@ -697,7 +629,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrashCan -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrashCan">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#ElementsOfCityArchitecture"/>
     </owl:Class>
@@ -705,7 +636,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Tunnel -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Tunnel">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadInfrastructure"/>
@@ -715,13 +645,11 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle -->
 
-
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Vehicle"/>
     
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#WarrantSign -->
-
 
     <owl:Class rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#WarrantSign">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#RoadSign"/>
@@ -737,12 +665,10 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-
     
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_blockOfFlatsUphDomStudentaNr1_0001 -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_blockOfFlatsUphDomStudentaNr1_0001">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
@@ -754,7 +680,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_busStop_0003 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_busStop_0003">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
         <CityOntoNavi:recordedInTheLocation rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#busStop02SiedlcePKP"/>
@@ -763,7 +688,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_houseZakAdKarnyWSiedlcach_0001 -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_houseZakAdKarnyWSiedlcach_0001">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
@@ -775,7 +699,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_railwayStationSiedlcePKP_0001 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_railwayStationSiedlcePKP_0001">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
         <CityOntoNavi:recordedInTheLocation rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#railwayStationSiedlcePKP"/>
@@ -785,7 +708,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesFacultyOfSciences_0001 -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesFacultyOfSciences_0001">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
@@ -797,7 +719,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesInstituteOfComputerScience_0001 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesInstituteOfComputerScience_0001">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
         <CityOntoNavi:recordedInTheLocation rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesInstituteOfComputerScience"/>
@@ -807,7 +728,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_shopBiedronkaSiedlceTadeuszaCzackiego_0001 -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_shopBiedronkaSiedlceTadeuszaCzackiego_0001">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
@@ -819,7 +739,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_shopRossmannSiedlceSienkiewicza_0001 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Track_shopRossmannSiedlceSienkiewicza_0001">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"/>
         <CityOntoNavi:recordedInTheLocation rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopRossmannSiedlceSienkiewicza"/>
@@ -829,7 +748,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#adverstingColumnArmiiKrajowej3Maja -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#adverstingColumnArmiiKrajowej3Maja">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#AdvertisingColumn"/>
@@ -842,7 +760,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlce3Maja -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlce3Maja">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#ATM"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesFacultyOfSciences"/>
@@ -853,7 +770,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlceArmiiKrajowej -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlceArmiiKrajowej">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#ATM"/>
@@ -867,7 +783,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlceSienkiewicza -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#atmSiedlceSienkiewicza">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#ATM"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopRossmannSiedlceSienkiewicza"/>
@@ -879,7 +794,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#blockOfFlatsUphDomStudentaNr1 -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#blockOfFlatsUphDomStudentaNr1">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BlockOfFlats"/>
@@ -893,7 +807,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#bollardSienkiewicza1 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#bollardSienkiewicza1">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Bollard"/>
         <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
@@ -904,7 +817,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#bollardSienkiewicza2 -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#bollardSienkiewicza2">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Bollard"/>
@@ -917,7 +829,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#boothIceCreamShop -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#boothIceCreamShop">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Booth"/>
         <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
@@ -928,7 +839,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#boothNewsStand -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#boothNewsStand">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Booth"/>
@@ -941,7 +851,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#busStop01SiedlceArmiiKrajowejSienkiewicza -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#busStop01SiedlceArmiiKrajowejSienkiewicza">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BusStop"/>
         <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
@@ -953,7 +862,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#busStop02SiedlcePKP -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#busStop02SiedlcePKP">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#BusStop"/>
         <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementKolejowa"/>
@@ -964,7 +872,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#houseZakAdKarnyWSiedlcach -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#houseZakAdKarnyWSiedlcach">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"/>
@@ -978,7 +885,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavement3Maja -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavement3Maja">
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#street3Maja"/>
@@ -988,7 +894,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Pavement"/>
@@ -1002,7 +907,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementKolejowa -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementKolejowa">
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetKolejowa"/>
@@ -1011,7 +915,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Pavement"/>
@@ -1024,7 +927,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementZdanowskiego -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementZdanowskiego">
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetZdanowskiego"/>
     </owl:NamedIndividual>
@@ -1032,7 +934,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossing3Maja1 -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossing3Maja1">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#PedestrianCrossing"/>
@@ -1047,7 +948,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossingKolejowa1 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossingKolejowa1">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#PedestrianCrossing"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementKolejowa"/>
@@ -1061,7 +961,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossingZdanowskiego1 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossingZdanowskiego1">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#PedestrianCrossing"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementZdanowskiego"/>
@@ -1074,7 +973,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej1 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej1">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole"/>
         <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
@@ -1085,7 +983,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej2 -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej2">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole"/>
@@ -1098,7 +995,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej3 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleArmiiKrajowej3">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole"/>
         <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
@@ -1110,7 +1006,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleSienkiewicza1 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#poleSienkiewicza1">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Pole"/>
         <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
@@ -1121,7 +1016,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#railwayStationSiedlcePKP -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#railwayStationSiedlcePKP">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#RailwayStation"/>
@@ -1135,7 +1029,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesFacultyOfSciences -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesFacultyOfSciences">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"/>
@@ -1159,7 +1052,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesInstituteOfComputerScience -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#schoolSiedlceUniversityOfNaturalSciencesAndHumanitiesInstituteOfComputerScience">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#School"/>
@@ -1181,12 +1073,11 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopBiedronkaSiedlceTadeuszaCzackiego -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopBiedronkaSiedlceTadeuszaCzackiego">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Shop"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementArmiiKrajowej"/>
-        <CityOntoNavi:location_gps_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string">52.163145, 22.271854</CityOntoNavi:location_gps_coordinates>
+        <CityOntoNavi:location_gps_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string">52.163097, 22.272134</CityOntoNavi:location_gps_coordinates>
         <CityOntoNavi:realEstate_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Biedronka</CityOntoNavi:realEstate_name>
         <rdfs:comment xml:lang="pl">Biedronka, sklep spożywczy.</rdfs:comment>
         <rdfs:label xml:lang="pl">Biedronka T. Czackiego</rdfs:label>
@@ -1195,7 +1086,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopRossmannSiedlceSienkiewicza -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#shopRossmannSiedlceSienkiewicza">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#GPSCoordinates"/>
@@ -1219,7 +1109,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#street3Maja -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#street3Maja">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street"/>
     </owl:NamedIndividual>
@@ -1227,7 +1116,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetArmiiKrajowej -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetArmiiKrajowej">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street"/>
@@ -1237,7 +1125,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetKolejowa -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetKolejowa">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street"/>
     </owl:NamedIndividual>
@@ -1245,7 +1132,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetSienkiewicza -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetSienkiewicza">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street"/>
@@ -1255,7 +1141,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetZdanowskiego -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#streetZdanowskiego">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#Street"/>
     </owl:NamedIndividual>
@@ -1263,7 +1148,6 @@
 
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trafficLightArmiiKrajowej3maja1 -->
-
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trafficLightArmiiKrajowej3maja1">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrafficLight"/>
@@ -1278,7 +1162,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trafficLightArmiiKrajowej3maja2 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trafficLightArmiiKrajowej3maja2">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrafficLight"/>
         <CityOntoNavi:hasDirectNeighbor rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pedestrainCrossing3Maja1"/>
@@ -1292,7 +1175,6 @@
 
     <!-- http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trashCanSienkiewicza1 -->
 
-
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#trashCanSienkiewicza1">
         <rdf:type rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavig#TrashCan"/>
         <CityOntoNavi:isLocatedOn rdf:resource="http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#pavementSienkiewicza"/>
@@ -1303,6 +1185,5 @@
 
 
 
-<!-- Generated by the OWL API (version 5.1.0.2017-03-29T23:31:42Z) https://github.com/owlcs/owlapi/ -->
-
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
 

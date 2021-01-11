@@ -314,7 +314,7 @@ public class OwlUtilsTest {
         OWLOntology ontology = manager.loadOntologyFromOntologyDocument(owlFile);
         OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);
         Set<OWLNamedIndividual> set = getIndividualsInPointProximity(poi, 200.0, LengthUnit.METER);
-        Map<OWLNamedIndividual, String> individualsLabels = OwlUtils.getIndividualsWithLabels(set);
+        Map<OWLNamedIndividual, String> individualsLabels = OwlUtils.getIndividualsWithLabels((LinkedHashSet<OWLNamedIndividual>) set);
 
         OWLClassExpression classExpression = dataFactory.getOWLClass(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#Voice"));
         OWLDataProperty owlDataProperty = dataFactory.getOWLDataProperty(IRI.create("http://www.semanticweb.org/lm/ontologies/2019/0/CityOntoNavi#fileName"));
