@@ -102,13 +102,32 @@ public class FreeTravelController implements Initializable {
 
     private void refreshProximityPoints(LatLng poi) {
             double proximityDistance = vicinity;
-            refreshProximityListView(poi, proximityDistance);
+            if (stepLength < 50 && unitType.equals(LengthUnit.METER)) {
+                refreshProximityListView(poi, proximityDistance);
+            }
+            else {
+                refreshProximityListViewWithBigStep(poi);
+            }
     }
 
     private void refreshProximityListView(LatLng poi, double proximityDistance) {
         namedIndividualsInProximity = OwlUtils.getIndividualsInPointProximity(poi, proximityDistance, unitType);
         Map<OWLNamedIndividual, String> points = OwlUtils.getIndividualsWithLabels(namedIndividualsInProximity);
         individualsWithLabels = FXCollections.observableMap(points);
+        proximityListView.getItems().setAll(individualsWithLabels.values());
+        proximityListView.getSelectionModel().selectFirst();
+    }
+
+    private void refreshProximityListViewWithBigStep(LatLng poi) {
+        List<LatLng> route = new ArrayList<LatLng>() {
+            {
+                add(startPoint);
+                add(poi);
+            }
+        };
+        LinkedHashSet<OWLNamedIndividual> points = OwlUtils.getOwlPointsCloseToRoute(route, vicinity, unitType);
+        LinkedHashMap<OWLNamedIndividual, String> pointsWithLabels = OwlUtils.getLinkedIndividualsWithLabels(points);
+        individualsWithLabels = FXCollections.observableMap(pointsWithLabels);
         proximityListView.getItems().setAll(individualsWithLabels.values());
         proximityListView.getSelectionModel().selectFirst();
     }

@@ -10,6 +10,9 @@ public class ProximityUtils {
         double x2 = convertToX(point2.getLongitude());
         double y2 = convertToY(point2.getLatitude());
 
+        if (x1-x2 == 0) return new StraightPerpendicularToOX(x1);
+        else if (y1-y2 == 0) return new StraightPerpendicularToOY(y1);
+
         double a = (y1 - y2)/(x1 - x2);
         double b = y1 - ((y1 - y2)/(x1 - x2))*x1;
 
@@ -36,6 +39,10 @@ public class ProximityUtils {
         Wy = -straight1.getFactorA()*straight2.getFactorB() - (-straight2.getFactorA()*straight1.getFactorB());
         double x = Wx/W;
         double y = Wy/W;
+        return new LatLng(convertToLatitude(y), convertToLongitude(x));
+    }
+
+    public static LatLng getCrossPoint(double x, double y) {
         return new LatLng(convertToLatitude(y), convertToLongitude(x));
     }
 

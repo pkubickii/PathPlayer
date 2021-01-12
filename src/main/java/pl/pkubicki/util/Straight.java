@@ -11,6 +11,9 @@ public class Straight {
         this.factorB = factorB;
     }
 
+    public Straight() {
+    }
+
     public double getFactorA() {
         return factorA;
     }

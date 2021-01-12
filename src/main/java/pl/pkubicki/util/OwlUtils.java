@@ -30,8 +30,15 @@ public class OwlUtils {
             for (Node<OWLNamedIndividual> node : nodes) {
                 for (OWLLiteral owlLiteral : (OwlRepo.getReasoner().getDataPropertyValues(node.getRepresentativeElement(), owlDataProperty))) {
                     LatLng point = stringToLatLng(owlLiteral.getLiteral());
-                    Straight straightPerpendicular = getStraightPerpendicular(straight, point);
-                    LatLng crossPoint = getCrossPoint(straight, straightPerpendicular);
+                    LatLng crossPoint;
+                    if(straight instanceof StraightPerpendicularToOX) {
+                        crossPoint = getCrossPoint(((StraightPerpendicularToOX) straight).getX(), convertToY(point.getLatitude()));
+                    } else if (straight instanceof StraightPerpendicularToOY){
+                        crossPoint = getCrossPoint(convertToX(point.getLongitude()), ((StraightPerpendicularToOY) straight).getY());
+                    } else {
+                        Straight straightPerpendicular = getStraightPerpendicular(straight, point);
+                        crossPoint = getCrossPoint(straight, straightPerpendicular);
+                    }
                     double dist = LatLngTool.distance(point, crossPoint, unit);
                     if (dist <= proximity && isOnSegment(route.get(i), route.get(i + 1), crossPoint))
                         proximityIndividuals.add(node.getRepresentativeElement());
