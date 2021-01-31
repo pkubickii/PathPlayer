@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 public class PrimaryController implements Initializable {
 
-    @FXML private Button loginButton;
+//    @FXML private Button loginButton;
     @FXML private Button owlPanelButton;
     @FXML private Button freeTravelButton;
     @FXML private Button routeTravelButton;
@@ -49,7 +49,7 @@ public class PrimaryController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        FxUtils.getFocusListener(loginButton, true);
+//        FxUtils.getFocusListener(loginButton, true);
         FxUtils.getFocusListener(owlPanelButton, true);
         FxUtils.getFocusListener(freeTravelButton, true);
         FxUtils.getFocusListener(routeTravelButton, true);

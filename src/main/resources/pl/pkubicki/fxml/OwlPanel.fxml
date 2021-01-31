@@ -27,9 +27,9 @@
         </Menu>
     </MenuBar>
 
-    <TabPane minHeight="800" minWidth="800" tabClosingPolicy="UNAVAILABLE">
-        <Tab text="Create new point">
-            <AnchorPane>
+<!--    <TabPane minHeight="800" minWidth="800" tabClosingPolicy="UNAVAILABLE">-->
+<!--        <Tab text="Create new point">-->
+            <AnchorPane minHeight="800" minWidth="800">
                 <GridPane alignment="center" hgap="10" vgap="10">
                     <padding>
                         <Insets bottom="10" left="25" right="25" top="25"/>
@@ -104,12 +104,12 @@
                 </GridPane>
 
             </AnchorPane>
-        </Tab>
-        <Tab text="Untitled Tab 2">
-            <ListView fx:id="individualsListView" layoutX="294.0" layoutY="237.0" minHeight="200" minWidth="100"
-                      prefHeight="292.0" prefWidth="160.0"/>
-        </Tab>
-    </TabPane>
+<!--        </Tab>-->
+<!--        <Tab text="Untitled Tab 2">-->
+<!--            <ListView fx:id="individualsListView" layoutX="294.0" layoutY="237.0" minHeight="200" minWidth="100"-->
+<!--                      prefHeight="292.0" prefWidth="160.0"/>-->
+<!--        </Tab>-->
+<!--    </TabPane>-->
 
 
 </VBox>

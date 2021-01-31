@@ -1,4 +1,4 @@
-package pl.pkubicki.util;
+package pl.pkubicki.util.geometry;
 
 import java.util.Objects;
 

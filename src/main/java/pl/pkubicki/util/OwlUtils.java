@@ -10,6 +10,9 @@ import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
 import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
 import pl.pkubicki.repositories.OwlRepo;
+import pl.pkubicki.util.geometry.Straight;
+import pl.pkubicki.util.geometry.StraightPerpendicularToOX;
+import pl.pkubicki.util.geometry.StraightPerpendicularToOY;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

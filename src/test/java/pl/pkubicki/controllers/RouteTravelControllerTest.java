@@ -5,8 +5,8 @@ import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
 import org.junit.jupiter.api.Test;
 import pl.pkubicki.util.OwlUtils;
-import pl.pkubicki.util.PointXY;
-import pl.pkubicki.util.Straight;
+import pl.pkubicki.util.geometry.PointXY;
+import pl.pkubicki.util.geometry.Straight;
 
 import java.util.*;
 

@@ -1,10 +1,10 @@
 package pl.pkubicki.controllers;
 
-import com.javadocmd.simplelatlng.LatLng;
 import org.junit.jupiter.api.Test;
-import pl.pkubicki.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
+import pl.pkubicki.util.geometry.PointXY;
+import pl.pkubicki.util.geometry.Straight;
+import pl.pkubicki.util.geometry.StraightPerpendicularToOX;
+import pl.pkubicki.util.geometry.StraightPerpendicularToOY;
 
 class FreeTravelControllerTest {
     public static PointXY point1 = new PointXY(-2, 3);

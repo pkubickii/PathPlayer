@@ -132,10 +132,10 @@ public class RouteTravelController implements Initializable {
 
     private boolean isRangeValid(double latitude, double longitude) {
         // values for mazowieckie.osm.pbf
-        double minLatitude = 19.16651861741808;
-        double maxLatitude = 23.16475711386108;
-        double minLongitude = 50.97398685605795;
-        double maxLongitude = 53.55018627383231;
+        double minLatitude = 50.97398685605795;
+        double maxLatitude = 53.55018627383231;
+        double minLongitude = 19.16651861741808;
+        double maxLongitude = 23.16475711386108;
         return minLatitude < latitude &&
                 latitude < maxLatitude &&
                 minLongitude < longitude &&

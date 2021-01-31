@@ -1,8 +1,15 @@
 package pl.pkubicki.util;
 
 import com.javadocmd.simplelatlng.LatLng;
+import pl.pkubicki.util.geometry.PointXY;
+import pl.pkubicki.util.geometry.Straight;
+import pl.pkubicki.util.geometry.StraightPerpendicularToOX;
+import pl.pkubicki.util.geometry.StraightPerpendicularToOY;
 
 public class ProximityUtils {
+
+    public static final double MIN_LAT = 52.16226631921795;
+    public static final double MAX_LAT = 52.16176184357488;
 
     public static Straight getStraightFromTwoPoints(LatLng point1, LatLng point2) {
         double x1 = convertToX(point1.getLongitude());
@@ -59,7 +66,7 @@ public class ProximityUtils {
 
     public static double convertToX(double longitude) {
         double R = 6371;
-        double avgLat = (52.16226631921795 + 52.16176184357488)/2;
+        double avgLat = (MIN_LAT + MAX_LAT)/2;
         return R*longitude*Math.cos(avgLat);
     }
 
@@ -70,7 +77,7 @@ public class ProximityUtils {
 
     public static double convertToLongitude(double x) {
         double R = 6371;
-        double avgLat = (52.16226631921795 + 52.16176184357488)/2;
+        double avgLat = (MIN_LAT + MAX_LAT)/2;
         return x/(R*Math.cos(avgLat));
     }
 

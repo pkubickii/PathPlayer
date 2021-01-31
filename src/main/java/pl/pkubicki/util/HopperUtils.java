@@ -45,6 +45,7 @@ public class HopperUtils {
         LatLng to = new LatLng(toLat, toLon);
         return pointListToLatLngList(pointList, from, to);
     }
+
     private static List<LatLng> pointListToLatLngList(PointList pointList, LatLng startPoint, LatLng endPoint) {
         List<LatLng> latLngs = new ArrayList<>();
         latLngs.add(startPoint);

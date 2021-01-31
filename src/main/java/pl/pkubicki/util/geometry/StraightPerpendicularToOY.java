@@ -1,8 +1,8 @@
-package pl.pkubicki.util;
+package pl.pkubicki.util.geometry;
 
 import java.util.Objects;
 
-public class StraightPerpendicularToOY extends Straight{
+public class StraightPerpendicularToOY extends Straight {
 
     private double y;
 

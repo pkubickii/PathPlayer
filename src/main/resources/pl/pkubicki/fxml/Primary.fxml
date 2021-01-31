@@ -21,9 +21,9 @@
    <HBox GridPane.rowIndex="0" >
       <Text id="welcome-text" text="Welcome to PathPlayer" style="-fx-font-size: 12pt;" />
    </HBox>
-   <HBox GridPane.rowIndex="2" alignment="CENTER">
-      <Button fx:id="loginButton" onAction="#switchToSecondary" styleClass="shadow" text="Login" minHeight="50" minWidth="100" alignment="CENTER" />
-   </HBox>
+<!--   <HBox GridPane.rowIndex="2" alignment="CENTER">-->
+<!--      <Button fx:id="loginButton" onAction="#switchToSecondary" styleClass="shadow" text="Login" minHeight="50" minWidth="100" alignment="CENTER" />-->
+<!--   </HBox>-->
    <HBox GridPane.rowIndex="3" alignment="CENTER">
       <Button fx:id="owlPanelButton" onAction="#switchToOwlPanel" styleClass="shadow" text="OWL Panel" minHeight="50" minWidth="100" alignment="CENTER" />
    </HBox>
