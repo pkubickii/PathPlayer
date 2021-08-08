@@ -9,7 +9,7 @@ import java.util.*;
 
 public class MediaUtils {
     private static Media media;
-    private static final File[] SOUNDS = new File("sounds").listFiles(((dir, name) -> name.endsWith(".mp3")));
+    private static final File[] SOUNDS = new File("sounds").listFiles(((dir, name) -> name.endsWith(".wav")));
     private static final List<Media> AUDIO_CUES = new ArrayList<Media>() {
         {
             assert SOUNDS != null;
@@ -26,7 +26,7 @@ public class MediaUtils {
 
     private static Media getAudioCue(String fileName) {
         for (Media media : AUDIO_CUES) {
-            if(media.getSource().contains("/" + fileName + ".mp3")) return media;
+            if(media.getSource().contains("/" + fileName + ".wav")) return media;
         }
         return null;
     }
